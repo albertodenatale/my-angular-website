@@ -1,0 +1,24 @@
+{
+  "name": "angular-cv",
+  "description": "my dynamic angular cv",
+  "main": "index.html",
+  "authors": [
+    "alberto de natale"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "v4.0.0-alpha.6"
+  },
+  "devDependencies": {
+    "font-awesome": "fontawesome#^4.7.0"
+  }
+}
