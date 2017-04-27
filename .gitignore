@@ -16,6 +16,10 @@
 *.launch
 .settings/
 *.sublime-workspace
+/wwwroot
+/bin
+/bower_components
+/obj
 
 # IDE - VSCode
 .vscode/*
