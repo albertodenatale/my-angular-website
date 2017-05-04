@@ -1,3 +1,132 @@
+$red : red;
+$darkRed:darkRed;
+$yellow:yellow;
+$darkYellow:darkGoldenRod;
+$green:green;
+$darkGreen:darkGreen;
+$orange:orange;
+$darkOrange:darkOrange;
+$blue:blue;
+$blueDark:#424199;
+$blueMedium:#4F81BD;
+$blueLight:#1698CE;
+$minHeight:200px;
+$paddingRightColumns1:20px;
+
+
+body{
+    font-size: 16px;
+}
+
+h5{
+    color: $blueDark;
+}
+
+//temp styles 
+header {
+    height: $minHeight;
+    margin-top:5em;
+    .col.second{
+
+        .trait {
+            width: 100%;
+            margin-bottom:0.5em; 
+            &:nth-child(n+2){
+                float: left;
+            }
+            i {
+                color: $blueLight;
+                margin-right: 1em;
+            }
+        }
+        > .foot {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            width: 100%;
+        }
+    }
+}
+
+.training { 
+    background: $yellow;
+    > .col:nth-child(2){
+        background: $darkYellow;
+    }
+}
+
+.education {
+    background: $orange;
+    > .col:nth-child(2){
+        background: $darkOrange;
+    }
+}
+
+.separator {
+    height: ($minHeight/5);
+    margin-bottom: 3%; 
+}
+
+.line {
+    width:100%;
+    height: 2px;
+    background: $blueMedium;
+    position: absolute;
+    bottom: 0;
+    left:0;
+}
+
+.square {
+    width:15px;
+    height: 15px;
+    background: $blueMedium;
+    position: absolute;
+    bottom: 0;
+    right:0;
+}
+
+header .col-3.first h5 {
+    top: 0;
+}
+
+h5{
+    right: $paddingRightColumns1;
+}
+
+.col-3.first h5 {
+    position: absolute;
+    top:15px;
+}
+
+.col-3.first strong {
+    color: $blueMedium;
+    position: absolute;
+    right: $paddingRightColumns1;
+}
+
+.entry{
+    margin-bottom: 10px;
+}
+
+.mars{
+    color: $blueLight;
+}
+
+.venus{
+    position: absolute;
+    top: 10px;
+    right:10px;
+    width: 25%;
+    .input-group{
+        width: 80%;
+        float: right;
+    }
+}
+
+.pdf{
+    margin-right: 10px;
+}
+
 html, body {
     max-width: 100%;
     overflow-x: hidden;

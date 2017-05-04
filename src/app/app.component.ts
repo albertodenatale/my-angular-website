@@ -4,7 +4,6 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   animations: [
     trigger("loaded",
       [

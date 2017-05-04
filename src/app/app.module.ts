@@ -1,3 +1,5 @@
+import { ExperiencesModule } from './experiences/experiences.module';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +16,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ExperiencesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
