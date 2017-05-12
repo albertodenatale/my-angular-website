@@ -1,25 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Experience } from './experience';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'experience',
   template: `
   <div class="row history entry">
     <div class="col-3 first">
-      <strong>Sept 2016 – 13 March 2017</strong>
+      <strong>{{experience.period}}</strong>
     </div>
     <div class="col second">
-      <h5>Software Engineer</h5>
-      <div>Brightserve, Chichester</div>
-      <div>Worked on the extension of two different angularjs/webapi2/SQLServer projects, mainly on authentication side installing
-        and configuring ASP.NET Identity with JWT tokens. I also had the opportunity to work with GIT, Windows Workflow Foundation,
-        Ninject, MOQ, bower and GRUNT
-      </div>
+      <h5>{{experience.title}}</h5>
+      <div>{{experience.place}}</div>
+      <div>{{experience.description}}</div>
     </div>
   </div>`
 })
 export class ExperienceComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  experience:Experience;
 
   ngOnInit() {
   }

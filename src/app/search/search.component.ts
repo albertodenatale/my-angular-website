@@ -4,7 +4,7 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 @Component({
   selector: 'search',
   template:`
-    <div class="venus" [@loaded]="this.loaded">
+    <div class="venus" [@loaded]="loaded">
       <button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
       <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="keywords">
