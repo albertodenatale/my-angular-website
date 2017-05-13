@@ -10,6 +10,10 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
       <toggable>.NET</toggable>
       <toggable>Angular</toggable>
       <toggable>MVC</toggable>
+      <toggable>C#</toggable>
+      <toggable>.NET</toggable>
+      <toggable>Angular</toggable>
+      <toggable>MVC</toggable>
      <!--< <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="keywords">
         <span class="input-group-btn">
