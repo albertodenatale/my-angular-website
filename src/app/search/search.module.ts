@@ -1,3 +1,4 @@
+import { ToggableComponent } from './toggable.component';
 import { SearchComponent } from './search.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -6,7 +7,7 @@ import { CommonModule } from '@angular/common';
   imports: [
     CommonModule
   ],
-  declarations: [SearchComponent],
+  declarations: [SearchComponent, ToggableComponent],
   exports: [SearchComponent]
 })
 export class SearchModule { }

@@ -5,17 +5,17 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
   selector: 'search',
   template:`
     <div class="venus" [@loaded]="loaded">
-      <button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>
-      <div class="input-group">
+      <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
+      <toggable>C#</toggable>
+      <toggable>.NET</toggable>
+      <toggable>Angular</toggable>
+      <toggable>MVC</toggable>
+     <!--< <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="keywords">
         <span class="input-group-btn">
           <button class="btn btn-primary" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </span>
-      </div>
-      <span class="badge badge-info">C#</span>
-      <span class="badge badge-info">.NET</span>
-      <span class="badge badge-info">Angular</span>
-      <span class="badge badge-info">MVC</span>
+      </div>-->
     </div>`,
   animations: [
     trigger("loaded",
