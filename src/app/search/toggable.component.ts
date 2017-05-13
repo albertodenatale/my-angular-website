@@ -3,7 +3,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'toggable',
   template: `
-    <button class="btn" [ngClass]="{ 'btn-success': isOn }" (click)="toggle()">
+    <button class="btn" [ngClass]="{ 'btn-primary': isOn, 'btn-info':!isOn }" (click)="toggle()">
       <ng-content></ng-content>
     </button>
   `

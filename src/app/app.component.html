@@ -1,5 +1,6 @@
 <div class="container" >
-  <header class="row">
+  <search class="row" [@loaded]="loaded"></search>
+  <div class="row personal">
     <div class="col-3 first">
       <h5>Personal Information</h5>
     </div>
@@ -12,7 +13,7 @@
       <span class="foot"><span class="mars">Sex</span> male | <span class="mars">Date of birth</span> 5 of December 1986
       | <span class="mars">Nationality</span> Italian</span>
     </div>
-  </header>
+  </div>
   <div class="separator row">
     <div class="col-3 first">
       <h5>Work Experience</h5>
@@ -24,4 +25,3 @@
   </div>
   <history></history>
 </div>
-<search [@loaded]="loaded"></search>

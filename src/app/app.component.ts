@@ -7,7 +7,7 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
   animations: [
     trigger("loaded",
       [
-        state("loading", style({ transform: "translate(400px)" })),
+        state("loading", style({ transform: "translate(1500px)" })),
         state("loaded", style({ transform: "translate(0)" })),
         transition('loading => loaded', animate('300ms ease-in'))
       ])
@@ -17,6 +17,6 @@ export class AppComponent {
   loaded: string = "loading";
 
   ngOnInit() {
-    TimerObservable.create(2000).subscribe(_ => this.loaded="loaded")
+    TimerObservable.create(1000).subscribe(_ => this.loaded="loaded")
   }
 }
