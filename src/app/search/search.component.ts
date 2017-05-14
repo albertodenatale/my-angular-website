@@ -17,18 +17,7 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
         <span class="input-group-btn">
           <button class="btn btn-primary" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </span>
-      </div>-->`,
-  styles: [`
-        :host{
-          display:block;
-          margin-top:1%;
-          width: 100%;
-          .input-group{
-              width: 80%;
-              float: right;
-          }
-        }
-      `]
+      </div>-->`
 })
 export class SearchComponent implements OnInit {
 
