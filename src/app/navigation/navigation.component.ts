@@ -1,7 +1,7 @@
 import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
 
 @Component({
-  selector: 'search',
+  selector: 'navigation',
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
       <toggable>FrontEnd</toggable>
@@ -13,7 +13,7 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
         </span>
       </div>-->`
 })
-export class SearchComponent implements OnInit {
+export class NavigationComponent implements OnInit {
 
 
   constructor() { }

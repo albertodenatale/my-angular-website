@@ -1,4 +1,4 @@
-import { SearchModule } from './search/search.module';
+import { NavigationModule } from './navigation/navigation.module';
 import { ExperiencesModule } from './experiences/experiences.module';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,7 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpModule,
     ExperiencesModule,
-    SearchModule
+    NavigationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
