@@ -7,7 +7,7 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
   animations: [
     trigger("loaded",
       [
-        state("loading", style({ transform: "translate(1500px)" })),
+        state("loading", style({ transform: "translate(-500px)" })),
         state("loaded", style({ transform: "translate(0)" })),
         transition('loading => loaded', animate('300ms ease-in'))
       ])
