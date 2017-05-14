@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'history',
   template: `
-    <experience *ngFor="let experience of experiences" [experience]="experience"></experience>
+    <experience *ngFor="let experience of experiences" [experience]="experience" class="row"></experience>
     `
 })
 export class HistoryComponent implements OnInit {

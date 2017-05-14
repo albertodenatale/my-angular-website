@@ -4,14 +4,8 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
   selector: 'search',
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
-      <toggable>C#</toggable>
-      <toggable>.NET</toggable>
-      <toggable>Angular</toggable>
-      <toggable>MVC</toggable>
-      <toggable>C#</toggable>
-      <toggable>.NET</toggable>
-      <toggable>Angular</toggable>
-      <toggable>MVC</toggable>
+      <toggable>FrontEnd</toggable>
+      <toggable>BackEnd</toggable>
      <!--< <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="keywords">
         <span class="input-group-btn">

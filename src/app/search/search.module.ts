@@ -1,13 +1,14 @@
-import { ToggableComponent } from './toggable.component';
+import { SharedModule } from './../shared/shared.module';
 import { SearchComponent } from './search.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
-  declarations: [SearchComponent, ToggableComponent],
+  declarations: [SearchComponent,],
   exports: [SearchComponent]
 })
 export class SearchModule { }

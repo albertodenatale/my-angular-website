@@ -13,6 +13,14 @@ export class ExperienceService {
         and configuring ASP.NET Identity with JWT tokens. I also had the opportunity to work with GIT, Windows Workflow Foundation,
         Ninject, MOQ, bower and GRUNT`,
         period: 'Sept 2016 – 13 March 2017'
+      },
+      {
+        title: 'Software Developer',
+        place: 'Brightserve, Chichester',
+        description: `Worked on the extension of two different angularjs/webapi2/SQLServer projects, mainly on authentication side installing
+        and configuring ASP.NET Identity with JWT tokens. I also had the opportunity to work with GIT, Windows Workflow Foundation,
+        Ninject, MOQ, bower and GRUNT`,
+        period: 'Sept 2016 – 13 March 2017'
       }
     ]
   }

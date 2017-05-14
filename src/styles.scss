@@ -124,26 +124,21 @@ html, body {
 
 search {
     display: flex;
-    justify-content: space-between;
     margin-top:1%;
     width: 100%;
     .input-group{
         width: 80%;
         float: right;
     }
+    toggable {
+        display:block;
+        width: 10%;
+        min-width: 100px;
+        margin: 0 10px 0 0;
+    }
 }
 
-toggable{
-    display:block;
-    width: 10%;
-    min-width: 100px;
-    .btn{
-        width: 100%;
-        &.btn-primary{
-            background-color:$blueDark;
-        } 
-        &.btn-secondary{
-            background-color:$blueMedium;
-        } 
-    }
+
+experience{
+    margin:0 0 10px 0;
 }
