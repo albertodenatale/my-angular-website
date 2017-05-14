@@ -1,3 +1,4 @@
+import { CoreModule } from './core/core.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { ExperiencesModule } from './experiences/experiences.module';
 
@@ -19,7 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     HttpModule,
     ExperiencesModule,
-    NavigationModule
+    NavigationModule,
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

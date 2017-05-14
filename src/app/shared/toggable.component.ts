@@ -10,15 +10,24 @@ import { Component, OnInit, Output, EventEmitter, HostBinding, HostListener } fr
 export class ToggableComponent implements OnInit {
   
   @Output()
-  clicked: EventEmitter<any> = new EventEmitter<any>();
+  whenOn: EventEmitter<any> = new EventEmitter<any>();
+  
+  @Output()
+  whenOff: EventEmitter<any> = new EventEmitter<any>();
 
-  @HostBinding('class.btn-primary') isOn: boolean = true;
+  @HostBinding('class.btn-primary') isOn: boolean;
   
   @HostBinding('class.btn-info') get isOff() { return !this.isOn;};
 
   @HostListener('click') toggle() {
-    this.clicked.emit();
     this.isOn = !this.isOn;
+
+    if(this.isOn){
+      this.whenOn.emit();
+    }
+    else{
+      this.whenOff.emit();
+    }
   }
 
   ngOnInit() {

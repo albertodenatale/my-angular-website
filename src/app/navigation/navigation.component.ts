@@ -1,11 +1,14 @@
+import { TagService } from './../core/tag.service';
+import { Tag } from './../core/tag';
+import { NavigationService } from './navigation.service';
+import { Node } from './navigation';
 import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
 
 @Component({
   selector: 'navigation',
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
-      <toggable>FrontEnd</toggable>
-      <toggable>BackEnd</toggable>
+      <toggable *ngFor="let nav of navs" (whenOff)="whenOff(nav.key)" (whenOn)="whenOn(nav.key)">{{nav.label}}</toggable>
      <!--< <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="keywords">
         <span class="input-group-btn">
@@ -15,10 +18,30 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
 })
 export class NavigationComponent implements OnInit {
 
+  navs:Array<Node>;
 
-  constructor() { }
+  constructor(private navigationService: NavigationService, private tagService:TagService) { }
 
   ngOnInit() {
+    this.navs = this.navigationService.getNavNodes();
+  }
+
+  whenOn(key:string){
+    this.tagService.produce(
+      <Tag>{
+        action:"add",
+        tag:key
+      }
+    );
+  }
+
+  whenOff(key:string){
+    this.tagService.produce(
+      <Tag>{
+        action:"remove",
+        tag:key
+      }
+    );
   }
 
 }
