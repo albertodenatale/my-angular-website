@@ -1,8 +1,8 @@
-import { Component, OnInit, trigger, state, style, transition, animate  } from '@angular/core';
+import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
 
 @Component({
   selector: 'search',
-  template:`
+  template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
       <toggable>C#</toggable>
       <toggable>.NET</toggable>
@@ -17,7 +17,18 @@ import { Component, OnInit, trigger, state, style, transition, animate  } from '
         <span class="input-group-btn">
           <button class="btn btn-primary" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </span>
-      </div>-->`
+      </div>-->`,
+  styles: [`
+        :host{
+          display:block;
+          margin-top:1%;
+          width: 100%;
+          .input-group{
+              width: 80%;
+              float: right;
+          }
+        }
+      `]
 })
 export class SearchComponent implements OnInit {
 
