@@ -1,4 +1,4 @@
 export class Tag{
-    action:string;
+    action:"add" | "remove";
     tag:string;
 }

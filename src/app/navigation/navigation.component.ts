@@ -9,6 +9,7 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
       <toggable *ngFor="let nav of navs" (whenOff)="whenOff(nav.key)" (whenOn)="whenOn(nav.key)">{{nav.label}}</toggable>
+      <subnavigation></subnavigation>
      <!--< <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="keywords">
         <span class="input-group-btn">
