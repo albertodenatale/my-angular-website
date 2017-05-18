@@ -1,4 +1,9 @@
 export class Tag{
-    action:"add" | "remove";
+    action:Action;
     tag:string;
+}
+
+export enum Action{
+    Add = 0,
+    Remove
 }

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { TagService } from './../core/tag.service';
-import { Tag } from './../core/tag';
+import { Tag, Action } from './../core/tag';
 import { NavigationService } from './navigation.service';
 import { Component, OnInit, trigger, state, transition, style, animate } from '@angular/core';
 import { Node } from './navigation';
@@ -37,7 +37,7 @@ export class SubnavigationComponent implements OnInit {
 
     this.tagService.tagSource.subscribe(
       (t: Tag) => {
-        let selected = this.navs[t.tag];
+        let selected:Node[] = this.navs[t.tag];
         if (selected) {
           this.activateSubnav(selected, t.action);
         }
@@ -45,21 +45,21 @@ export class SubnavigationComponent implements OnInit {
     )
   }
 
-  private activateSubnav(subnav: Node[], action: string) {
-    let interval: number = action == "add" ? 200 : 200 * subnav.length;
-    
+  private activateSubnav(subnav: Node[], action: Action) {
+    let interval: number = action == Action.Add ? 200 : 200 * subnav.length;
+
     subnav.forEach(
       t => {
         setTimeout(() => {
-          if (action == "add") {
+          if (action == Action.Add) {
             this.nav.push(t);
           }
-          else if (action == "remove") {
+          else if (action == Action.Remove) {
             this.remove(t)
           }
         }, interval);
 
-        if (action == "add") {
+        if (action == Action.Add) {
           interval += 200;
         }
         else {
