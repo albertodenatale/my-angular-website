@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { TagService } from './../core/tag.service';
 import { Tags, Action } from '../core/tags';
 import { NavigationService } from './navigation.service';
-import { Component, OnInit, trigger, state, transition, style, animate } from '@angular/core';
+import { Component, OnInit, trigger, state, transition, style, animate, keyframes } from '@angular/core';
 import { Node } from './navigation';
 import 'rxjs/Rx';
 
@@ -16,11 +16,18 @@ import 'rxjs/Rx';
     trigger('flyInOut', [
       state('in', style({ transform: 'translateX(0)' })),
       transition('void => *', [
-        style({ transform: 'translateX(1000%)' }),
-        animate(300)
+        animate(300, keyframes([
+          style({ transform: 'translateX(1000%)',}),
+          style({ transform: 'translateX(-30px)' }),
+          style({ transform: 'translateX(0)' })
+        ]))
       ]),
       transition('* => void', [
-        animate(300, style({ transform: 'translateX(1000%)' }))
+        animate(300, keyframes([
+          style({ transform: 'translateX(0)',}),
+          style({ transform: 'translateX(-30px)' }),
+          style({ transform: 'translateX(1000%)' })
+        ]))
       ])
     ])
   ]
