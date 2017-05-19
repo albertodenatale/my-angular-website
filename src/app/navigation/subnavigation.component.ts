@@ -31,7 +31,7 @@ export class SubnavigationComponent implements OnInit {
   navs: { [key: string]: Array<Node> };
   queue: Array<Node> = new Array<Node>();
 
-  constructor(private navigationService: NavigationService, private tagService: TagService) { }
+  constructor(private navigationService: NavigationService) { }
 
   ngOnInit() {
     this.navs = this.navigationService.getSubnavNodes();
