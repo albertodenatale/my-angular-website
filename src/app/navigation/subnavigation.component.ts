@@ -34,7 +34,7 @@ import 'rxjs/Rx';
 })
 export class SubnavigationComponent implements OnInit {
 
-  navs: { [key: string]: Array<Node> };
+  navs: Array<Node>;
   queue: Array<Node> = new Array<Node>();
 
   constructor(private navigationService: NavigationService) { }

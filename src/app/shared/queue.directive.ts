@@ -1,6 +1,7 @@
 import { TagService } from './../core/tag.service';
 import { Tags, Action } from '../core/tags';
 import { Directive, Input } from '@angular/core';
+import { Node } from '../navigation/navigation';
 
 @Directive({
   selector: '[queue], queue'
@@ -8,7 +9,7 @@ import { Directive, Input } from '@angular/core';
 export class QueueDirective {
 
   @Input()
-  source:any
+  source:Array<Node>
 
   @Input()
   queue: Array<Node>;
@@ -16,14 +17,7 @@ export class QueueDirective {
   constructor(private tagService: TagService) {
     this.tagService.tagSource.subscribe(
       (t: Tags) => {
-        let selected: Node[];
-
-        if (t.tags.length == 1) {
-          selected= this.source[t.tags[0]];
-        }
-        else{
-          selected = this.source[t.tags[0]][t.tags[1]];
-        }
+        let selected: Node[] = this.source.filter(n => n.requires.filter(r => t.tags.indexOf(r)>-1).length > 0 );
 
         if (selected) {
           this.addToQueueWithIncrementalDelay(selected, t.action);

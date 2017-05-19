@@ -7,6 +7,10 @@ export class ExperienceService {
   getAll() : Iterable<Experience>{
     return [
       {
+        id: 7,
+        label: "C++",
+        key: "",
+        requires: ["backend", "java"],
         title: 'Software Developer',
         place: 'Brightserve, Chichester',
         description: `Worked on the extension of two different angularjs/webapi2/SQLServer projects, mainly on authentication side installing
@@ -15,6 +19,10 @@ export class ExperienceService {
         period: 'Sept 2016 – 13 March 2017'
       },
       {
+        id: 7,
+        label: "C++",
+        key: "",
+        requires: ["frontend","javascript"],
         title: 'Software Developer',
         place: 'Brightserve, Chichester',
         description: `Worked on the extension of two different angularjs/webapi2/SQLServer projects, mainly on authentication side installing

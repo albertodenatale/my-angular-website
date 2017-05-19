@@ -6,57 +6,60 @@ export class NavigationService {
 
   constructor() { }
 
-  getNavNodes() : Array<Node>{
+  getNavNodes(): Array<Node> {
     return [
-      <Node> {
-        id:0,
-        key:"frontend",
-        label:"Front End"
-      }, 
-      <Node> {
-        id:1,
-        key:"backend",
-        label:"Back End"
+      <Node>{
+        id: 0,
+        key: "frontend",
+        label: "Front End"
+      },
+      <Node>{
+        id: 1,
+        key: "backend",
+        label: "Back End"
       }
     ]
   }
 
-  getSubnavNodes():{ [key:string]:Array<Node> }{
-    return {
-      frontend:[
-        <Node>{
-          id:2,
-          label:"angular",
-          key:"angular"
-        },
-        <Node>{
-          id:3,
-          label:"AngularJS",
-          key:"angularjs"
-        },
-        <Node>{
-          id:4,
-          label:"JQuery",
-          key:"angular"
-        }
-      ],
-      backend:[
-        <Node>{
-          id:5,
-          label:"Java",
-          key:"java"
-        },
-        <Node>{
-          id:6,
-          label:"C#",
-          key:"csharp"
-        },
-        <Node>{
-          id:7,
-          label:"C++",
-          key:"cplusplus"
-        }
-      ]
-    }
+  getSubnavNodes(): Array<Node> {
+    return [
+      <Node>{
+        id: 2,
+        label: "angular",
+        key: "angular",
+        requires: ["frontend"]
+      },
+      <Node>{
+        id: 3,
+        label: "AngularJS",
+        key: "angularjs",
+        requires: ["frontend"]
+      },
+      <Node>{
+        id: 4,
+        label: "JQuery",
+        key: "angular",
+        requires: ["frontend"]
+      },
+      <Node>{
+        id: 5,
+        label: "Java",
+        key: "java",
+        requires: ["backend"]
+      },
+      <Node>{
+        id: 6,
+        label: "C#",
+        key: "csharp",
+        requires: ["backend"]
+      },
+      <Node>{
+        id: 7,
+        label: "C++",
+        key: "cplusplus",
+        requires: ["backend"]
+      }
+    ]
   }
 }
+
