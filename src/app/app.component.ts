@@ -1,4 +1,4 @@
-import { Component, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 
 @Component({
@@ -7,9 +7,14 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
   animations: [
     trigger("loaded",
       [
-        state("loading", style({ transform: "translate(-500px)" })),
         state("loaded", style({ transform: "translate(0)" })),
-        transition('loading => loaded', animate('300ms ease-in'))
+        transition('loading => loaded', [
+        animate(300, keyframes([
+          style({ transform: 'translateX(-100%)',}),
+          style({ transform: 'translateX(30px)' }),
+          style({ transform: 'translateX(0)' })
+        ]))
+      ])
       ])
   ]
 })

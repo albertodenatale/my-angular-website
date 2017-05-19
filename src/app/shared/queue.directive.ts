@@ -8,7 +8,7 @@ import { Directive, Input } from '@angular/core';
 export class QueueDirective {
 
   @Input()
-  data:any
+  source:any
 
   @Input()
   queue: Array<Node>;
@@ -19,10 +19,10 @@ export class QueueDirective {
         let selected: Node[];
 
         if (t.tags.length == 1) {
-          selected= this.data[t.tags[0]];
+          selected= this.source[t.tags[0]];
         }
         else{
-          selected = this.data[t.tags[0]][t.tags[1]];
+          selected = this.source[t.tags[0]][t.tags[1]];
         }
 
         if (selected) {
