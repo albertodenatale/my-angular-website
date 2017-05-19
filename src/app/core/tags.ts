@@ -1,6 +1,6 @@
-export class Tag{
+export class Tags{
     action:Action;
-    tag:string;
+    tags:string[];
 }
 
 export enum Action{

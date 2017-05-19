@@ -1,5 +1,5 @@
 import { TagService } from './../core/tag.service';
-import { Tag, Action } from './../core/tag';
+import { Tags, Action } from '../core/tags';
 import { NavigationService } from './navigation.service';
 import { Node } from './navigation';
 import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
@@ -29,18 +29,18 @@ export class NavigationComponent implements OnInit {
 
   whenOn(key:string){
     this.tagService.produce(
-      <Tag>{
+      <Tags>{
         action:Action.Add,
-        tag:key
+        tags:[key]
       }
     );
   }
 
   whenOff(key:string){
     this.tagService.produce(
-      <Tag>{
+      <Tags>{
         action:Action.Remove,
-        tag:key
+        tags:[key]
       }
     );
   }
