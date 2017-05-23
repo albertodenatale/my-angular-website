@@ -10,7 +10,7 @@ export class ExperienceService {
         id: 7,
         label: "C++",
         key: "",
-        requires: ["backend", "java"],
+        path: ["backend", "java"],
         title: 'Software Developer',
         place: 'Brightserve, Chichester',
         description: `Worked on the extension of two different angularjs/webapi2/SQLServer projects, mainly on authentication side installing
@@ -22,7 +22,7 @@ export class ExperienceService {
         id: 7,
         label: "C++",
         key: "",
-        requires: ["frontend","javascript"],
+        path: ["frontend","javascript"],
         title: 'Software Developer',
         place: 'Brightserve, Chichester',
         description: `Worked on the extension of two different angularjs/webapi2/SQLServer projects, mainly on authentication side installing

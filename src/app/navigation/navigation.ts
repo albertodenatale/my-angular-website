@@ -2,5 +2,5 @@ export class Node{
     id:number;
     label:string;
     key:string;
-    requires:string[];
+    path:string[];
 }

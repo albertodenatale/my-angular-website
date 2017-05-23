@@ -1,3 +1,4 @@
+import { Experience } from './../experiences/experience';
 import { Node } from './navigation';
 import { Injectable } from '@angular/core';
 
@@ -25,39 +26,80 @@ export class NavigationService {
     return [
       <Node>{
         id: 2,
-        label: "angular",
-        key: "angular",
-        requires: ["frontend"]
+        label: "javascript",
+        key: "javascript",
+        path: ["frontend"]
       },
       <Node>{
         id: 3,
-        label: "AngularJS",
-        key: "angularjs",
-        requires: ["frontend"]
+        label: "CSS3",
+        key: "css",
+        path: ["frontend"]
       },
       <Node>{
         id: 4,
-        label: "JQuery",
-        key: "angular",
-        requires: ["frontend"]
+        label: "HTML5",
+        key: "html",
+        path: ["frontend"]
       },
       <Node>{
         id: 5,
         label: "Java",
         key: "java",
-        requires: ["backend"]
+        path: ["backend"]
       },
       <Node>{
         id: 6,
         label: "C#",
         key: "csharp",
-        requires: ["backend"]
+        path: ["backend"]
       },
       <Node>{
         id: 7,
         label: "C++",
         key: "cplusplus",
-        requires: ["backend"]
+        path: ["backend"]
+      }
+    ]
+  }
+
+  getExperienceSubnav(experience:Experience): Array<Node>  {
+    return [
+      <Node>{
+        id: 2,
+        label: "angular",
+        key: "angular",
+        path: ["frontend", "javascript"]
+      },
+      <Node>{
+        id: 3,
+        label: "AngularJS",
+        key: "angularjs",
+        path: ["frontend", "javascript"]
+      },
+      <Node>{
+        id: 4,
+        label: "JQuery",
+        key: "jquery",
+        path: ["frontend", "javascript"]
+      },
+      <Node>{
+        id: 5,
+        label: "Java",
+        key: "java",
+        path: ["backend"]
+      },
+      <Node>{
+        id: 6,
+        label: "C#",
+        key: "csharp",
+        path: ["backend"]
+      },
+      <Node>{
+        id: 7,
+        label: "C++",
+        key: "cplusplus",
+        path: ["backend"]
       }
     ]
   }

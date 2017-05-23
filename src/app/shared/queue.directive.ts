@@ -17,7 +17,7 @@ export class QueueDirective {
   constructor(private tagService: TagService) {
     this.tagService.tagSource.subscribe(
       (t: Tags) => {
-        let selected: Node[] = this.source.filter(n => n.requires.filter(r => t.tags.indexOf(r)>-1).length > 0 );
+        let selected: Node[] = this.source.filter(n => n.path.filter(r => t.tags.indexOf(r)>-1).length > 0 );
 
         if (selected) {
           this.addToQueueWithIncrementalDelay(selected, t.action);
