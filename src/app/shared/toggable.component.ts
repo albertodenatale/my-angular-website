@@ -1,4 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, HostBinding, HostListener } from '@angular/core';
+import { ToggableService } from 'app/core/toggable.service';
+import { Action } from 'app/core/tags';
+import { Component, OnInit, Output, EventEmitter, HostBinding, HostListener, Input } from '@angular/core';
+import { TagService } from "app/core/tag.service";
 
 @Component({
   selector: 'toggable',
@@ -8,6 +11,8 @@ import { Component, OnInit, Output, EventEmitter, HostBinding, HostListener } fr
   host: { 'class':'btn' }
 })
 export class ToggableComponent implements OnInit {
+  @Input()
+  id:string;
   
   @Output()
   whenOn: EventEmitter<any> = new EventEmitter<any>();
@@ -30,7 +35,14 @@ export class ToggableComponent implements OnInit {
     }
   }
 
+  constructor(private toggableService:ToggableService){ }
+
   ngOnInit() {
+    this.toggableService.toggables.subscribe(t =>{
+      if(t.id == this.id){
+        this.isOn=t.action!=Action.Remove;
+      }
+    })
   }
 
 }

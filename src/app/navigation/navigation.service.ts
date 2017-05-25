@@ -26,39 +26,39 @@ export class NavigationService {
     return [
       <Node>{
         id: 2,
-        label: "javascript",
-        key: "javascript",
-        path: ["frontend"]
+        label: "angular",
+        key: "angular",
+        path: ["frontend", "javascript", "angular"]
       },
       <Node>{
         id: 3,
-        label: "CSS3",
-        key: "css",
-        path: ["frontend"]
+        label: "AngularJS",
+        key: "angularjs",
+        path: ["frontend", "javascript","angularjs"]
       },
       <Node>{
         id: 4,
-        label: "HTML5",
-        key: "html",
-        path: ["frontend"]
+        label: "JQuery",
+        key: "jquery",
+        path: ["frontend", "javascript","jquery"]
       },
       <Node>{
         id: 5,
         label: "Java",
         key: "java",
-        path: ["backend"]
+        path: ["backend","java"]
       },
       <Node>{
         id: 6,
         label: "C#",
         key: "csharp",
-        path: ["backend"]
+        path: ["backend","csharp"]
       },
       <Node>{
         id: 7,
         label: "C++",
         key: "cplusplus",
-        path: ["backend"]
+        path: ["backend","cplusplus"]
       }
     ]
   }
@@ -66,40 +66,46 @@ export class NavigationService {
   getExperienceSubnav(experience:Experience): Array<Node>  {
     return [
       <Node>{
+        id: 0,
+        key: "frontend",
+        label: "Front End",
+        path: ["frontend"]
+      },
+      <Node>{
         id: 2,
         label: "angular",
         key: "angular",
-        path: ["frontend", "javascript"]
+        path: ["frontend", "javascript", "angular"]
       },
       <Node>{
         id: 3,
         label: "AngularJS",
         key: "angularjs",
-        path: ["frontend", "javascript"]
+        path: ["frontend", "javascript", "angularjs"]
       },
       <Node>{
         id: 4,
         label: "JQuery",
         key: "jquery",
-        path: ["frontend", "javascript"]
+        path: ["frontend", "javascript", "jquery"]
       },
       <Node>{
         id: 5,
         label: "Java",
         key: "java",
-        path: ["backend"]
+        path: ["backend","java"]
       },
       <Node>{
         id: 6,
         label: "C#",
         key: "csharp",
-        path: ["backend"]
+        path: ["backend","csharp"]
       },
       <Node>{
         id: 7,
         label: "C++",
         key: "cplusplus",
-        path: ["backend"]
+        path: ["backend","cplusplus"]
       }
     ]
   }

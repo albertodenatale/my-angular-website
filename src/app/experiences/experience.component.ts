@@ -13,7 +13,7 @@ import { Tags, Action } from "app/core/tags";
     </div>
     <div class="col second">
       <h5>{{experience.title}}
-          <toggable *ngFor="let nav of queue" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+          <toggable *ngFor="let nav of queue" [id]="nav.key" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
       </h5>
       <div>{{experience.place}}</div>
       <div>{{experience.description}}</div>

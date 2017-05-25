@@ -1,3 +1,4 @@
+import { ToggableService } from 'app/core/toggable.service';
 import { TagService } from './../core/tag.service';
 import { Tags, Action } from '../core/tags';
 import { NavigationService } from './navigation.service';
@@ -8,7 +9,7 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
   selector: 'navigation',
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
-      <toggable *ngFor="let nav of navs" (whenOff)="whenOff(nav.key)" (whenOn)="whenOn(nav.key)">{{nav.label}}</toggable>
+      <toggable *ngFor="let nav of navs" [id]="nav.key" (whenOff)="whenOff(nav.key)" (whenOn)="whenOn(nav.key)">{{nav.label}}</toggable>
       <subnavigation></subnavigation>
      <!--< <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="keywords">

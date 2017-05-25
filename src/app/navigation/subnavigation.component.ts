@@ -10,7 +10,7 @@ import 'rxjs/Rx';
   selector: 'subnavigation',
   template: `
     <queue [source]="navs" [queue]="queue"></queue>
-    <toggable *ngFor="let t of queue" [@flyInOut]>{{t.label}}</toggable>
+    <toggable *ngFor="let t of queue" [id]="t.key" [@flyInOut]>{{t.label}}</toggable>
   `,
   animations: [
     trigger('flyInOut', [

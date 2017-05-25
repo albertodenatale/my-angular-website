@@ -5,8 +5,6 @@ import { Subject } from "rxjs/Subject";
 @Injectable()
 export class TagService {
 
-  constructor() { }
-
   private source = new Subject<Tags>();
 
   tagSource = this.source.asObservable();
