@@ -5,13 +5,13 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'history',
   template: `
-    <queue [source]="experiences" [queue]="queue"></queue>
-    <experience *ngFor="let experience of queue" [experience]="experience" class="row"></experience>
+    <queue [source]="experiences">
+      <experience *ngFor="let experience of experiences" [experience]="experience" class="row"></experience>
+    </queue>
     `
 })
 export class HistoryComponent implements OnInit {
   experiences:Iterable<Experience> = new Array<Experience>();
-  queue:Array<Experience> = new Array<Experience>();
 
   constructor(private service:ExperienceService) { }
 

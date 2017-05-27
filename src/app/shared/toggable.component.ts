@@ -20,12 +20,13 @@ export class ToggableComponent implements OnInit {
   @Output()
   whenOff: EventEmitter<any> = new EventEmitter<any>();
 
+  @Input()
   @HostBinding('class.btn-primary') isOn: boolean;
   
   @HostBinding('class.btn-info') get isOff() { return !this.isOn;};
 
   @HostListener('click') toggle() {
-    this.isOn = !this.isOn;
+    this.toggleState();
 
     if(this.isOn){
       this.whenOn.emit();
@@ -33,6 +34,10 @@ export class ToggableComponent implements OnInit {
     else{
       this.whenOff.emit();
     }
+  }
+
+  toggleState(){
+    this.isOn = !this.isOn;
   }
 
   constructor(private toggableService:ToggableService){ }

@@ -9,8 +9,9 @@ import 'rxjs/Rx';
 @Component({
   selector: 'subnavigation',
   template: `
-    <queue [source]="navs" [queue]="queue"></queue>
-    <toggable *ngFor="let t of queue" [id]="t.key" [@flyInOut]>{{t.label}}</toggable>
+    <queue [source]="navs">
+      <toggable *ngFor="let t of navs" [id]="t.key" [@flyInOut]>{{t.label}}</toggable>
+    </queue>
   `,
   animations: [
     trigger('flyInOut', [
@@ -30,12 +31,9 @@ import 'rxjs/Rx';
       ])
     ])
   ]
-
 })
 export class SubnavigationComponent implements OnInit {
-
   navs: Array<Node>;
-  queue: Array<Node> = new Array<Node>();
 
   constructor(private navigationService: NavigationService) { }
 

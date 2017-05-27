@@ -1,6 +1,7 @@
+import { ToggableComponent } from './toggable.component';
 import { TagService } from './../core/tag.service';
 import { Tags, Action } from '../core/tags';
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, ViewChildren, QueryList, ContentChildren } from '@angular/core';
 import { Node } from '../navigation/navigation';
 
 @Directive({
@@ -9,15 +10,15 @@ import { Node } from '../navigation/navigation';
 export class QueueDirective {
 
   @Input()
-  source:Array<Node>
+  source: Array<Node>
 
-  @Input()
-  queue: Array<Node>;
+  @ContentChildren(ToggableComponent)
+  toggables: QueryList<ToggableComponent>;
 
   constructor(private tagService: TagService) {
     this.tagService.tagSource.subscribe(
       (t: Tags) => {
-        let selected: Node[] = this.source.filter(n => n.path.filter(r => t.tags.indexOf(r)>-1).length > 0 );
+        let selected: Node[] = this.source.filter(n => n.path.filter(r => t.tags.indexOf(r) > -1).length > 0);
 
         if (selected) {
           this.addToQueueWithIncrementalDelay(selected, t.action);
@@ -27,33 +28,42 @@ export class QueueDirective {
   }
 
   private addToQueueWithIncrementalDelay(subnav: Node[], action: Action) {
-    let interval: number = action == Action.Add ? 200 : 200 * subnav.length;
+    //let interval: number = action == Action.Add ? 200 : 200 * subnav.length;
 
-    subnav.forEach(
-      t => {
-        setTimeout(() => {
-          if (action == Action.Add) {
-            this.queue.push(t);
-          }
-          else if (action == Action.Remove) {
-            this.remove(t)
-          }
-        }, interval);
+    subnav.forEach(t => this.toggle(t));
+    //{
+    //   setTimeout(() => {
+    //     if (action == Action.Add) {
+    //       this.add(t);
+    //     }
+    //     else if (action == Action.Remove) {
+    //       this.remove(t)
+    //     }
+    //   }, interval);
 
-        if (action == Action.Add) {
-          interval += 200;
-        }
-        else {
-          interval -= 200;
-        }
-      });
+    //   if (action == Action.Add) {
+    //     interval += 200;
+    //   }
+    //   else {
+    //     interval -= 200;
+    //   }
+    // }
   }
 
-  private remove(node: Node) {
-    let index = this.queue.indexOf(node);
-
-    if (index >= 0) {
-      this.queue.splice(index, 1);
+  private toggle(node: Node) {
+    //this.queue.push(node);
+    let selected = this.toggables.find(t => t.id === node.key);
+    
+    if (selected) {
+      selected.toggleState();
     }
   }
+
+  // private remove(node: Node) {
+  //   let index = this.queue.indexOf(node);
+
+  //   if (index >= 0) {
+  //     this.queue.splice(index, 1);
+  //   }
+  // }
 }
