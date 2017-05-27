@@ -9,7 +9,9 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
   selector: 'navigation',
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
-      <toggable *ngFor="let nav of navs" [id]="nav.key" (whenOff)="whenOff(nav.key)" (whenOn)="whenOn(nav.key)">{{nav.label}}</toggable>
+        <queue [source]="navs">
+          <toggable *ngFor="let nav of navs" [id]="nav.key" (click)="produce(nav)">{{nav.label}}</toggable>
+        </queue>
       <subnavigation></subnavigation>
      <!--< <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="keywords">
@@ -20,28 +22,19 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
 })
 export class NavigationComponent implements OnInit {
 
-  navs:Array<Node>;
+  navs: Array<Node>;
 
-  constructor(private navigationService: NavigationService, private tagService:TagService) { }
+  constructor(private navigationService: NavigationService, private tagService: TagService) { }
 
   ngOnInit() {
     this.navs = this.navigationService.getNavNodes();
   }
 
-  whenOn(key:string){
+  produce(nav: Node) {
     this.tagService.produce(
       <Tags>{
-        action:Action.Add,
-        tags:[key]
-      }
-    );
-  }
-
-  whenOff(key:string){
-    this.tagService.produce(
-      <Tags>{
-        action:Action.Remove,
-        tags:[key]
+        action: Action.Add,
+        tags: nav.path
       }
     );
   }

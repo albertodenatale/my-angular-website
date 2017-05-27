@@ -12,12 +12,14 @@ export class NavigationService {
       <Node>{
         id: 0,
         key: "frontend",
-        label: "Front End"
+        label: "Front End",
+        path: ["frontend"]
       },
       <Node>{
         id: 1,
         key: "backend",
-        label: "Back End"
+        label: "Back End",
+        path: ["backend"]
       }
     ]
   }

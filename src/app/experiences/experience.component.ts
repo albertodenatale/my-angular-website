@@ -13,7 +13,9 @@ import { Tags, Action } from "app/core/tags";
     </div>
     <div class="col second">
       <h5>{{experience.title}}
-          <toggable *ngFor="let nav of queue" [id]="nav.key" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+        <queue [source]="queue">
+          <toggable *ngFor="let nav of queue" [id]="nav.key" class="btn-sm" (click)="produce(nav)">{{nav.label}}</toggable>
+        </queue>
       </h5>
       <div>{{experience.place}}</div>
       <div>{{experience.description}}</div>
@@ -32,25 +34,12 @@ export class ExperienceComponent implements OnInit {
     this.queue = this.navigationService.getExperienceSubnav(this.experience);
   }
 
-  whenOn(node: Node) {
+  produce(node: Node) {
     let tags = node.path.slice();
-    tags.push(node.key);
 
     this.tagService.produce(
       <Tags>{
         action: Action.Add,
-        tags: tags
-      }
-    );
-  }
-
-  whenOff(node: Node) {
-    let tags = node.path.slice();
-    tags.push(node.key);
-
-    this.tagService.produce(
-      <Tags>{
-        action: Action.Remove,
         tags: tags
       }
     );
