@@ -83,7 +83,7 @@ export class QueueDirective {
       return false;
     }
 
-    selected.isOn = !selected.isOn;
+    selected.toggleState();
 
     return true;
   }

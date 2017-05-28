@@ -7,15 +7,9 @@ import { TagService } from "app/core/tag.service";
   selector: 'toggable, [toggable]',
   host: { 'class':'btn' }
 })
-export class ToggableDirective implements OnInit {
+export class ToggableDirective{
   @Input()
   id:string;
-  
-  @Output()
-  whenOn: EventEmitter<any> = new EventEmitter<any>();
-  
-  @Output()
-  whenOff: EventEmitter<any> = new EventEmitter<any>();
 
   @Input()
   @HostBinding('class.btn-primary') isOn: boolean;
@@ -24,16 +18,6 @@ export class ToggableDirective implements OnInit {
 
   toggleState(){
     this.isOn = !this.isOn;
-  }
-
-  constructor(private toggableService:ToggableService){ }
-
-  ngOnInit() {
-    this.toggableService.toggables.subscribe(t =>{
-      if(t.id == this.id){
-        this.isOn=t.action!=Action.Remove;
-      }
-    })
   }
 
 }
