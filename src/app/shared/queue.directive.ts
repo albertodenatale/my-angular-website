@@ -45,10 +45,7 @@ export class QueueDirective {
 
     subnav.forEach(t => {
       if (this.toggle(this.toggables, t) === false) {
-        this.subscriptions.push(this.toggables.changes.subscribe(list => {
-          this.toggle(list, t);
-          this.changeDetectionRef.detectChanges();
-        }));
+        this.tryWaitComponentToBeCreated(t);
       }
     });
 
@@ -71,6 +68,13 @@ export class QueueDirective {
     // }
   }
 
+  private tryWaitComponentToBeCreated(t:Node) {
+    this.subscriptions.push(this.toggables.changes.subscribe(list => {
+      this.toggle(list, t);
+      this.changeDetectionRef.detectChanges();
+    }));
+  }
+
   private toggle(list: QueryList<ToggableComponent>, node: Node): boolean {
     //this.queue.push(node);
     let selected: ToggableComponent = this.toggables.find(t => t.id === node.key);
@@ -80,7 +84,7 @@ export class QueueDirective {
     }
 
     selected.isOn = !selected.isOn;
-    
+
     return true;
   }
 
