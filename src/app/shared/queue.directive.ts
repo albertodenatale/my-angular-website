@@ -28,11 +28,43 @@ export class QueueDirective {
           return intersection.length == n.path.length && intersection.length == t.tags.length;
         });
 
+        let addedPaths: Node[] = this.source.filter(n => {
+          let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
+
+          return intersection.length > 0;
+        });
+
+        if (addedPaths && this.queue) {
+          let toRemove: Node[] = addedPaths.filter(a => this.queue.find(q => q.key == a.key) != null);
+          let toAdd: Node[] = addedPaths.filter(a => this.queue.find(q => q.id == a.id) == null);
+          if (selected == null || toRemove.length === 0) {
+            if (toAdd) {
+              this.addPaths(toAdd);
+            }
+
+            if (toRemove) {
+              this.removePaths(toRemove);
+            }
+          }
+        }
+
         if (selected) {
           this.tryToggleOrCreate([selected], t.action);
         }
       }
     )
+  }
+
+  private addPaths(leafs: Node[]) {
+    leafs.forEach(l => {
+      this.create(l);
+    });
+  }
+
+  private removePaths(leafs: Node[]) {
+    leafs.forEach(l => {
+      this.remove(l);
+    });
   }
 
   subscriptions: Array<Subscription> = new Array<Subscription>();
@@ -43,10 +75,10 @@ export class QueueDirective {
     this.subscriptions.forEach(s => s.unsubscribe());
 
     subnav.forEach(n => {
-      let existsAndToggled : boolean = this.tryToggle(this.toggables, n);
+      let existsAndToggled: boolean = this.tryToggle(this.toggables, n);
 
-      if(!existsAndToggled) {
-        this.createAndToggle(n);
+      if (!existsAndToggled) {
+        this.waitCreationAndToggle(n);
       }
     });
 
@@ -69,39 +101,35 @@ export class QueueDirective {
     // }
   }
 
-  private createAndToggle(node: Node) {
-    this.create(node);
-    this.waitCreationAndToggle(node);
-  }
-
-  private create(node:Node){
+  private create(node: Node) {
     if (this.queue) this.queue.push(node);
   }
 
   private waitCreationAndToggle(t: Node) {
     this.subscriptions.push(this.toggables.changes.subscribe(list => {
-      this.tryToggle(list, t);
-      this.changeDetectionRef.detectChanges();
+      if (this.tryToggle(list, t)) {
+        this.changeDetectionRef.detectChanges();
+      }
     }));
   }
 
-  private tryToggle(list:QueryList<ToggableDirective>, node:Node) : boolean{
-      let selected: ToggableDirective = this.toggables.find(t => t.id === node.key);
+  private tryToggle(list: QueryList<ToggableDirective>, node: Node): boolean {
+    let selected: ToggableDirective = this.toggables.find(t => t.id === node.key);
 
-      if (selected) {
-        selected.toggleState();
+    if (selected) {
+      selected.toggleState();
 
-        return true;
-      }
+      return true;
+    }
 
-      return false;
+    return false;
   }
 
-  // private remove(node: Node) {
-  //   let index = this.queue.indexOf(node);
+  private remove(node: Node) {
+    let index = this.queue.indexOf(node);
 
-  //   if (index >= 0) {
-  //     this.queue.splice(index, 1);
-  //   }
-  // }
+    if (index >= 0) {
+      this.queue.splice(index, 1);
+    }
+  }
 }
