@@ -7,7 +7,7 @@ import { TagService } from "app/core/tag.service";
   selector: 'toggable, [toggable]',
   host: { 'class':'btn' }
 })
-export class ToggableComponent implements OnInit {
+export class ToggableDirective implements OnInit {
   @Input()
   id:string;
   

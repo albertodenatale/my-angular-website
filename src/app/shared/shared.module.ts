@@ -1,4 +1,4 @@
-import { ToggableComponent } from './toggable.component';
+import { ToggableDirective } from './toggable.directive';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QueueDirective } from './queue.directive';
@@ -7,7 +7,7 @@ import { QueueDirective } from './queue.directive';
   imports: [
     CommonModule
   ],
-  declarations: [ToggableComponent, QueueDirective],
-  exports:[ToggableComponent, QueueDirective]
+  declarations: [ToggableDirective, QueueDirective],
+  exports:[ToggableDirective, QueueDirective]
 })
 export class SharedModule { }

@@ -1,4 +1,4 @@
-import { ToggableComponent } from './toggable.component';
+import { ToggableDirective } from './toggable.directive';
 import { TagService } from './../core/tag.service';
 import { Tags, Action } from '../core/tags';
 import { Directive, Input, ViewChildren, QueryList, ContentChildren, ChangeDetectorRef } from '@angular/core';
@@ -16,8 +16,8 @@ export class QueueDirective {
   @Input()
   queue: Array<Node>
 
-  @ContentChildren(ToggableComponent)
-  toggables: QueryList<ToggableComponent>;
+  @ContentChildren(ToggableDirective)
+  toggables: QueryList<ToggableDirective>;
 
   constructor(private tagService: TagService, private changeDetectionRef: ChangeDetectorRef) {
     this.tagService.tagSource.subscribe(
@@ -75,9 +75,9 @@ export class QueueDirective {
     }));
   }
 
-  private toggle(list: QueryList<ToggableComponent>, node: Node): boolean {
+  private toggle(list: QueryList<ToggableDirective>, node: Node): boolean {
     //this.queue.push(node);
-    let selected: ToggableComponent = this.toggables.find(t => t.id === node.key);
+    let selected: ToggableDirective = this.toggables.find(t => t.id === node.key);
 
     if (selected == null) {
       return false;
