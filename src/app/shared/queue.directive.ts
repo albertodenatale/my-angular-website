@@ -28,6 +28,12 @@ export class QueueDirective {
           return intersection.length == n.path.length && intersection.length == t.tags.length;
         });
 
+        let parent: Node = this.source.find(n => {
+          let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
+
+          return intersection.length != t.tags.length && intersection.length == n.path.length;
+        });
+
         let addedPaths: Node[] = this.source.filter(n => {
           let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
 
@@ -50,6 +56,14 @@ export class QueueDirective {
 
         if (selected) {
           this.tryToggleOrCreate([selected], t.action);
+        }
+
+        if (parent) {
+          let directive: ToggableDirective = this.toggables.find(t => t.id == parent.key && !t.isOn);
+
+          if (directive) {
+            directive.toggleState();
+          }
         }
       }
     )
