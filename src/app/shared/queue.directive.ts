@@ -29,8 +29,7 @@ export class QueueDirective {
         });
 
         if (selected) {
-          this.addToQueueWithIncrementalDelay([selected], t.action);
-          if (this.queue) this.queue.push(selected);
+          this.tryToggleOrCreate([selected], t.action);
         }
       }
     )
@@ -38,14 +37,16 @@ export class QueueDirective {
 
   subscriptions: Array<Subscription> = new Array<Subscription>();
 
-  private addToQueueWithIncrementalDelay(subnav: Node[], action: Action) {
+  private tryToggleOrCreate(subnav: Node[], action: Action) {
     //let interval: number = action == Action.Add ? 200 : 200 * subnav.length;
 
     this.subscriptions.forEach(s => s.unsubscribe());
 
-    subnav.forEach(t => {
-      if (this.toggle(this.toggables, t) === false) {
-        this.tryWaitComponentToBeCreated(t);
+    subnav.forEach(n => {
+      let existsAndToggled : boolean = this.tryToggle(this.toggables, n);
+
+      if(!existsAndToggled) {
+        this.createAndToggle(n);
       }
     });
 
@@ -68,28 +69,32 @@ export class QueueDirective {
     // }
   }
 
-  private tryWaitComponentToBeCreated(t:Node) {
+  private createAndToggle(node: Node) {
+    this.create(node);
+    this.waitCreationAndToggle(node);
+  }
+
+  private create(node:Node){
+    if (this.queue) this.queue.push(node);
+  }
+
+  private waitCreationAndToggle(t: Node) {
     this.subscriptions.push(this.toggables.changes.subscribe(list => {
-      this.toggle(list, t);
+      this.tryToggle(list, t);
       this.changeDetectionRef.detectChanges();
     }));
   }
 
-  private toggle(list: QueryList<ToggableDirective>, node: Node): boolean {
-    //this.queue.push(node);
-    let selected: ToggableDirective = this.toggables.find(t => t.id === node.key);
+  private tryToggle(list:QueryList<ToggableDirective>, node:Node) : boolean{
+      let selected: ToggableDirective = this.toggables.find(t => t.id === node.key);
 
-    if (selected == null) {
+      if (selected) {
+        selected.toggleState();
+
+        return true;
+      }
+
       return false;
-    }
-
-    selected.toggleState();
-
-    return true;
-  }
-
-  ngAfterViewInit() {
-    this.toggables.changes.subscribe(x => console.log(x));
   }
 
   // private remove(node: Node) {
