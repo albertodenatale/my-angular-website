@@ -3,13 +3,15 @@ import { TagService } from './../core/tag.service';
 import { Tags, Action } from '../core/tags';
 import { NavigationService } from './navigation.service';
 import { Node } from './navigation';
-import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, trigger, state, style, transition, animate, ViewChild } from '@angular/core';
+import { Subject } from "rxjs/Rx";
+import { QueueDirective } from "app/shared/queue.directive";
 
 @Component({
   selector: 'navigation',
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
-        <queue [source]="navs">
+        <queue [source]="navs" (newNode)="process($event)">
           <toggable *ngFor="let nav of navs" [id]="nav.key" (click)="produce(nav)">{{nav.label}}</toggable>
         </queue>
       <subnavigation></subnavigation>
@@ -23,20 +25,30 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
 export class NavigationComponent implements OnInit {
 
   navs: Array<Node>;
+  
+  @ViewChild(QueueDirective) queueDirective: QueueDirective;
 
-  constructor(private navigationService: NavigationService, private tagService: TagService) { }
+  constructor(private navigationService: NavigationService, private tagService: TagService) {
+  }
 
   ngOnInit() {
     this.navs = this.navigationService.getNavNodes();
   }
+  ngAfterViewInit() {
+    this.queueDirective.connect();
+  }
 
   produce(nav: Node) {
-    this.tagService.produce(
+    this.queueDirective.produce(
       <Tags>{
         action: Action.Add,
         tags: nav.path
       }
     );
+  }
+
+  process(){
+
   }
 
 }

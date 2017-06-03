@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs/Subject';
 import { Tags } from 'app/core/tags';
 import { ToggableDirective } from './toggable.directive';
 import { TagService } from './../core/tag.service';
@@ -7,7 +8,7 @@ import { Node } from '../navigation/navigation';
 import { Subscription } from "rxjs/Rx";
 
 @Directive({
-  selector: '[queue], queue'
+  selector: 'queue'
 })
 export class QueueDirective {
 
@@ -23,17 +24,46 @@ export class QueueDirective {
   @ContentChildren(ToggableDirective)
   toggables: QueryList<ToggableDirective>;
 
-  constructor(private tagService: TagService, private changeDetectionRef: ChangeDetectorRef) {
-    this.tagService.tagSource.subscribe(
-      (t: Tags) => {
-        this.handleToggling(t);
+  output: Subject<Tags>;
 
-        this.newNode.emit(t);
-      }
-    )
+  constructor(private tagService: TagService, private changeDetectionRef: ChangeDetectorRef) {
+
   }
 
-  private handleToggling(t: Tags) {
+  connect(){
+    let reply : Subject<Subject<Tags>> = new Subject<Subject<Tags>>();
+    let replySubscription = reply.asObservable().subscribe(
+      (subject: Subject<Tags>) => {
+        subject.subscribe(
+          (t: Tags) => {
+            this.handleToggling(t);
+
+            this.newNode.emit(t);
+          });
+      });
+
+    this.output = this.tagService.connect(reply);
+
+    this.tagService.sources.subscribe(
+      (subjects: [Subject<Tags>, Subject<Subject<Tags>>]) => {
+        subjects[0].subscribe(
+          (t: Tags) => {
+            this.handleToggling(t);
+
+            this.newNode.emit(t);
+          });
+
+        subjects[1].next(this.output);
+      }
+    );
+  }
+
+  public produce(tag:Tags){
+    this.output.next(tag);
+    this.handleToggling(tag);
+  }
+
+  public handleToggling(t: Tags) {
     let selected: Node = this.source.find(n => {
       let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
 
@@ -41,24 +71,22 @@ export class QueueDirective {
     });
 
     if (selected) {
-      this.tryToggleOrCreate([selected], t.action);
+      this.tryToggleOrCreate(selected, t);
     }
   }
 
   subscriptions: Array<Subscription> = new Array<Subscription>();
 
-  private tryToggleOrCreate(subnav: Node[], action: Action) {
+  private tryToggleOrCreate(node: Node, tag: Tags) {
     //let interval: number = action == Action.Add ? 200 : 200 * subnav.length;
 
     this.subscriptions.forEach(s => s.unsubscribe());
 
-    subnav.forEach(n => {
-      let existsAndToggled: boolean = this.tryToggle(this.toggables, n);
+    let existsAndToggled: boolean = this.tryToggle(this.toggables, node, tag);
 
-      if (!existsAndToggled) {
-        this.waitCreationAndToggle(n);
-      }
-    });
+    if (!existsAndToggled) {
+      this.waitCreationAndToggle(node, tag);
+    }
 
     //{
     //   setTimeout(() => {
@@ -79,18 +107,18 @@ export class QueueDirective {
     // }
   }
 
-  private waitCreationAndToggle(t: Node) {
+  private waitCreationAndToggle(node: Node, tag: Tags) {
     this.subscriptions.push(this.toggables.changes.subscribe(list => {
-      if (this.tryToggle(list, t)) {
+      if (this.tryToggle(list, node, tag)) {
         this.changeDetectionRef.detectChanges();
       }
     }));
   }
 
-  private tryToggle(list: QueryList<ToggableDirective>, node: Node): boolean {
+  private tryToggle(list: QueryList<ToggableDirective>, node: Node, tag: Tags): boolean {
     let selected: ToggableDirective = this.toggables.find(t => t.id === node.key);
 
-    if (selected) {
+    if (selected && (selected.isOn && tag.action === Action.Remove || selected.isOff && tag.action === Action.Add)) {
       selected.toggleState();
 
       return true;

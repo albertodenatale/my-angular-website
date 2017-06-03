@@ -1,16 +1,19 @@
-import { Tags } from './tags';
+import { Tags } from 'app/core/tags';
 import { Injectable } from '@angular/core';
 import { Subject } from "rxjs/Subject";
+import { Observable } from "rxjs/Rx";
 
 @Injectable()
 export class TagService {
 
-  private source = new Subject<Tags>();
+  public sources: Subject<[Subject<Tags>, Subject<Subject<Tags>>]> = new Subject<[Subject<Tags>, Subject<Subject<Tags>>]>();
 
-  tagSource = this.source.asObservable();
+  connect(reply:Subject<Subject<Tags>>): Subject<Tags> {
+    let subject = new Subject<Tags>();
 
-  produce(tag:Tags){
-    this.source.next(tag);
-  }
+    this.sources.next([subject, reply]);
+
+    return subject;
+  };
 
 }

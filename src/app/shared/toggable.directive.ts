@@ -10,6 +10,12 @@ import { TagService } from "app/core/tag.service";
 export class ToggableDirective{
   @Input()
   id:string;
+  
+  @Output()
+  whenOn: EventEmitter<ToggableDirective> = new EventEmitter<ToggableDirective>();
+  
+  @Output()
+  whenOff: EventEmitter<ToggableDirective> = new EventEmitter<ToggableDirective>();
 
   @Input()
   @HostBinding('class.btn-primary') isOn: boolean;
@@ -18,6 +24,17 @@ export class ToggableDirective{
 
   toggleState(){
     this.isOn = !this.isOn;
+  }
+
+  @HostListener('click') toggle() {
+    this.isOn = !this.isOn;
+
+    if(this.isOn){
+      this.whenOn.emit(this);
+    }
+    else{
+      this.whenOff.emit(this);
+    }
   }
 
 }

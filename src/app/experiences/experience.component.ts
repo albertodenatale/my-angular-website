@@ -1,6 +1,8 @@
+import { QueueDirective } from './../shared/queue.directive';
+import { Subject } from 'rxjs/Subject';
 import { TagService } from './../core/tag.service';
 import { Experience } from './experience';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ContentChild, ViewChild, Directive } from '@angular/core';
 import { NavigationService } from "app/navigation/navigation.service";
 import { Node } from '../navigation/navigation';
 import { Tags, Action } from "app/core/tags";
@@ -13,36 +15,59 @@ import { Tags, Action } from "app/core/tags";
     </div>
     <div class="col second">
       <h5>{{experience.title}}
-        <queue [source]="queue">
-          <toggable *ngFor="let nav of queue" [id]="nav.key" class="btn-sm" (click)="produce(nav)">{{nav.label}}</toggable>
+        <queue [source]="navs" (newNode)="process($event)">
+          <toggable *ngFor="let nav of navs" [id]="nav.key" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
         </queue>
       </h5>
       <div>{{experience.place}}</div>
       <div>{{experience.description}}</div>
     </div>`
 })
-export class ExperienceComponent implements OnInit {
+export class ExperienceComponent {
 
   @Input()
   experience: Experience;
 
-  queue: Array<Node>;
+  navs: Array<Node>
+
+  @ViewChild(QueueDirective) queueDirective: QueueDirective;
 
   constructor(private navigationService: NavigationService, private tagService: TagService) { }
 
   ngOnInit() {
-    this.queue = this.navigationService.getExperienceSubnav(this.experience);
+    this.navs = this.navigationService.getExperienceSubnav(this.experience);
+  }  
+
+  ngAfterViewInit() {
+    this.queueDirective.connect();
   }
 
-  produce(node: Node) {
+  whenOn(node: Node) {
     let tags = node.path.slice();
+    let current: string[] = [];
 
-    this.tagService.produce(
+    for (let tag in node.path) {
+      current.push(node.path[tag]);
+
+      this.queueDirective.produce(
+        <Tags>{
+          action: Action.Add,
+          tags: current
+        }
+      );
+    }
+  }
+
+  whenOff(node: Node) {
+    this.queueDirective.produce(
       <Tags>{
-        action: Action.Add,
-        tags: tags
+        action: Action.Remove,
+        tags: node.path
       }
     );
+  }
+
+  process(){
   }
 
 }
