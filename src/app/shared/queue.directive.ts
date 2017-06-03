@@ -37,8 +37,6 @@ export class QueueDirective {
         subject.subscribe(
           (t: Tags) => {
             this.handleToggling(t);
-
-            this.newNode.emit(t);
           });
       });
 
@@ -59,6 +57,7 @@ export class QueueDirective {
   }
 
   public produce(tag:Tags){
+    this.subscriptions.forEach(s => s.unsubscribe());
     this.output.next(tag);
     this.handleToggling(tag);
   }
@@ -73,14 +72,14 @@ export class QueueDirective {
     if (selected) {
       this.tryToggleOrCreate(selected, t);
     }
+
+    this.newNode.emit(t);
   }
 
   subscriptions: Array<Subscription> = new Array<Subscription>();
 
   private tryToggleOrCreate(node: Node, tag: Tags) {
     //let interval: number = action == Action.Add ? 200 : 200 * subnav.length;
-
-    this.subscriptions.forEach(s => s.unsubscribe());
 
     let existsAndToggled: boolean = this.tryToggle(this.toggables, node, tag);
 
