@@ -1,7 +1,8 @@
+import { Tags } from 'app/core/tags';
 import { ToggableDirective } from './toggable.directive';
 import { TagService } from './../core/tag.service';
-import { Tags, Action } from '../core/tags';
-import { Directive, Input, ViewChildren, QueryList, ContentChildren, ChangeDetectorRef } from '@angular/core';
+import { Action } from '../core/tags';
+import { Directive, Input, ViewChildren, QueryList, ContentChildren, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { Node } from '../navigation/navigation';
 import { Subscription } from "rxjs/Rx";
 
@@ -16,69 +17,32 @@ export class QueueDirective {
   @Input()
   queue: Array<Node>
 
+  @Output()
+  newNode: EventEmitter<Tags> = new EventEmitter<Tags>()
+
   @ContentChildren(ToggableDirective)
   toggables: QueryList<ToggableDirective>;
 
   constructor(private tagService: TagService, private changeDetectionRef: ChangeDetectorRef) {
     this.tagService.tagSource.subscribe(
       (t: Tags) => {
-        let selected: Node = this.source.find(n => {
-          let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
+        this.handleToggling(t);
 
-          return intersection.length == n.path.length && intersection.length == t.tags.length;
-        });
-
-        let parent: Node = this.source.find(n => {
-          let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
-
-          return intersection.length != t.tags.length && intersection.length == n.path.length;
-        });
-
-        let addedPaths: Node[] = this.source.filter(n => {
-          let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
-
-          return intersection.length > 0;
-        });
-
-        if (addedPaths && this.queue) {
-          let toRemove: Node[] = addedPaths.filter(a => this.queue.find(q => q.key == a.key) != null);
-          let toAdd: Node[] = addedPaths.filter(a => this.queue.find(q => q.id == a.id) == null);
-          if (selected == null || toRemove.length === 0) {
-            if (toAdd) {
-              this.addPaths(toAdd);
-            }
-
-            if (toRemove) {
-              this.removePaths(toRemove);
-            }
-          }
-        }
-
-        if (selected) {
-          this.tryToggleOrCreate([selected], t.action);
-        }
-
-        if (parent) {
-          let directive: ToggableDirective = this.toggables.find(t => t.id == parent.key && !t.isOn);
-
-          if (directive) {
-            directive.toggleState();
-          }
-        }
+        this.newNode.emit(t);
       }
     )
   }
 
-  private addPaths(leafs: Node[]) {
-    leafs.forEach(l => {
-      this.create(l);
-    });
-  }
+  private handleToggling(t: Tags) {
+    let selected: Node = this.source.find(n => {
+      let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
 
-  private removePaths(leafs: Node[]) {
-    leafs.forEach(l => {
-      this.remove(l);
+      return intersection.length == n.path.length && intersection.length == t.tags.length;
     });
+
+    if (selected) {
+      this.tryToggleOrCreate([selected], t.action);
+    }
   }
 
   subscriptions: Array<Subscription> = new Array<Subscription>();
@@ -115,10 +79,6 @@ export class QueueDirective {
     // }
   }
 
-  private create(node: Node) {
-    if (this.queue) this.queue.push(node);
-  }
-
   private waitCreationAndToggle(t: Node) {
     this.subscriptions.push(this.toggables.changes.subscribe(list => {
       if (this.tryToggle(list, t)) {
@@ -137,13 +97,5 @@ export class QueueDirective {
     }
 
     return false;
-  }
-
-  private remove(node: Node) {
-    let index = this.queue.indexOf(node);
-
-    if (index >= 0) {
-      this.queue.splice(index, 1);
-    }
   }
 }

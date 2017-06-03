@@ -28,9 +28,21 @@ export class NavigationService {
     return [
       <Node>{
         id: 2,
+        label: "javascript",
+        key: "javascript",
+        path: ["frontend", "javascript"]
+      },
+      <Node>{
+        id: 2,
+        label: "typescript",
+        key: "typescript",
+        path: ["frontend", "typescript"]
+      },
+      <Node>{
+        id: 2,
         label: "angular",
         key: "angular",
-        path: ["frontend", "javascript", "angular"]
+        path: ["frontend", "typescript", "angular"]
       },
       <Node>{
         id: 3,
@@ -75,9 +87,21 @@ export class NavigationService {
       },
       <Node>{
         id: 2,
+        label: "javascript",
+        key: "javascript",
+        path: ["frontend", "javascript"]
+      },
+      <Node>{
+        id: 2,
+        label: "typescript",
+        key: "typescript",
+        path: ["frontend", "typescript"]
+      },
+      <Node>{
+        id: 2,
         label: "angular",
         key: "angular",
-        path: ["frontend", "javascript", "angular"]
+        path: ["frontend", "typescript", "angular"]
       },
       <Node>{
         id: 3,
