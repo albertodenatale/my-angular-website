@@ -11,8 +11,8 @@ import { QueueDirective } from "app/shared/queue.directive";
   selector: 'navigation',
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
-        <queue [source]="navs" (newNode)="process($event)">
-          <toggable *ngFor="let nav of navs" [id]="nav.key" (click)="produce(nav)">{{nav.label}}</toggable>
+        <queue [source]="navs">
+          <toggable *ngFor="let nav of navs" [id]="nav.key" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
         </queue>
       <subnavigation></subnavigation>
      <!--< <div class="input-group">
@@ -28,27 +28,39 @@ export class NavigationComponent implements OnInit {
   
   @ViewChild(QueueDirective) queueDirective: QueueDirective;
 
-  constructor(private navigationService: NavigationService, private tagService: TagService) {
-  }
+  constructor(private navigationService: NavigationService) { }
 
   ngOnInit() {
     this.navs = this.navigationService.getNavNodes();
   }
+
   ngAfterViewInit() {
     this.queueDirective.connect();
   }
 
-  produce(nav: Node) {
-    this.queueDirective.produce(
-      <Tags>{
-        action: Action.Add,
-        tags: nav.path
-      }
-    );
+  whenOn(node: Node) {
+    let tags = node.path.slice();
+    let current: string[] = [];
+
+    for (let tag in node.path) {
+      current.push(node.path[tag]);
+
+      this.queueDirective.produce(
+        <Tags>{
+          action: Action.Add,
+          tags: current
+        }
+      );
+    }
   }
 
-  process(){
-
+  whenOff(node: Node) {
+    this.queueDirective.produce(
+      <Tags>{
+        action: Action.Remove,
+        tags: node.path
+      }
+    );
   }
 
 }

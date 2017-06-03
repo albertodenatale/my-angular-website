@@ -13,7 +13,7 @@ import { QueueDirective } from "app/shared/queue.directive";
   selector: 'subnavigation',
   template: `
     <queue [source]="navs" [queue]="queue" (newNode)="process($event)">
-      <toggable *ngFor="let nav of navs" [id]="nav.key" [@flyInOut] (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+      <toggable *ngFor="let nav of queue" [id]="nav.key" [@flyInOut] (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
     </queue>
   `,
   animations: [
@@ -37,11 +37,11 @@ import { QueueDirective } from "app/shared/queue.directive";
 })
 export class SubnavigationComponent implements OnInit {
   navs: Array<Node>;
+  queue: Array<Node> = [];
 
   @ViewChild(QueueDirective) queueDirective: QueueDirective;
 
-  constructor(private navigationService: NavigationService, private tagService: TagService) {
-  }
+  constructor(private navigationService: NavigationService) { }
 
   ngOnInit() {
     this.navs = this.navigationService.getSubnavNodes();
@@ -71,6 +71,7 @@ export class SubnavigationComponent implements OnInit {
       }
     );
   }
+
   ngAfterViewInit() {
     this.queueDirective.connect();
   }

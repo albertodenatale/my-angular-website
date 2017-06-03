@@ -15,7 +15,7 @@ import { Tags, Action } from "app/core/tags";
     </div>
     <div class="col second">
       <h5>{{experience.title}}
-        <queue [source]="navs" (newNode)="process($event)">
+        <queue [source]="navs">
           <toggable *ngFor="let nav of navs" [id]="nav.key" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
         </queue>
       </h5>
@@ -32,7 +32,7 @@ export class ExperienceComponent {
 
   @ViewChild(QueueDirective) queueDirective: QueueDirective;
 
-  constructor(private navigationService: NavigationService, private tagService: TagService) { }
+  constructor(private navigationService: NavigationService) { }
 
   ngOnInit() {
     this.navs = this.navigationService.getExperienceSubnav(this.experience);
@@ -65,9 +65,6 @@ export class ExperienceComponent {
         tags: node.path
       }
     );
-  }
-
-  process(){
   }
 
 }
