@@ -76,7 +76,7 @@ export class SubnavigationComponent implements OnInit {
       let potential: Node[] = this.navs.filter(n => {
         let intersection = tag.tags.filter(r => n.path.indexOf(r) > -1 && n.path.length <= tag.tags.length + 1);
 
-        return intersection.length === tag.tags.length || intersection.length > 0 && n.path.length < tag.tags.length;
+        return intersection.length === tag.tags.length || intersection.length > 0 && (n.path.length < tag.tags.length || n.path.length === tag.tags.length && intersection.length === tag.tags.length - 1) ;
       });
 
       potential.forEach(n => {
