@@ -30,8 +30,8 @@ export class QueueDirective {
 
   }
 
-  connect(){
-    let reply : Subject<Subject<Tags>> = new Subject<Subject<Tags>>();
+  connect() {
+    let reply: Subject<Subject<Tags>> = new Subject<Subject<Tags>>();
     let replySubscription = reply.asObservable().subscribe(
       (subject: Subject<Tags>) => {
         subject.subscribe(
@@ -56,18 +56,29 @@ export class QueueDirective {
     );
   }
 
-  public produce(tag:Tags){
+  public produce(tag: Tags) {
     this.subscriptions.forEach(s => s.unsubscribe());
     this.output.next(tag);
     this.handleToggling(tag);
   }
 
   public handleToggling(t: Tags) {
-    let selected: Node = this.source.find(n => {
-      let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
+    let selected: Node[];
 
-      return intersection.length == n.path.length && intersection.length == t.tags.length;
-    });
+    if (t.action === Action.Add) {
+      selected = this.source.filter(n => {
+        let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
+        
+        return intersection.length === n.path.length  && (intersection.length === t.tags.length || intersection.length > 0 && n.path.length < t.tags.length);
+      });
+    }
+    else if(t.action === Action.Remove){
+      selected = this.source.filter(n => {
+        let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
+
+        return intersection.length == n.path.length && intersection.length == t.tags.length;
+      });
+    }
 
     if (selected) {
       this.tryToggleOrCreate(selected, t);
@@ -78,14 +89,15 @@ export class QueueDirective {
 
   subscriptions: Array<Subscription> = new Array<Subscription>();
 
-  private tryToggleOrCreate(node: Node, tag: Tags) {
+  private tryToggleOrCreate(nodes: Node[], tag: Tags) {
     //let interval: number = action == Action.Add ? 200 : 200 * subnav.length;
+    nodes.forEach(node => {
+      let existsAndToggled: boolean = this.tryToggle(this.toggables, node, tag);
 
-    let existsAndToggled: boolean = this.tryToggle(this.toggables, node, tag);
-
-    if (!existsAndToggled) {
-      this.waitCreationAndToggle(node, tag);
-    }
+      if (!existsAndToggled) {
+        this.waitCreationAndToggle(node, tag);
+      }
+    });
 
     //{
     //   setTimeout(() => {
@@ -117,7 +129,7 @@ export class QueueDirective {
   private tryToggle(list: QueryList<ToggableDirective>, node: Node, tag: Tags): boolean {
     let selected: ToggableDirective = this.toggables.find(t => t.id === node.key);
 
-    if (selected && (selected.isOn && tag.action === Action.Remove || selected.isOff && tag.action === Action.Add)) {
+    if (selected && (selected.isOff && tag.action === Action.Add || selected.isOn && tag.action === Action.Remove)) {
       selected.toggleState();
 
       return true;

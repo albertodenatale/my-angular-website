@@ -20,14 +20,14 @@ import { QueueDirective } from "app/shared/queue.directive";
     trigger('flyInOut', [
       transition('void => *', [
         animate(300, keyframes([
-          style({ transform: 'translateX(1000%)',}),
+          style({ transform: 'translateX(1000%)', }),
           style({ transform: 'translateX(-30px)' }),
           style({ transform: 'translateX(0)' })
         ]))
       ]),
       transition('* => void', [
         animate(300, keyframes([
-          style({ transform: 'translateX(0)',}),
+          style({ transform: 'translateX(0)', }),
           style({ transform: 'translateX(-30px)' }),
           style({ transform: 'translateX(1000%)' })
         ]))
@@ -49,18 +49,13 @@ export class SubnavigationComponent implements OnInit {
 
   whenOn(node: Node) {
     let tags = node.path.slice();
-    let current: string[] = [];
 
-    for (let tag in node.path) {
-      current.push(node.path[tag]);
-
-      this.queueDirective.produce(
-        <Tags>{
-          action: Action.Add,
-          tags: current
-        }
-      );
-    }
+    this.queueDirective.produce(
+      <Tags>{
+        action: Action.Add,
+        tags: tags
+      }
+    );
   }
 
   whenOff(node: Node) {
@@ -76,22 +71,29 @@ export class SubnavigationComponent implements OnInit {
     this.queueDirective.connect();
   }
 
-  process(tag:Tags){
-    let potential: Node[] = this.navs.filter(n => {
-       let intersection = tag.tags.filter(r => n.path.indexOf(r) > -1 && n.path.length <= tag.tags.length+1);
- 
-       return intersection.length  === tag.tags.length || intersection.length > 0 && n.path.length < tag.tags.length;
-     });
+  process(tag: Tags) {
+    if (tag.action === Action.Add) {
+      let potential: Node[] = this.navs.filter(n => {
+        let intersection = tag.tags.filter(r => n.path.indexOf(r) > -1 && n.path.length <= tag.tags.length + 1);
 
-     if(tag.action === Action.Add){
-       potential.forEach(n =>{
-         let index = this.queue.indexOf(n);
- 
-         if(index < 0){
-           this.queue.push(n);
-         }
-       })
-     }
+        return intersection.length === tag.tags.length || intersection.length > 0 && n.path.length < tag.tags.length;
+      });
+
+      potential.forEach(n => {
+        let index = this.queue.indexOf(n);
+
+        if (index < 0) {
+          this.queue.push(n);
+        }
+      })
+    }
+    else if (tag.action === Action.Remove) {
+      let descendants : Node[] = this.queue.filter(
+        n => {
+         // let intersection = n.path.filter()
+        }
+      );
+    }
   }
 
 }

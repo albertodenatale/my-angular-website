@@ -40,18 +40,13 @@ export class NavigationComponent implements OnInit {
 
   whenOn(node: Node) {
     let tags = node.path.slice();
-    let current: string[] = [];
 
-    for (let tag in node.path) {
-      current.push(node.path[tag]);
-
-      this.queueDirective.produce(
-        <Tags>{
-          action: Action.Add,
-          tags: current
-        }
-      );
-    }
+    this.queueDirective.produce(
+      <Tags>{
+        action: Action.Add,
+        tags: tags
+      }
+    );
   }
 
   whenOff(node: Node) {
