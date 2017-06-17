@@ -90,9 +90,23 @@ export class SubnavigationComponent implements OnInit {
     else if (tag.action === Action.Remove) {
       let descendants : Node[] = this.queue.filter(
         n => {
-         // let intersection = n.path.filter()
+          let intersection = tag.tags.filter(r => n.path.indexOf(r) > -1);
+
+          return intersection.length === tag.tags.length && n.path.length > tag.tags.length;
         }
       );
+
+      descendants.forEach(d => {
+        this.remove(d);
+      });
+    }
+  }
+
+  private remove(node: Node) {
+    let index = this.queue.indexOf(node);
+
+    if (index >= 0) {
+      this.queue.splice(index, 1);
     }
   }
 

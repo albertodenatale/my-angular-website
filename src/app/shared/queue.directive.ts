@@ -76,7 +76,7 @@ export class QueueDirective {
       selected = this.source.filter(n => {
         let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
 
-        return intersection.length == n.path.length && intersection.length == t.tags.length;
+        return intersection.length === t.tags.length;
       });
     }
 
