@@ -37,23 +37,31 @@ export class OfToggablesDirective {
     let selected: Node[];
 
     if (t.action === Action.Add) {
-      selected = this.source.filter(n => {
-        let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
-
-        return intersection.length === n.path.length && (intersection.length === t.tags.length || intersection.length > 0 && n.path.length < t.tags.length);
-      });
+      selected = this.getNodesToBeAdded(t);
     }
     else if (t.action === Action.Remove) {
-      selected = this.source.filter(n => {
-        let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
-
-        return intersection.length === t.tags.length;
-      });
+      selected = this.getNodeToBeRemoved(t);
     }
 
     if (selected) {
       this.tryToggleOrCreate(selected, t);
     }
+  }
+
+  getNodesToBeAdded(t: Tags): Node[] {
+    return this.source.filter(n => {
+      let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
+
+      return intersection.length === n.path.length && (intersection.length === t.tags.length || intersection.length > 0 && n.path.length < t.tags.length);
+    });
+  }
+
+  getNodeToBeRemoved(t: Tags): Node[] {
+    return this.source.filter(n => {
+      let intersection = t.tags.filter(r => n.path.indexOf(r) > -1);
+
+      return intersection.length === t.tags.length;
+    });
   }
 
   private tryToggleOrCreate(nodes: Node[], tag: Tags) {
