@@ -1,11 +1,7 @@
-import { Subject } from 'rxjs/Subject';
-import { Tags } from 'app/core/tags';
-import { ToggableDirective } from './toggable.directive';
 import { TagService } from './../core/tag.service';
-import { Action } from '../core/tags';
-import { Directive, Input, ViewChildren, QueryList, ContentChildren, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
-import { Node } from '../navigation/navigation';
-import { Subscription } from "rxjs/Rx";
+import { Tags } from './../core/tags';
+import { Subscription, Subject } from 'rxjs/Rx';
+import { EventEmitter, Directive, Output } from '@angular/core';
 
 @Directive({
   selector: 'queue'
@@ -55,7 +51,7 @@ export class QueueDirective {
     this.subscriptions.push(inputSubscription);
   }
 
-  subscribeToNewInputs(){
+  subscribeToNewInputs() {
     let newInputSubscription = this.tagService.sources.subscribe(
       (subjects: [Subject<Tags>, Subject<Subject<Tags>>]) => {
         this.registerToInput(subjects[0]);

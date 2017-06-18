@@ -20,8 +20,12 @@ export class OfToggablesDirective {
   @ContentChildren(ToggableDirective)
   toggables: QueryList<ToggableDirective>;
 
+  subscriptions: Array<Subscription> = new Array<Subscription>();
+
+  newNodeSubscription: Subscription
+
   constructor( @Host() private queueDirective: QueueDirective, private changeDetectionRef: ChangeDetectorRef) {
-    queueDirective.newNode.subscribe(
+    this.newNodeSubscription = queueDirective.newNode.subscribe(
       (t: Tags) => {
         this.cleanSubscriptions();
         this.handleToggling(t);
@@ -51,8 +55,6 @@ export class OfToggablesDirective {
       this.tryToggleOrCreate(selected, t);
     }
   }
-
-  subscriptions: Array<Subscription> = new Array<Subscription>();
 
   private tryToggleOrCreate(nodes: Node[], tag: Tags) {
     //let interval: number = action == Action.Add ? 200 : 200 * subnav.length;
@@ -84,6 +86,7 @@ export class OfToggablesDirective {
   }
 
   ngOnDestroy() {
+    this.newNodeSubscription.unsubscribe();
     this.cleanSubscriptions();
   }
 
