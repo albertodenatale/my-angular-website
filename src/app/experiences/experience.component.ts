@@ -6,6 +6,7 @@ import { Component, OnInit, Input, ContentChild, ViewChild, Directive } from '@a
 import { NavigationService } from "app/navigation/navigation.service";
 import { Node } from '../navigation/navigation';
 import { Tags, Action } from "app/core/tags";
+import { OfToggablesDirective } from "app/shared/of-toggables.directive";
 
 @Component({
   selector: 'experience',
@@ -15,7 +16,7 @@ import { Tags, Action } from "app/core/tags";
     </div>
     <div class="col second">
       <h5>{{experience.title}}
-        <queue [source]="navs">
+        <queue ofToggables [source]="navs">
           <toggable *ngFor="let nav of navs" [id]="nav.key" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
         </queue>
       </h5>

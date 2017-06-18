@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'history',
   template: `
-    <queue [source]="experiences">
+    <queue ofToggables [source]="experiences">
       <experience *ngFor="let experience of experiences" [experience]="experience" class="row"></experience>
     </queue>
     `

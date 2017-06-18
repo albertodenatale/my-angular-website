@@ -1,3 +1,4 @@
+import { OfToggablesDirective } from './../shared/of-toggables.directive';
 import { ToggableService } from 'app/core/toggable.service';
 import { TagService } from './../core/tag.service';
 import { Tags, Action } from '../core/tags';
@@ -11,7 +12,7 @@ import { QueueDirective } from "app/shared/queue.directive";
   selector: 'navigation',
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
-        <queue [source]="navs">
+        <queue ofToggables [source]="navs">
           <toggable *ngFor="let nav of navs" [id]="nav.key" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
         </queue>
       <subnavigation></subnavigation>
@@ -35,7 +36,7 @@ export class NavigationComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.queueDirective.connect();
+     this.queueDirective.connect();
   }
 
   whenOn(node: Node) {

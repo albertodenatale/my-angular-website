@@ -8,11 +8,12 @@ import { Component, OnInit, trigger, state, transition, style, animate, keyframe
 import { Node } from './navigation';
 import 'rxjs/Rx';
 import { QueueDirective } from "app/shared/queue.directive";
+import { OfToggablesDirective } from "app/shared/of-toggables.directive";
 
 @Component({
   selector: 'subnavigation',
   template: `
-    <queue [source]="navs" [queue]="queue" (newNode)="process($event)">
+    <queue ofToggables [source]="navs" [queue]="queue" (newNode)="process($event)">
       <toggable *ngFor="let nav of queue" [id]="nav.key" [@flyInOut] (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
     </queue>
   `,
@@ -56,6 +57,12 @@ export class SubnavigationComponent implements OnInit {
         tags: tags
       }
     );
+
+    this.process(
+      <Tags>{
+        action: Action.Add,
+        tags: tags
+      });
   }
 
   whenOff(node: Node) {
@@ -65,6 +72,13 @@ export class SubnavigationComponent implements OnInit {
         tags: node.path
       }
     );
+
+    this.process(
+      <Tags>{
+        action: Action.Remove,
+        tags: node.path
+      });
+
   }
 
   ngAfterViewInit() {
@@ -76,7 +90,7 @@ export class SubnavigationComponent implements OnInit {
       let potential: Node[] = this.navs.filter(n => {
         let intersection = tag.tags.filter(r => n.path.indexOf(r) > -1 && n.path.length <= tag.tags.length + 1);
 
-        return intersection.length === tag.tags.length || intersection.length > 0 && (n.path.length < tag.tags.length || n.path.length === tag.tags.length && intersection.length === tag.tags.length - 1) ;
+        return intersection.length === tag.tags.length || intersection.length > 0 && (n.path.length < tag.tags.length || n.path.length === tag.tags.length && intersection.length === tag.tags.length - 1);
       });
 
       potential.forEach(n => {
@@ -88,7 +102,7 @@ export class SubnavigationComponent implements OnInit {
       })
     }
     else if (tag.action === Action.Remove) {
-      let descendants : Node[] = this.queue.filter(
+      let descendants: Node[] = this.queue.filter(
         n => {
           let intersection = tag.tags.filter(r => n.path.indexOf(r) > -1);
 
