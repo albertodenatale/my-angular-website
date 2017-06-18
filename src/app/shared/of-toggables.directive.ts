@@ -23,7 +23,7 @@ export class OfToggablesDirective {
   constructor( @Host() private queueDirective: QueueDirective, private changeDetectionRef: ChangeDetectorRef) {
     queueDirective.newNode.subscribe(
       (t: Tags) => {
-        this.subscriptions.forEach(s => s.unsubscribe());
+        this.cleanSubscriptions();
         this.handleToggling(t);
       }
     )
@@ -81,6 +81,15 @@ export class OfToggablesDirective {
     //     interval -= 200;
     //   }
     // }
+  }
+
+  ngOnDestroy() {
+    this.cleanSubscriptions();
+  }
+
+  cleanSubscriptions() {
+    this.subscriptions.forEach(s => s.unsubscribe());
+    this.subscriptions.length = 0;
   }
 
   private waitCreationAndToggle(node: Node, tag: Tags) {
