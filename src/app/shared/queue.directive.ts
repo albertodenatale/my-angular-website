@@ -21,7 +21,7 @@ export class QueueDirective {
     let reply: Subject<Subject<Tags>> = new Subject<Subject<Tags>>();
     this.subscribeToReplies(reply);
     this.output = this.tagService.connect(reply);
-    this.subscribeToNewInputs();
+    this.subscribeToNewInputSources();
   }
 
   public produce(tag: Tags) {
@@ -34,7 +34,7 @@ export class QueueDirective {
   }
 
   subscribeToReplies(replyInput: Subject<Subject<Tags>>) {
-    let replySubscription = replyInput.asObservable().subscribe(
+    let replySubscription = replyInput.subscribe(
       (input: Subject<Tags>) => {
         this.registerToInput(input);
       });
@@ -51,7 +51,7 @@ export class QueueDirective {
     this.subscriptions.push(inputSubscription);
   }
 
-  subscribeToNewInputs() {
+  subscribeToNewInputSources() {
     let newInputSubscription = this.tagService.sources.subscribe(
       (subjects: [Subject<Tags>, Subject<Subject<Tags>>]) => {
         this.registerToInput(subjects[0]);
