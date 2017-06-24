@@ -36,7 +36,7 @@ export class ExperienceComponent {
   constructor(private navigationService: NavigationService) { }
 
   ngOnInit() {
-    this.navs = this.navigationService.getExperienceSubnav(this.experience);
+    this.navs = this.experience.subnav;
   }  
 
   ngAfterViewInit() {
