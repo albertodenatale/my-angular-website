@@ -5,4 +5,5 @@ export class Experience extends Node{
     place:string;
     description:string;    
     period:string;
+    subnav:Array<Node>
 }
