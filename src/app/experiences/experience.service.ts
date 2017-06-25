@@ -95,7 +95,7 @@ export class ExperienceService {
     }
   ]
 
-  getAll(): Iterable<Experience> {
+  getAll(): Array<Experience> {
     return [
       {
         id: 7,
