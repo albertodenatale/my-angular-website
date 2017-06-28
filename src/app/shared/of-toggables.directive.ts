@@ -2,7 +2,7 @@ import { TagService } from 'app/core/tag.service';
 import { Subject } from 'rxjs/Subject';
 import { QueueDirective } from './queue.directive';
 import { Subscription } from 'rxjs/Rx';
-import { Directive, Input, ChangeDetectorRef, ContentChildren, QueryList, Host } from '@angular/core';
+import { Directive, Input, ChangeDetectorRef, ContentChildren, QueryList, Host, NgZone } from '@angular/core';
 import { Tags } from "app/core/tags";
 import { Action } from '../core/tags';
 import { ToggableDirective } from "app/shared/toggable.directive";
@@ -26,7 +26,7 @@ export class OfToggablesDirective {
 
   newNodeSubscription: Subscription
 
-  constructor( @Host() private queueDirective: QueueDirective, private changeDetectionRef: ChangeDetectorRef, private tagService: TagService) {
+  constructor( @Host() private queueDirective: QueueDirective, private changeDetectionRef: ChangeDetectorRef, private tagService: TagService, private zoneService: NgZone) {
     this.newNodeSubscription = queueDirective.newNode.subscribe(
       (t: Tags) => {
         this.cleanSubscriptions();
@@ -131,18 +131,21 @@ export class OfToggablesDirective {
   }
 
   inputs: Array<Subject<Node>> = [];
-
-  ngAfterViewInit() {
-    this.sync();
-  }
-
+  zoneSubscription: Subscription;
   toggleSubscription = new Subscription();
   outToggleSubscription = new Subscription();
+
+  ngOnInit() {
+    this.zoneSubscription = this.zoneService.onStable.subscribe((a) => {
+      this.zoneSubscription.unsubscribe();
+      this.sync();
+    })
+  }
 
   public sync() {
     let helloAnswers = new Subject<Node>();
 
-    if(this.toggleSubscription){
+    if (this.toggleSubscription) {
       this.toggleSubscription.unsubscribe();
     }
 
@@ -151,15 +154,14 @@ export class OfToggablesDirective {
         let toggable = this.toggables.find(n => n.id === node.key);
 
         if (toggable.isOff) {
-          toggable.toggleState();
-          this.changeDetectionRef.detectChanges();
+          this.zoneService.run(() => toggable.toggleState());
         }
       }
     });
 
     this.tagService.sync(helloAnswers);
 
-    if(this.outToggleSubscription){
+    if (this.outToggleSubscription) {
       this.outToggleSubscription.unsubscribe();
     }
 
