@@ -1,3 +1,5 @@
+import { TagService } from 'app/core/tag.service';
+import { Subject } from 'rxjs/Subject';
 import { QueueDirective } from './queue.directive';
 import { Subscription } from 'rxjs/Rx';
 import { Directive, Input, ChangeDetectorRef, ContentChildren, QueryList, Host } from '@angular/core';
@@ -24,7 +26,7 @@ export class OfToggablesDirective {
 
   newNodeSubscription: Subscription
 
-  constructor( @Host() private queueDirective: QueueDirective, private changeDetectionRef: ChangeDetectorRef) {
+  constructor( @Host() private queueDirective: QueueDirective, private changeDetectionRef: ChangeDetectorRef, private tagService: TagService) {
     this.newNodeSubscription = queueDirective.newNode.subscribe(
       (t: Tags) => {
         this.cleanSubscriptions();
@@ -94,7 +96,12 @@ export class OfToggablesDirective {
   }
 
   ngOnDestroy() {
+    this.toggables.forEach(element => {
+      element.isOn = false;
+    });
     this.newNodeSubscription.unsubscribe();
+    this.outToggleSubscription.unsubscribe();
+    this.toggleSubscription.unsubscribe();
     this.cleanSubscriptions();
   }
 
@@ -121,5 +128,51 @@ export class OfToggablesDirective {
     }
 
     return false;
+  }
+
+  inputs: Array<Subject<Node>> = [];
+
+  ngAfterViewInit() {
+    this.sync();
+  }
+
+  toggleSubscription = new Subscription();
+  outToggleSubscription = new Subscription();
+
+  public sync() {
+    let helloAnswers = new Subject<Node>();
+
+    if(this.toggleSubscription){
+      this.toggleSubscription.unsubscribe();
+    }
+
+    this.toggleSubscription = helloAnswers.subscribe((node: Node) => {
+      if (this.toggables) {
+        let toggable = this.toggables.find(n => n.id === node.key);
+
+        if (toggable.isOff) {
+          toggable.toggleState();
+          this.changeDetectionRef.detectChanges();
+        }
+      }
+    });
+
+    this.tagService.sync(helloAnswers);
+
+    if(this.outToggleSubscription){
+      this.outToggleSubscription.unsubscribe();
+    }
+
+    this.outToggleSubscription = this.tagService.syncSource.subscribe(
+      (out) => {
+        if (this.toggables) {
+          let actives = this.toggables.filter(t => t.isOn);
+
+          actives.forEach(a => {
+            out.next(this.source.find(n => n.key === a.id));
+          });
+        }
+      }
+    )
   }
 }

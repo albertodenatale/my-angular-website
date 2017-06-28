@@ -16,4 +16,10 @@ export class TagService {
     return subject;
   };
 
+  public syncSource : Subject<any> = new Subject<any>()
+
+  sync(out:Subject<any>){
+    this.syncSource.next(out);
+  }
+
 }

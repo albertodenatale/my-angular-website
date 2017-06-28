@@ -29,10 +29,6 @@ export class QueueDirective {
     this.newNode.emit(tag);
   }
 
-  reply(replyOutput: Subject<Subject<Tags>>) {
-    replyOutput.next(this.output);
-  }
-
   subscribeToReplies(replyInput: Subject<Subject<Tags>>) {
     let replySubscription = replyInput.subscribe(
       (input: Subject<Tags>) => {
@@ -60,6 +56,10 @@ export class QueueDirective {
     );
 
     this.subscriptions.push(newInputSubscription);
+  }
+
+  reply(replyOutput: Subject<Subject<Tags>>) {
+    replyOutput.next(this.output);
   }
 
   ngOnDestroy() {
