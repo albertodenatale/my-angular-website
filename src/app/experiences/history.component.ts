@@ -76,7 +76,6 @@ export class HistoryComponent implements OnInit {
     }
     else {
       let isExpand = false;
-      let isNarrow = false;
 
       let paths = this.activePaths.filter(path => {
         let intersection = tag.tags.filter(t => path.indexOf(t) > -1);
@@ -88,10 +87,7 @@ export class HistoryComponent implements OnInit {
             return intersection.length === path.length - 1 && path.length === tag.tags.length;
           });
 
-          if (hasSiblings) {
-            isNarrow = true;
-          }
-          else {
+          if (!hasSiblings) {
             let start = path.indexOf(skill);
 
             if (start > 0) {
@@ -102,7 +98,7 @@ export class HistoryComponent implements OnInit {
 
           return true;
         }
-
+        
         return false;
       });
 
@@ -114,13 +110,13 @@ export class HistoryComponent implements OnInit {
 
       if (isExpand) {
         this.expand(path[path.length - 1]);
-        this.addMissings();
       }
       else {
         paths.forEach(path => {
-          this.removePath(path, isNarrow);
+          this.removePath(path);
         });
       }
+      this.addMissings();
     }
   }
 
@@ -142,7 +138,7 @@ export class HistoryComponent implements OnInit {
         let shouldBe = this.activePaths.some(path => {
           let intersection = path.filter(p => experience.path.indexOf(p) > -1);
 
-          return intersection && intersection.length > 0;
+          return intersection && intersection.length >= path.length;
         });
 
         return shouldBe;
@@ -162,26 +158,21 @@ export class HistoryComponent implements OnInit {
     this.activePaths.push(path);
   }
 
-  private removePath(path: string[], isNarrow: boolean) {
+  private removePath(path: string[]) {
     this.remove(this.activePaths, path);
-    let toRemove = [];
+    let toRemove = this.queue
+      .filter(e => e.path.indexOf(path[path.length - 1]) > -1)
+      .filter(element => {
 
-    if (isNarrow) {
-      toRemove = this.queue.filter(e => e.path.indexOf(path[path.length - 1]) > -1);
-    }
-    else {
-      toRemove = this.queue
-        .filter(e => e.path.indexOf(path[0]) > -1)
-        .filter(element => {
-          let isActive = this.activePaths.some(activePath => {
-            let intersection = activePath.filter(s => element.path.indexOf(s) > -1);
+        let isActive = this.activePaths.some(activePath => {
+          let intersection = activePath.filter(s => element.path.indexOf(s) > -1);
 
-            return intersection && intersection.length > 0;
-          });
-
-          return !isActive;
+          return intersection && intersection.length >= activePath.length;
         });
-    }
+
+        return !isActive;
+
+      });
 
     toRemove.forEach(element => {
       this.remove(this.queue, element);

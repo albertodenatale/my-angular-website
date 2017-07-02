@@ -141,7 +141,7 @@ export class ExperienceService {
         id: 10,
         label: "",
         key: "",
-        path: ["frontend", "javascript"],
+        path: ["frontend", "javascript", "jquery"],
         title: 'Junior Software Developer',
         place: 'PharmiWeb Solutions, Bracknell',
         description: `Front-end development on HTML5 web sites, compiled to IOS apps. I mainly worked with
