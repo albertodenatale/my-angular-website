@@ -44,7 +44,7 @@ export class HistoryComponent implements OnInit {
       let paths = this.activePaths.filter(path => {
         let intersection = tag.tags.filter(t => path.indexOf(t) > -1);
 
-        if (intersection.length > 0) {
+        if (intersection.length > 0 && tag.tags.length !== path.length) {
           isNarrow = true;
 
           return true;
@@ -56,44 +56,57 @@ export class HistoryComponent implements OnInit {
       if (paths.length > 1) {
         throw Error("Only one path at the time can be added");
       }
-      
+
 
       if (isNarrow) {
         let path = paths[0];
         for (var index = 0; index < tag.tags.length; index++) {
           var element = tag.tags[index];
-          
-          if(path.indexOf(element) === -1){
+
+          if (path.indexOf(element) === -1) {
             path.push(element);
           }
         }
         this.narrow(skill);
       }
       else {
-        this.addPath([skill]);
+        this.addPath(tag.tags);
         this.expand(skill);
       }
     }
     else {
       let isExpand = false;
-      let removed = [];
+      let isNarrow = false;
 
       let paths = this.activePaths.filter(path => {
         let intersection = tag.tags.filter(t => path.indexOf(t) > -1);
 
         if (intersection.length === tag.tags.length) {
-          let start = path.indexOf(skill);
+          let hasSiblings = this.activePaths.some(path => {
+            let intersection = tag.tags.filter(t => path.indexOf(t) > -1);
 
-          if (start > 0) {
-            isExpand = true;
-            removed = path.splice(start, path.length);
+            return intersection.length === path.length - 1 && path.length === tag.tags.length;
+          });
+
+          if (hasSiblings) {
+            isNarrow = true;
           }
+          else {
+            let start = path.indexOf(skill);
+
+            if (start > 0) {
+              isExpand = true;
+              path.splice(start, path.length);
+            }
+          }
+
           return true;
         }
+
         return false;
       });
 
-      if (paths.length != 1) {
+      if (paths.length === 0) {
         throw Error("One path should be selected");
       }
 
@@ -101,9 +114,12 @@ export class HistoryComponent implements OnInit {
 
       if (isExpand) {
         this.expand(path[path.length - 1]);
+        this.addMissings();
       }
       else {
-        this.removePath(path);
+        paths.forEach(path => {
+          this.removePath(path, isNarrow);
+        });
       }
     }
   }
@@ -120,32 +136,57 @@ export class HistoryComponent implements OnInit {
     });
   }
 
+  private addMissings() {
+    let shouldBeIn = this.experiences
+      .filter(experience => {
+        let shouldBe = this.activePaths.some(path => {
+          let intersection = path.filter(p => experience.path.indexOf(p) > -1);
+
+          return intersection && intersection.length > 0;
+        });
+
+        return shouldBe;
+      })
+      .filter(experience => {
+        let index = this.queue.indexOf(experience);
+
+        return index === -1;
+      });
+
+    shouldBeIn.forEach(element => {
+      this.queue.push(element);
+    });
+  }
+
   private addPath(path: string[]) {
     this.activePaths.push(path);
   }
 
-  private removePath(path: string[]) {
-    let toRemove =
-      this.queue
+  private removePath(path: string[], isNarrow: boolean) {
+    this.remove(this.activePaths, path);
+    let toRemove = [];
+
+    if (isNarrow) {
+      toRemove = this.queue.filter(e => e.path.indexOf(path[path.length - 1]) > -1);
+    }
+    else {
+      toRemove = this.queue
         .filter(e => e.path.indexOf(path[0]) > -1)
         .filter(element => {
-          this.activePaths.forEach(activePath => {
+          let isActive = this.activePaths.some(activePath => {
             let intersection = activePath.filter(s => element.path.indexOf(s) > -1);
 
-            if (intersection && intersection.length > 0) {
-              return false;
-            }
+            return intersection && intersection.length > 0;
           });
 
-          return true;
-
+          return !isActive;
         });
+    }
 
     toRemove.forEach(element => {
       this.remove(this.queue, element);
     });
 
-    this.remove(this.activePaths, path);
   }
 
 

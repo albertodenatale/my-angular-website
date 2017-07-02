@@ -102,6 +102,9 @@ export class OfToggablesDirective {
     this.newNodeSubscription.unsubscribe();
     this.outToggleSubscription.unsubscribe();
     this.toggleSubscription.unsubscribe();
+    if(this.zoneSubscription){
+      this.zoneSubscription.unsubscribe();
+    }
     this.cleanSubscriptions();
   }
 
@@ -153,7 +156,7 @@ export class OfToggablesDirective {
       if (this.toggables) {
         let toggable = this.toggables.find(n => n.id === node.key);
 
-        if (toggable.isOff) {
+        if (toggable && toggable.isOff) {
           this.zoneService.run(() => toggable.toggleState());
         }
       }
