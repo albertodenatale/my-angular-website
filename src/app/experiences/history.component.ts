@@ -98,7 +98,7 @@ export class HistoryComponent implements OnInit {
 
           return true;
         }
-        
+
         return false;
       });
 

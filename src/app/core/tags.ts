@@ -1,9 +1,9 @@
-export class Tags{
-    action:Action;
-    tags:string[];
+export class Tags {
+    action: Action;
+    tags: string[];
 }
 
-export enum Action{
+export enum Action {
     Add = 0,
     Remove
 }
