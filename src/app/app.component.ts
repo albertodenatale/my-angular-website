@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Rx';
-import { SkillTree } from './shared/skilltree';
+import { ISkillTree, AppState } from './shared/skilltree';
 import * as NodesActions from 'app/reducers/nodes.actions';
 import { StateService } from './core/state.service';
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
@@ -26,8 +26,8 @@ import { Store } from "@ngrx/store";
 export class AppComponent {
   loaded: string = "loading";
 
-  constructor(private store: Store<SkillTree>, private stateService: StateService) {
-    this.store.select<SkillTree>((state) => state).toPromise().then(() => { this.loaded = "loaded" });
+  constructor(private store: Store<AppState>, private stateService: StateService) {
+    this.store.select<ISkillTree>(state => state.skillTree).toPromise().then(() => { this.loaded = "loaded" });
   }
 
   ngOnInit() {

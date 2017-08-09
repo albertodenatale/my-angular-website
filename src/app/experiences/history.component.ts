@@ -10,9 +10,7 @@ import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/
 @Component({
   selector: 'history',
   template: `
-    <queue (newNode)="process($event)">
-      <experience *ngFor="let experience of queue" [experience]="experience" class="row"></experience>
-    </queue>
+<!--      <experience *ngFor="let experience of queue" [experience]="experience" class="row"></experience> -->
     `
 })
 export class HistoryComponent implements OnInit {
@@ -29,10 +27,6 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit() {
     this.experiences = this.service.getAll();
-  }
-
-  ngAfterViewInit() {
-    this.queueDirective.connect();
   }
 
   process(tag: Tags) {

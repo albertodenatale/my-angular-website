@@ -1,3 +1,6 @@
+import { AppState, MAINNAV } from './../shared/skilltree';
+import { Add, Remove } from './../reducers/nodes.actions';
+import { Store } from '@ngrx/store';
 import { OfToggablesDirective } from './../shared/of-toggables.directive';
 import { ToggableService } from 'app/core/toggable.service';
 import { TagService } from './../core/tag.service';
@@ -7,14 +10,13 @@ import { Node } from './navigation';
 import { Component, OnInit, trigger, state, style, transition, animate, ViewChild } from '@angular/core';
 import { Subject } from "rxjs/Rx";
 import { QueueDirective } from "app/shared/queue.directive";
+import { ISkillTree, getByNavigationBarId, Skill } from "app/shared/skilltree";
 
 @Component({
   selector: 'navigation',
   template: `
       <!--<button class="btn btn-primary pdf" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></button> -->
-        <queue ofToggables [source]="navs">
-          <toggable *ngFor="let nav of navs" [id]="nav.key" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
-        </queue>
+      <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" [id]="nav.key" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
       <subnavigation></subnavigation>
      <!--< <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="keywords">
@@ -23,40 +25,30 @@ import { QueueDirective } from "app/shared/queue.directive";
         </span>
       </div>-->`
 })
-export class NavigationComponent implements OnInit {
+export class NavigationComponent {
 
-  navs: Array<Node>;
+  navs: Array<Skill>;
   
   @ViewChild(QueueDirective) queueDirective: QueueDirective;
 
-  constructor(private navigationService: NavigationService) { }
-
-  ngOnInit() {
-    this.navs = this.navigationService.getNavNodes();
-  }
-
-  ngAfterViewInit() {
-     this.queueDirective.connect();
-  }
-
-  whenOn(node: Node) {
-    let tags = node.path.slice();
-
-    this.queueDirective.produce(
-      <Tags>{
-        action: Action.Add,
-        tags: tags
+  constructor(private store: Store<AppState>) {
+    this.store.select<ISkillTree>(state => state.skillTree).subscribe(
+      skillTree => {
+        this.navs = getByNavigationBarId(skillTree, MAINNAV);
       }
-    );
+    ) 
   }
 
-  whenOff(node: Node) {
-    this.queueDirective.produce(
-      <Tags>{
-        action: Action.Remove,
-        tags: node.path
-      }
-    );
+  whenOn(skill: Skill) {
+    this.store.dispatch(
+      new Add(skill.id)
+    )
+  }
+
+  whenOff(skill: Skill) {
+    this.store.dispatch(
+      new Remove(skill.id)
+    )
   }
 
 }

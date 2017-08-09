@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { SkillTree } from "app/shared/skilltree";
+import { ISkillTree } from "app/shared/skilltree";
 
 export const ADD = "ADD";
 export const REMOVE = "REMOVE";
@@ -20,7 +20,7 @@ export class Remove implements Action {
 export class InitialStateLoaded implements Action {
     readonly type = INITIALSTATELOADED;
 
-    constructor(public payload: SkillTree) { }
+    constructor(public payload: ISkillTree) { }
 }
 
 export type All =  Add | Remove| InitialStateLoaded;

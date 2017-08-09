@@ -1,27 +1,30 @@
-import { Skill } from './../shared/skilltree';
+import { Skill, SUBNAV, MAINNAV } from './../shared/skilltree';
 import { Injectable } from '@angular/core';
-import { SkillTree } from "app/shared/skilltree";
+import { SkillTree, ISkillTree } from "app/shared/skilltree";
 
 
 @Injectable()
 export class StateService {
 
-    loadInitialState(): SkillTree {
+    loadInitialState(): ISkillTree {
         return <SkillTree>{
             root: <Skill>{
                 id: null,
                 children: [
                     <Skill>{
                         id: "frontend",
+                        navigationBarId: MAINNAV,
                         children: [
                             <Skill>{
                                 id: "javascript",
                                 children: [
                                     <Skill>{
-                                        id: "jquery"
+                                        id: "jquery",
+                                        navigationBarId: SUBNAV
                                     },
                                     <Skill>{
-                                        id: "angularjs"
+                                        id: "angularjs",
+                                        navigationBarId: SUBNAV
                                     }
                                 ]
                             },
@@ -29,7 +32,8 @@ export class StateService {
                                 id: "typescript",
                                 children: [
                                     <Skill>{
-                                        id: "angular"
+                                        id: "angular",
+                                        navigationBarId: SUBNAV
                                     }
                                 ]
                             }
@@ -38,15 +42,19 @@ export class StateService {
                     },
                     <Skill>{
                         id: "backend",
+                        navigationBarId: MAINNAV,
                         children: [
                             <Skill>{
-                                id: "csharp"
+                                id: "csharp",
+                                navigationBarId: SUBNAV
                             },
                             <Skill>{
-                                id: "java"
+                                id: "java",
+                                navigationBarId: SUBNAV
                             },
                             <Skill>{
-                                id: "cplusplus"
+                                id: "cplusplus",
+                                navigationBarId: SUBNAV
                             }
                         ]
                     }

@@ -1,3 +1,4 @@
+import { StateService } from './state.service';
 import { TagService } from './tag.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,7 +10,7 @@ import { ToggableService } from "app/core/toggable.service";
   imports: [
     CommonModule
   ],
-  providers:[TagService, ToggableService],
+  providers:[TagService, ToggableService, StateService],
   declarations: [LineComponent, PersonalDetailsComponent],
   exports:[LineComponent, PersonalDetailsComponent]
 })
