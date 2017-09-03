@@ -1,4 +1,4 @@
-import { SUBNAV, AppState } from './../shared/skilltree';
+import { SUBNAV, AppState, MAINNAV } from './../shared/skilltree';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import { Tags } from './../core/tags';
@@ -11,7 +11,7 @@ import { Node } from './navigation';
 import 'rxjs/Rx';
 import { QueueDirective } from "app/shared/queue.directive";
 import { OfToggablesDirective } from "app/shared/of-toggables.directive";
-import { ISkillTree, Skill, getByNavigationBarId } from "app/shared/skilltree";
+import { ISkillTree, Skill, getByNavigationBarId, findSkill } from "app/shared/skilltree";
 import { Add, Remove } from "app/reducers/nodes.actions";
 
 @Component({
@@ -44,9 +44,9 @@ export class SubnavigationComponent {
   constructor(private store: Store<AppState>) {
     this.store.select<ISkillTree>((state) => state.skillTree).subscribe(
       skillTree => {
-        this.navs = getByNavigationBarId(this.process(skillTree), SUBNAV).filter(s => s.isVisible);
+        this.navs = this.process(skillTree, getByNavigationBarId(skillTree, SUBNAV));
       }
-    ) 
+    )
   }
 
   whenOn(skill: Skill) {
@@ -61,8 +61,16 @@ export class SubnavigationComponent {
     )
   }
 
-  process(skillTree:ISkillTree) : ISkillTree{
-    return skillTree;
+  process(skillTree: ISkillTree, selected: Array<Skill>): Array<Skill> {
+    return selected.filter(
+      node => {
+        let parent: Skill = findSkill(skillTree, node.parentId);
+
+        if (parent != null) {
+          return parent.isActive;
+        }
+      }
+    );
   }
 
 }

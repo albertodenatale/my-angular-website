@@ -37,8 +37,4 @@ export class ToggableDirective{
     }
   }
 
-  ngOnInit(){
-    this.isOn = false;
-  }
-
 }

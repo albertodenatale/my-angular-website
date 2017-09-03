@@ -13,48 +13,66 @@ export class StateService {
                 children: [
                     <Skill>{
                         id: "frontend",
+                        label:"Front End",
                         navigationBarId: MAINNAV,
                         children: [
                             <Skill>{
                                 id: "javascript",
+                                label:"Javascript",
                                 children: [
                                     <Skill>{
                                         id: "jquery",
-                                        navigationBarId: SUBNAV
+                                        navigationBarId: SUBNAV,
+                                        parentId: "javascript"
                                     },
                                     <Skill>{
                                         id: "angularjs",
-                                        navigationBarId: SUBNAV
+                                        navigationBarId: SUBNAV,
+                                        parentId: "javascript"
                                     }
-                                ]
+                                ],
+                                navigationBarId: SUBNAV,
+                                parentId: "frontend"
                             },
                             <Skill>{
                                 id: "typescript",
+                                label:"Typescript",
                                 children: [
                                     <Skill>{
                                         id: "angular",
-                                        navigationBarId: SUBNAV
+                                        label:"Angular",
+                                        navigationBarId: SUBNAV,
+                                        parentId: "typescript"
                                     }
-                                ]
+                                ],
+                                navigationBarId: SUBNAV,
+                                parentId: "frontend"
                             }
                         ]
 
                     },
                     <Skill>{
                         id: "backend",
+                        label:"Back End",
                         navigationBarId: MAINNAV,
                         children: [
                             <Skill>{
                                 id: "csharp",
-                                navigationBarId: SUBNAV
+                                label:"C#",
+                                navigationBarId: SUBNAV,
+                                parentId: "backend"
                             },
                             <Skill>{
                                 id: "java",
-                                navigationBarId: SUBNAV
+                                label:"Java",
+                                navigationBarId: SUBNAV,
+                                parentId: "backend"
                             },
                             <Skill>{
                                 id: "cplusplus",
-                                navigationBarId: SUBNAV
+                                label:"C++",
+                                navigationBarId: SUBNAV,
+                                parentId: "backend"
                             }
                         ]
                     }

@@ -15,11 +15,11 @@ export function removeSkill(tree: ISkillTree, skillId: string) {
 }
 
 export function findSkill(tree: ISkillTree, skillId: string): Skill {
-    return null;
-}
-
-export function updateSkill(tree: ISkillTree, skill: Skill): ISkillTree {
-    return null;
+    for (var skill of Array.from(enumerateTree(tree))) {
+        if (skill.id === skillId) {
+            return skill;
+        }
+    }
 }
 
 export function getByNavigationBarId(tree: ISkillTree, navBarId: string): Array<Skill> {
@@ -38,7 +38,7 @@ export function* enumerateTree(tree: ISkillTree): IterableIterator<Skill> {
     if (tree == null || tree.root == null) {
         return;
     }
-
+    
     for (let skill of Array.from(enumerateSkill(tree.root))) {
         yield skill;
     }
@@ -46,7 +46,7 @@ export function* enumerateTree(tree: ISkillTree): IterableIterator<Skill> {
 
 export function* enumerateSkill(skill: Skill): IterableIterator<Skill> {
     if (skill.children == null || skill.children.length === 0) {
-        yield skill;
+        return;
     }
     else {
         for (let child of skill.children) {
@@ -74,22 +74,14 @@ export class SkillTree implements ISkillTree {
     private currentNode: Skill = this.root;
 }
 
-export class Skill extends Immutable.Record({
-    id: 0,
-    isActive: false,
-    isVisible: false,
-    navigationBarId: "",
-    children: [],
-    parent: null
-}) {
-    constructor(skill: Skill) { super(skill); }
-
-    id: string
-    isActive: boolean
-    isVisible: boolean
-    navigationBarId: string
-    children: Array<Skill>
-    parent: Skill
+export class Skill {
+    id: string;
+    isActive: boolean;
+    isVisible: boolean;
+    navigationBarId: string;
+    children: Array<Skill>;
+    parentId: string;
+    label:string;
 }
 
 export const MAINNAV = "MAINNAV";
