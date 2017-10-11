@@ -22,11 +22,13 @@ export class StateService {
                                 children: [
                                     <Skill>{
                                         id: "jquery",
+                                        label:"jquery",
                                         navigationBarId: SUBNAV,
                                         parentId: "javascript"
                                     },
                                     <Skill>{
                                         id: "angularjs",
+                                        label:"angularjs",
                                         navigationBarId: SUBNAV,
                                         parentId: "javascript"
                                     }

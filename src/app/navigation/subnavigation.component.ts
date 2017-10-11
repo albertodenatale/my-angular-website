@@ -44,7 +44,7 @@ export class SubnavigationComponent {
   constructor(private store: Store<AppState>) {
     this.store.select<ISkillTree>((state) => state.skillTree).subscribe(
       skillTree => {
-        this.navs = this.process(skillTree, getByNavigationBarId(skillTree, SUBNAV));
+        this.process(skillTree, getByNavigationBarId(skillTree, SUBNAV));
       }
     )
   }
@@ -61,16 +61,40 @@ export class SubnavigationComponent {
     )
   }
 
-  process(skillTree: ISkillTree, selected: Array<Skill>): Array<Skill> {
-    return selected.filter(
+  process(skillTree: ISkillTree, selected: Array<Skill>): void { 
+    if(this.navs == null){
+      this.navs = [];
+    }
+
+    var toAdd = selected.filter(
       node => {
         let parent: Skill = findSkill(skillTree, node.parentId);
 
         if (parent != null) {
-          return parent.isActive;
+          if(parent.isActive){
+            return !this.navs.some(n => n.id === node.id);
+          }
         }
+
+        return false;
       }
     );
+
+    var toRemove = selected.filter(
+      node => {
+        let parent: Skill = findSkill(skillTree, node.parentId);
+
+        if (parent != null) {
+          if(!parent.isActive){
+            return this.navs.some(n => n.id === node.id);
+          }
+        }
+
+        return false;
+      }
+    );
+
+    this.navs = this.navs.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
   }
 
 }
