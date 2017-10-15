@@ -59,7 +59,7 @@ export function* enumerateSkill(skill: Skill): IterableIterator<Skill> {
     }
 }
 
-export function convertToRegex(tree: ISkillTree): Array<string> {
+export function convertToRegex(tree: ISkillTree): Array<RegExp> {
     if (tree == null || tree.root == null) {
         return;
     }
@@ -75,13 +75,13 @@ export function convertToRegex(tree: ISkillTree): Array<string> {
                     regex = element.id;
                 }
                 else {
-                    regex = regex.concat(" | ", element.id)
+                    regex = regex.concat("|", element.id)
                 }
             }
         });
 
         if (regex != null) {
-            regexes.push(regex);
+            regexes.push(new RegExp(regex));
         }
     }
 

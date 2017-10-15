@@ -1,4 +1,4 @@
-import { ISkillTree, findSkill, Skill } from './../shared/skilltree';
+import { ISkillTree, findSkill, Skill, enumerateSkill } from './../shared/skilltree';
 import * as NodesActions from './nodes.actions'
 
 export type SelectedNodes = Array<string[]>
@@ -35,5 +35,9 @@ function remove(state, nodeId) {
 
     if (skill != null) {
         skill.isActive = false;
+        
+        for (let s of Array.from(enumerateSkill(skill))) {
+            s.isActive = false;
+        }
     }
 }
