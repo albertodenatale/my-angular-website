@@ -32,46 +32,50 @@ export class HistoryComponent implements OnInit {
   }
 
   process(skillTree: ISkillTree) {
-    var regex : Array<RegExp> = convertToRegex(skillTree);
+    var regex: Array<RegExp> = convertToRegex(skillTree);
 
-    let selected : Array<Experience> = this.experiences.filter(
-      e => {
-        let path : string = e.path.join(' ');
-        let isMatch: boolean = true;
-
-        regex.forEach(r => {
-          if(path.match(r) == null){
-            isMatch = false;
-          }
-        });
-
-        return isMatch;
-      }
-    );
-
-    if(selected != null && selected.length > 0) {
-      let toAdd:Array<Experience> = selected.filter(
+    if (regex && regex.length > 0) {
+      let selected: Array<Experience> = this.experiences.filter(
         e => {
-          if(this.queue.find(existing => existing.id === e.id)==null)
-          {
-            return true;
-          }
+          let path: string = e.path.join(' ');
+          let isMatch: boolean = true;
 
-          return false;
+          regex.forEach(r => {
+            if (path.match(r) == null) {
+              isMatch = false;
+            }
+          });
+
+          return isMatch;
         }
       );
 
-      let toRemove : Array<Experience> = this.queue.filter(
-        existing => {
-          if(selected.find(e => e.id === existing.id) == null){
-            return true;
+      if (selected != null && selected.length > 0) {
+        let toAdd: Array<Experience> = selected.filter(
+          e => {
+            if (this.queue.find(existing => existing.id === e.id) == null) {
+              return true;
+            }
+
+            return false;
           }
+        );
 
-          return false;
-        }
-      );
+        let toRemove: Array<Experience> = this.queue.filter(
+          existing => {
+            if (selected.find(e => e.id === existing.id) == null) {
+              return true;
+            }
 
-      this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
+            return false;
+          }
+        );
+
+        this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
+      }
+    }
+    else {
+      this.queue = [];
     }
   }
 }

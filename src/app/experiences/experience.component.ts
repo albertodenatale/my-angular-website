@@ -19,7 +19,6 @@ import { Add, Remove } from "app/reducers/nodes.actions";
     </div>
     <div class="col second">
       <h5>{{experience.title}}
-          <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" [id]="nav.key" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
       </h5>
       <div>{{experience.place}}</div>
       <div>{{experience.description}}</div>
@@ -29,27 +28,5 @@ export class ExperienceComponent {
 
   @Input()
   experience: Experience;
-
-  navs: Array<Skill>
-
-  constructor(private store: Store<AppState>) {
-    this.store.select<ISkillTree>(state => state.skillTree).subscribe(
-      skillTree => {
-        this.navs = getByNavigationBarId(skillTree, "test");
-      }
-    )
-  }
-
-  whenOn(skill: Skill) {
-    this.store.dispatch(
-      new Add(skill.id)
-    )
-  }
-
-  whenOff(skill: Skill) {
-    this.store.dispatch(
-      new Remove(skill.id)
-    )
-  }
-
+  
 }
