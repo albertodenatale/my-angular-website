@@ -64,20 +64,23 @@ export function convertToRegex(tree: ISkillTree): Array<RegExp> {
     }
 
     var regexes = [];
-
-    for (let level of Array.from(enumerateLevels([tree.root]))) {
+    
+    for(let skillset of tree.root.children){
         let regex = null;
-
-        level.forEach(element => {
-            if (element.isActive && !hasActiveChildren(element)) {
-                if (regex == null) {
-                    regex = element.id;
+        
+        for (let level of Array.from(enumerateLevels([skillset]))) {
+            level.forEach(element => {
+                if (element.isActive && !hasActiveChildren(element)) {
+                    if (regex == null) {
+                        regex = element.id;
+                    }
+                    else {
+                        regex = regex.concat("|", element.id)
+                    }
                 }
-                else {
-                    regex = regex.concat("|", element.id)
-                }
-            }
-        });
+            });
+    
+        }
 
         if (regex != null) {
             regexes.push(new RegExp(regex));
