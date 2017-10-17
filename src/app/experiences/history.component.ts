@@ -1,9 +1,6 @@
 import { Store } from '@ngrx/store';
 import { ExperienceComponent } from './experience.component';
 import { element } from 'protractor';
-import { QueueDirective } from './../shared/queue.directive';
-import { Action } from 'app/core/tags';
-import { Tags } from './../core/tags';
 import { ExperienceService } from './experience.service';
 import { Experience } from './experience';
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
@@ -72,6 +69,9 @@ export class HistoryComponent implements OnInit {
         );
 
         this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
+      }
+      else {
+        this.queue = [];
       }
     }
     else {

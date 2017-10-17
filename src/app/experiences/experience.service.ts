@@ -14,15 +14,15 @@ export class ExperienceService {
     },
     <Node>{
       id: 2,
-      label: "javascript",
-      key: "javascript",
-      path: ["frontend", "javascript"]
+      label: "js",
+      key: "js",
+      path: ["frontend", "js"]
     },
     <Node>{
       id: 3,
       label: "AngularJS",
       key: "angularjs",
-      path: ["frontend", "javascript", "angularjs"]
+      path: ["frontend", "js", "angularjs"]
     },
     <Node>{
       id: 6,
@@ -41,15 +41,15 @@ export class ExperienceService {
     },
     <Node>{
       id: 2,
-      label: "javascript",
-      key: "javascript",
-      path: ["frontend", "javascript"]
+      label: "js",
+      key: "js",
+      path: ["frontend", "js"]
     },
     <Node>{
       id: 4,
       label: "JQuery",
       key: "jquery",
-      path: ["frontend", "javascript", "jquery"]
+      path: ["frontend", "js", "jquery"]
     },
     <Node>{
       id: 6,
@@ -83,15 +83,15 @@ export class ExperienceService {
     },
     <Node>{
       id: 2,
-      label: "javascript",
-      key: "javascript",
-      path: ["frontend", "javascript"]
+      label: "js",
+      key: "js",
+      path: ["frontend", "js"]
     },
     <Node>{
       id: 4,
       label: "JQuery",
       key: "jquery",
-      path: ["frontend", "javascript", "jquery"]
+      path: ["frontend", "js", "jquery"]
     }
   ]
 
@@ -101,7 +101,7 @@ export class ExperienceService {
         id: 7,
         label: "",
         key: "",
-        path: ["backend", "csharp", "frontend", "javascript", "angularjs"],
+        path: ["backend", "csharp", "frontend", "js", "angularjs"],
         title: 'Software Developer',
         place: 'Brightserve, Chichester',
         description: `Worked on the extension of two different angularjs/webapi2/SQLServer projects, mainly on authentication side installing
@@ -114,7 +114,7 @@ export class ExperienceService {
         id: 8,
         label: "",
         key: "",
-        path: ["backend", "csharp", "frontend", "javascript", "jquery"],
+        path: ["backend", "csharp", "frontend", "js", "jquery"],
         title: 'Web Developer',
         place: 'Fresh Egg, Worthing',
         description: `Worked on different integrations with third party web-services (Trustpilot, Mailchimp,
@@ -141,11 +141,11 @@ export class ExperienceService {
         id: 10,
         label: "",
         key: "",
-        path: ["frontend", "javascript", "jquery"],
+        path: ["frontend", "js", "jquery"],
         title: 'Junior Software Developer',
         place: 'PharmiWeb Solutions, Bracknell',
         description: `Front-end development on HTML5 web sites, compiled to IOS apps. I mainly worked with
-        javascript, html5 and css3.`,
+        js, html5 and css3.`,
         period: 'November 2013 – August 2014',
         subnav: this.pharmi
       }

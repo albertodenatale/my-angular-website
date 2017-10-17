@@ -1,6 +1,5 @@
 import { element } from 'protractor';
 import { ISkillTree } from './skilltree';
-import * as Immutable from 'immutable';
 
 export function addSkill(tree: ISkillTree, skillId: string) {
     if (tree && tree.root) {

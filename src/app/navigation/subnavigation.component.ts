@@ -1,16 +1,10 @@
 import { SUBNAV, AppState, MAINNAV } from './../shared/skilltree';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
-import { Tags } from './../core/tags';
-import { Observable } from 'rxjs/Observable';
-import { TagService } from './../core/tag.service';
-import { Action } from '../core/tags';
 import { NavigationService } from './navigation.service';
 import { Component, OnInit, trigger, state, transition, style, animate, keyframes, ViewChild } from '@angular/core';
 import { Node } from './navigation';
 import 'rxjs/Rx';
-import { QueueDirective } from "app/shared/queue.directive";
-import { OfToggablesDirective } from "app/shared/of-toggables.directive";
 import { ISkillTree, Skill, getByNavigationBarId, findSkill } from "app/shared/skilltree";
 import { Add, Remove } from "app/reducers/nodes.actions";
 
