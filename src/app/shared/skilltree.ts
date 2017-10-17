@@ -70,7 +70,7 @@ export function convertToRegex(tree: ISkillTree): Array<RegExp> {
         let regex = null;
 
         level.forEach(element => {
-            if (element.isActive) {
+            if (element.isActive && !hasActiveChildren(element)) {
                 if (regex == null) {
                     regex = element.id;
                 }
@@ -86,6 +86,10 @@ export function convertToRegex(tree: ISkillTree): Array<RegExp> {
     }
 
     return regexes;
+}
+
+function hasActiveChildren(element:Skill) {
+    return element != null && element.children != null && element.children.some(e => e.isActive === true);
 }
 
 function* enumerateLevels(level: Skill[]): IterableIterator<Skill[]> {
