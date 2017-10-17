@@ -17,20 +17,20 @@ export class StateService {
                         navigationBarId: MAINNAV,
                         children: [
                             <Skill>{
-                                id: "javascript",
+                                id: "js",
                                 label:"Javascript",
                                 children: [
                                     <Skill>{
                                         id: "jquery",
                                         label:"jquery",
                                         navigationBarId: SUBNAV,
-                                        parentId: "javascript"
+                                        parentId: "js"
                                     },
                                     <Skill>{
                                         id: "angularjs",
                                         label:"angularjs",
                                         navigationBarId: SUBNAV,
-                                        parentId: "javascript"
+                                        parentId: "js"
                                     }
                                 ],
                                 navigationBarId: SUBNAV,

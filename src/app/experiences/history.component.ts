@@ -70,6 +70,9 @@ export class HistoryComponent implements OnInit {
 
         this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
       }
+      else {
+        this.queue = [];
+      }
     }
     else {
       this.queue = [];
