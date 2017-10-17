@@ -9,6 +9,8 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from "@ngrx/store";
+import { nodesReducer } from "app/reducers/nodes.reducer";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpModule,
     ExperiencesModule,
     NavigationModule,
-    CoreModule
+    CoreModule,
+    StoreModule.forRoot({ skillTree: nodesReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,4 @@
-import { ToggableService } from 'app/core/toggable.service';
-import { Action } from 'app/core/tags';
 import { Component, OnInit, Output, EventEmitter, HostBinding, HostListener, Input, Directive } from '@angular/core';
-import { TagService } from "app/core/tag.service";
 
 @Directive({
   selector: 'toggable, [toggable]',
@@ -35,10 +32,6 @@ export class ToggableDirective{
     else{
       this.whenOff.emit(this);
     }
-  }
-
-  ngOnInit(){
-    this.isOn = false;
   }
 
 }

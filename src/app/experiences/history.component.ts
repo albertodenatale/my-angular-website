@@ -1,76 +1,81 @@
+import { Store } from '@ngrx/store';
 import { ExperienceComponent } from './experience.component';
 import { element } from 'protractor';
-import { QueueDirective } from './../shared/queue.directive';
-import { Action } from 'app/core/tags';
-import { Tags } from './../core/tags';
 import { ExperienceService } from './experience.service';
 import { Experience } from './experience';
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { AppState, ISkillTree, convertToRegex } from "app/shared/skilltree";
 
 @Component({
   selector: 'history',
   template: `
-    <queue (newNode)="process($event)">
-      <experience *ngFor="let experience of queue" [experience]="experience" class="row"></experience>
-    </queue>
+     <experience *ngFor="let experience of queue" [experience]="experience" class="row"></experience>
     `
 })
 export class HistoryComponent implements OnInit {
   experiences: Array<Experience> = new Array<Experience>();
   queue: Array<Experience> = [];
-  activePaths: Array<string[]> = [];
 
-  @ViewChild(QueueDirective) queueDirective: QueueDirective;
-
-  @ViewChildren(ExperienceComponent)
-  visibleExperiences: QueryList<ExperienceComponent>;
-
-  constructor(private service: ExperienceService) { }
+  constructor(private experienceService: ExperienceService, private store: Store<AppState>) {
+    this.store.select<ISkillTree>((state) => state.skillTree).subscribe(
+      skillTree => {
+        this.process(skillTree);
+      }
+    )
+  }
 
   ngOnInit() {
-    this.experiences = this.service.getAll();
+    this.experiences = this.experienceService.getAll();
   }
 
-  ngAfterViewInit() {
-    this.queueDirective.connect();
-  }
+  process(skillTree: ISkillTree) {
+    var regex: Array<RegExp> = convertToRegex(skillTree);
 
-  process(tag: Tags) {
-    let skill = tag.tags[tag.tags.length - 1];
+    if (regex && regex.length > 0) {
+      let selected: Array<Experience> = this.experiences.filter(
+        e => {
+          let path: string = e.path.join(' ');
+          let isMatch: boolean = true;
 
-    if (tag.action === Action.Add) {
-      let isFilter: boolean = false;
+          regex.forEach(r => {
+            if (path.match(r) == null) {
+              isMatch = false;
+            }
+          });
 
-      this.activePaths.forEach(path => {
-        let intersection = tag.tags.filter(t => path.indexOf(t) > -1);
-
-        if (intersection.length > 0) {
-          path.push(skill);
-          isFilter = true;
+          return isMatch;
         }
-      });
+      );
 
-      if (isFilter) {
-        this.queue = this.queue.filter(element => element.path.indexOf(skill) > -1);
+      if (selected != null && selected.length > 0) {
+        let toAdd: Array<Experience> = selected.filter(
+          e => {
+            if (this.queue.find(existing => existing.id === e.id) == null) {
+              return true;
+            }
+
+            return false;
+          }
+        );
+
+        let toRemove: Array<Experience> = this.queue.filter(
+          existing => {
+            if (selected.find(e => e.id === existing.id) == null) {
+              return true;
+            }
+
+            return false;
+          }
+        );
+
+        this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
       }
       else {
-        this.activePaths.push([skill]);
-        let toAdd = this.experiences.filter(e => e.path.indexOf(skill) > -1);
-
-        toAdd.forEach(element => {
-          this.queue.push(element);
-        });
+        this.queue = [];
       }
-
+    }
+    else {
+      this.queue = [];
     }
   }
-
-  private remove<T>(list: T[], node: T): T[] {
-    let index = list.indexOf(node);
-
-    if (index >= 0) {
-      return list.splice(index, 1);
-    }
-  }
-
 }

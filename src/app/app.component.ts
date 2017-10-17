@@ -1,5 +1,10 @@
+import { Observable } from 'rxjs/Rx';
+import { ISkillTree, AppState } from './shared/skilltree';
+import * as NodesActions from 'app/reducers/nodes.actions';
+import { StateService } from './core/state.service';
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: 'app-root',
@@ -9,19 +14,28 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
       [
         state("loaded", style({ transform: "translate(0)" })),
         transition('loading => loaded', [
-        animate(300, keyframes([
-          style({ transform: 'translateX(-100%)',}),
-          style({ transform: 'translateX(30px)' }),
-          style({ transform: 'translateX(0)' })
-        ]))
-      ])
+          animate(300, keyframes([
+            style({ transform: 'translateX(-100%)', }),
+            style({ transform: 'translateX(30px)' }),
+            style({ transform: 'translateX(0)' })
+          ]))
+        ])
       ])
   ]
 })
 export class AppComponent {
   loaded: string = "loading";
 
+  constructor(private store: Store<AppState>, private stateService: StateService) {
+    this.store.select<ISkillTree>(state => state.skillTree).toPromise().then(() => { this.loaded = "loaded" });
+  }
+
   ngOnInit() {
-    TimerObservable.create(1000).subscribe(_ => this.loaded="loaded")
+    this.store.dispatch({
+      type: NodesActions.INITIALSTATELOADED,
+      payload: this.stateService.loadInitialState()
+    });
+
+    //TimerObservable.create(1000).subscribe(_ => this.loaded="loaded")
   }
 }
