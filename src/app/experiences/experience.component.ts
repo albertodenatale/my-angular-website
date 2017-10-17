@@ -1,14 +1,10 @@
 import { Store } from '@ngrx/store';
 import { ISkillTree, Skill, getByNavigationBarId, AppState } from './../shared/skilltree';
-import { QueueDirective } from './../shared/queue.directive';
 import { Subject } from 'rxjs/Subject';
-import { TagService } from './../core/tag.service';
 import { Experience } from './experience';
 import { Component, OnInit, Input, ContentChild, ViewChild, Directive } from '@angular/core';
 import { NavigationService } from "app/navigation/navigation.service";
 import { Node } from '../navigation/navigation';
-import { Tags, Action } from "app/core/tags";
-import { OfToggablesDirective } from "app/shared/of-toggables.directive";
 import { Add, Remove } from "app/reducers/nodes.actions";
 
 @Component({
