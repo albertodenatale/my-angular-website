@@ -32,10 +32,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.store.dispatch({
-      type: NodesActions.INITIALSTATELOADED,
-      payload: this.stateService.loadInitialState()
+      type: NodesActions.FETCHINITIALSTATE
     });
-
-    //TimerObservable.create(1000).subscribe(_ => this.loaded="loaded")
   }
 }

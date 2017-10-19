@@ -4,11 +4,16 @@ import { ISkillTree } from "app/shared/skilltree";
 export const ADD = "ADD";
 export const REMOVE = "REMOVE";
 export const INITIALSTATELOADED = "INITIALSTATELOADED";
+export const FETCHINITIALSTATE = "FETCHINITIALSTATE";
 
 export class Add implements Action {
     readonly type = ADD;
 
     constructor(public payload: string) { }
+}
+
+export class FetchInitialState implements Action {
+    readonly type = FETCHINITIALSTATE;
 }
 
 export class Remove implements Action {
@@ -23,4 +28,4 @@ export class InitialStateLoaded implements Action {
     constructor(public payload: ISkillTree) { }
 }
 
-export type All =  Add | Remove| InitialStateLoaded;
+export type All =  Add | Remove| InitialStateLoaded | FetchInitialState;
