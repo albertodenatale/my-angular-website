@@ -1,3 +1,4 @@
+import { ExperienceService } from './experiences/experience.service';
 import { StateService } from './core/state.service';
 import { CoreModule } from './core/core.module';
 import { NavigationModule } from './navigation/navigation.module';
@@ -11,7 +12,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from "@ngrx/store";
-import { nodesReducer } from "app/reducers/nodes.reducer";
+import { navigationReducer, mainReducer} from "app/reducers/reducers";
 import { environment } from "environments/environment";
 import { AngularFireModule } from 'angularfire2';
 import { EffectsModule } from "@ngrx/effects";
@@ -29,10 +30,10 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
     ExperiencesModule,
     NavigationModule,
     CoreModule,
-    StoreModule.forRoot({ skillTree: nodesReducer }),
+    StoreModule.forRoot({ navigation: navigationReducer, main: mainReducer }),
     AngularFireModule.initializeApp(environment.firebase),             
     AngularFireDatabaseModule,   
-    EffectsModule.forRoot([StateService])
+    EffectsModule.forRoot([StateService, ExperienceService])
   ],
   providers: [],
   bootstrap: [AppComponent]

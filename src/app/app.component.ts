@@ -1,7 +1,7 @@
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Rx';
 import { ISkillTree, AppState } from './shared/skilltree';
-import * as NodesActions from 'app/reducers/nodes.actions';
+import * as NodesActions from 'app/reducers/actions';
 import { StateService } from './core/state.service';
 import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
@@ -28,7 +28,7 @@ export class AppComponent {
   loaded: string = "loading";
 
   constructor(private store: Store<AppState>, private stateService: StateService) {
-    this.store.select<ISkillTree>(state => state.skillTree).subscribe((skillTree) => { if(skillTree.root != null) { this.loaded = "loaded"} });
+    this.store.select<ISkillTree>(state => state.navigation).subscribe((skillTree) => { if(skillTree.isLoaded) { this.loaded = "loaded"} });
   }
 
   ngOnInit() {

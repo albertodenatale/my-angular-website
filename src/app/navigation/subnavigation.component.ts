@@ -6,7 +6,7 @@ import { Component, OnInit, trigger, state, transition, style, animate, keyframe
 import { Node } from './navigation';
 import 'rxjs/Rx';
 import { ISkillTree, Skill, getByNavigationBarId, findSkill } from "app/shared/skilltree";
-import { Add, Remove } from "app/reducers/nodes.actions";
+import { Add, Remove } from "app/reducers/actions";
 
 @Component({
   selector: 'subnavigation',
@@ -36,7 +36,7 @@ export class SubnavigationComponent {
   navs: Array<Skill>;
 
   constructor(private store: Store<AppState>) {
-    this.store.select<ISkillTree>((state) => state.skillTree).subscribe(
+    this.store.select<ISkillTree>((state) => state.navigation).subscribe(
       skillTree => {
         this.process(skillTree, getByNavigationBarId(skillTree, SUBNAV));
       }

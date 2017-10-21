@@ -6,7 +6,7 @@ import { Experience } from './experience';
 import { Component, OnInit, Input, ContentChild, ViewChild, Directive } from '@angular/core';
 import { NavigationService } from "app/navigation/navigation.service";
 import { Node } from '../navigation/navigation';
-import { Add, Remove } from "app/reducers/nodes.actions";
+import { Add, Remove } from "app/reducers/actions";
 
 @Component({
   selector: 'experience',
@@ -32,7 +32,7 @@ export class ExperienceComponent {
   constructor(private store: Store<AppState>) { }
 
   ngOnInit(){
-    this.store.select<ISkillTree>(state => state.skillTree).subscribe(
+    this.store.select<ISkillTree>(state => state.navigation).subscribe(
       skillTree => {
         this.navs = [];
         

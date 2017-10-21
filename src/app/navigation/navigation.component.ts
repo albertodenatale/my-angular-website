@@ -1,5 +1,5 @@
 import { AppState, MAINNAV } from './../shared/skilltree';
-import { Add, Remove } from './../reducers/nodes.actions';
+import { Add, Remove } from '../reducers/actions';
 import { Store } from '@ngrx/store';
 import { NavigationService } from './navigation.service';
 import { Node } from './navigation';
@@ -18,7 +18,7 @@ export class NavigationComponent {
   navs: Array<Skill>;
   
   constructor(private store: Store<AppState>) {
-    this.store.select<ISkillTree>(state => state.skillTree).subscribe(
+    this.store.select<ISkillTree>(state => state.navigation).subscribe(
       skillTree => {
         this.navs = getByNavigationBarId(skillTree, MAINNAV);
       }

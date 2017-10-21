@@ -1,9 +1,10 @@
+import { FetchInitialState, FetchMainContent } from './../reducers/actions';
 import { Store } from '@ngrx/store';
 import { ExperienceComponent } from './experience.component';
 import { element } from 'protractor';
 import { ExperienceService } from './experience.service';
 import { Experience } from './experience';
-import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList, state } from '@angular/core';
 import { AppState, ISkillTree, convertToRegex } from "app/shared/skilltree";
 
 @Component({
@@ -16,66 +17,72 @@ export class HistoryComponent implements OnInit {
   experiences: Array<Experience> = new Array<Experience>();
   queue: Array<Experience> = [];
 
-  constructor(private experienceService: ExperienceService, private store: Store<AppState>) {
-    this.store.select<ISkillTree>((state) => state.skillTree).subscribe(
-      skillTree => {
-        this.process(skillTree);
+  constructor(private store: Store<AppState>, private experienceService: ExperienceService) {
+    this.store.select<AppState>((state) => state).subscribe(
+      state => {
+        this.process(state);
       }
     )
   }
 
   ngOnInit() {
-    this.experiences = this.experienceService.getAll();
+    this.store.dispatch(new FetchMainContent());
   }
 
-  process(skillTree: ISkillTree) {
-    var regex: Array<RegExp> = convertToRegex(skillTree);
+  process(state: AppState) {
+    if (state.navigation.isLoaded && state.main.isLoaded) {
+      if(this.experiences == null || this.experiences.length === 0){
+        this.experiences = state.main.experiences;
+      }
 
-    if (regex && regex.length > 0) {
-      let selected: Array<Experience> = this.experiences.filter(
-        e => {
-          let path: string = e.path.join(' ');
-          let isMatch: boolean = true;
+      var regex: Array<RegExp> = convertToRegex(state.navigation);
 
-          regex.forEach(r => {
-            if (path.match(r) == null) {
-              isMatch = false;
-            }
-          });
-
-          return isMatch;
-        }
-      );
-
-      if (selected != null && selected.length > 0) {
-        let toAdd: Array<Experience> = selected.filter(
+      if (regex && regex.length > 0) {
+        let selected: Array<Experience> = this.experiences.filter(
           e => {
-            if (this.queue.find(existing => existing.id === e.id) == null) {
-              return true;
-            }
+            let path: string = e.path.join(' ');
+            let isMatch: boolean = true;
 
-            return false;
+            regex.forEach(r => {
+              if (path.match(r) == null) {
+                isMatch = false;
+              }
+            });
+
+            return isMatch;
           }
         );
 
-        let toRemove: Array<Experience> = this.queue.filter(
-          existing => {
-            if (selected.find(e => e.id === existing.id) == null) {
-              return true;
+        if (selected != null && selected.length > 0) {
+          let toAdd: Array<Experience> = selected.filter(
+            e => {
+              if (this.queue.find(existing => existing.id === e.id) == null) {
+                return true;
+              }
+
+              return false;
             }
+          );
 
-            return false;
-          }
-        );
+          let toRemove: Array<Experience> = this.queue.filter(
+            existing => {
+              if (selected.find(e => e.id === existing.id) == null) {
+                return true;
+              }
 
-        this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
+              return false;
+            }
+          );
+
+          this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
+        }
+        else {
+          this.queue = [];
+        }
       }
       else {
         this.queue = [];
       }
-    }
-    else {
-      this.queue = [];
     }
   }
 }

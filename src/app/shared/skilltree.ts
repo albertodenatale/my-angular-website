@@ -1,3 +1,4 @@
+import { Experience } from './../experiences/experience';
 import { element } from 'protractor';
 import { ISkillTree } from './skilltree';
 
@@ -64,10 +65,10 @@ export function convertToRegex(tree: ISkillTree): Array<RegExp> {
     }
 
     var regexes = [];
-    
-    for(let skillset of tree.root.children){
+
+    for (let skillset of tree.root.children) {
         let regex = null;
-        
+
         for (let level of Array.from(enumerateLevels([skillset]))) {
             level.forEach(element => {
                 if (element.isActive && !hasActiveChildren(element)) {
@@ -79,7 +80,7 @@ export function convertToRegex(tree: ISkillTree): Array<RegExp> {
                     }
                 }
             });
-    
+
         }
 
         if (regex != null) {
@@ -90,7 +91,7 @@ export function convertToRegex(tree: ISkillTree): Array<RegExp> {
     return regexes;
 }
 
-function hasActiveChildren(element:Skill) {
+function hasActiveChildren(element: Skill) {
     return element != null && element.children != null && element.children.some(e => e.isActive === true);
 }
 
@@ -116,15 +117,23 @@ function* enumerateLevels(level: Skill[]): IterableIterator<Skill[]> {
 }
 
 export class AppState {
-    skillTree: ISkillTree;
+    navigation: ISkillTree;
+    main: Main;
 }
 
 export interface ISkillTree {
     root: Skill
+    isLoaded: boolean
 }
 
 export class SkillTree implements ISkillTree {
-    root: Skill
+    root: Skill;
+    isLoaded: boolean;
+}
+
+export class Main {
+    isLoaded?:boolean;
+    experiences: Array<Experience>
 }
 
 export class Skill {
