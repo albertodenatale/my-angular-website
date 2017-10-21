@@ -1,3 +1,4 @@
+import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Rx';
 import { ISkillTree, AppState } from './shared/skilltree';
 import * as NodesActions from 'app/reducers/nodes.actions';
@@ -27,7 +28,7 @@ export class AppComponent {
   loaded: string = "loading";
 
   constructor(private store: Store<AppState>, private stateService: StateService) {
-    this.store.select<ISkillTree>(state => state.skillTree).toPromise().then(() => { this.loaded = "loaded" });
+    this.store.select<ISkillTree>(state => state.skillTree).subscribe((skillTree) => { if(skillTree.root != null) { this.loaded = "loaded"} });
   }
 
   ngOnInit() {
