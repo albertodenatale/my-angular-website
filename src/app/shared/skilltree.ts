@@ -120,13 +120,11 @@ export class AppState {
 }
 
 export interface ISkillTree {
-    root?: Skill
+    root: Skill
 }
 
 export class SkillTree implements ISkillTree {
-    root?: Skill
-
-    private currentNode: Skill = this.root;
+    root: Skill
 }
 
 export class Skill {

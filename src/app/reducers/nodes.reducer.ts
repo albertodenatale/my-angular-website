@@ -3,7 +3,7 @@ import * as NodesActions from './nodes.actions'
 
 export type SelectedNodes = Array<string[]>
 
-export function nodesReducer(state: ISkillTree = {}, action: NodesActions.All): ISkillTree {
+export function nodesReducer(state: ISkillTree = { root: null }, action: NodesActions.All): ISkillTree {
     switch (action.type) {
         case NodesActions.ADD:
             add(state, action.payload);

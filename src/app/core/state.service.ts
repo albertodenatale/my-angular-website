@@ -1,5 +1,6 @@
+import { Observable } from 'rxjs/Rx';
 import { Skill, SUBNAV, MAINNAV } from './../shared/skilltree';
-import { Injectable } from '@angular/core';
+import { Injectable, state } from '@angular/core';
 import { SkillTree, ISkillTree } from "app/shared/skilltree";
 import { Http } from "@angular/http";
 import { Actions, Effect } from '@ngrx/effects';
@@ -8,12 +9,15 @@ import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
 export class StateService {
+    state: Observable<SkillTree[]>;
 
     constructor(
         private http: Http,
         private actions$: Actions,
         private db: AngularFireDatabase
-      ) { }
+      ) { 
+        this.state = this.db.object<SkillTree>("skilltree").valueChanges();
+      }
 
       @Effect() loadInitialState$ = this.actions$
         .ofType(NodesActions.FETCHINITIALSTATE)
@@ -21,7 +25,7 @@ export class StateService {
         .map(res => ({type: NodesActions.INITIALSTATELOADED, payload: res }))
 
         private getState(){
-            return this.db.list<SkillTree>("skilltree").valueChanges();
+            return this.state;
         }
         
     // loadInitialState(): ISkillTree {
