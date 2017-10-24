@@ -21,6 +21,7 @@
 /bin
 /bower_components
 /obj
+/public
 
 # IDE - VSCode
 .vscode/*
