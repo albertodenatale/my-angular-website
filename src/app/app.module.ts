@@ -12,11 +12,12 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from "@ngrx/store";
-import { navigationReducer, mainReducer} from "app/reducers/reducers";
+import { navigationReducer, mainReducer, authenticationReducer} from "app/reducers/reducers";
 import { environment } from "environments/environment";
 import { AngularFireModule } from 'angularfire2';
 import { EffectsModule } from "@ngrx/effects";
 import { AngularFireDatabaseModule } from "angularfire2/database";
+import { AngularFireAuthModule } from "angularfire2/auth";
 
 @NgModule({
   declarations: [
@@ -30,10 +31,11 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
     ExperiencesModule,
     NavigationModule,
     CoreModule,
-    StoreModule.forRoot({ navigation: navigationReducer, main: mainReducer }),
+    StoreModule.forRoot({ navigation: navigationReducer, main: mainReducer, authentication: authenticationReducer }),
     AngularFireModule.initializeApp(environment.firebase),             
     AngularFireDatabaseModule,   
-    EffectsModule.forRoot([StateService, ExperienceService])
+    EffectsModule.forRoot([StateService, ExperienceService]),      
+    AngularFireAuthModule  
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -15,9 +15,9 @@ import { Add, Remove } from "app/reducers/actions";
       <strong>{{experience.period}}</strong>
     </div>
     <div class="col second">
-      <h5>{{experience.title}}
-        <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" [id]="nav.key" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
-      </h5>
+      <h5>{{experience.title}}</h5>
+      <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" [id]="nav.key" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+      <i *ngIf="isEditable === true" class="fa fa-pencil-square-o" aria-hidden="true"></i>
       <div>{{experience.place}}</div>
       <div>{{experience.description}}</div>
     </div>`
@@ -29,13 +29,15 @@ export class ExperienceComponent {
 
   navs: Array<Skill> = [];
 
+  isEditable:boolean;
+
   constructor(private store: Store<AppState>) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.store.select<ISkillTree>(state => state.navigation).subscribe(
       skillTree => {
         this.navs = [];
-        
+
         this.experience.path.forEach(skillId => {
           let skill: Skill = findSkill(skillTree, skillId);
 
@@ -43,6 +45,17 @@ export class ExperienceComponent {
         });
       }
     )
+
+    this.store.select<any>(state => state.authentication).subscribe(
+      auth => {
+        if (auth != null) {
+          this.isEditable = true;
+        }
+        else{
+          this.isEditable = false;
+        }
+      }
+    );
   }
 
   whenOn(skill: Skill) {

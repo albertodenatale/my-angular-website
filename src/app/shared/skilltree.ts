@@ -119,6 +119,7 @@ function* enumerateLevels(level: Skill[]): IterableIterator<Skill[]> {
 export class AppState {
     navigation: ISkillTree;
     main: Main;
+    authentication:any;
 }
 
 export interface ISkillTree {
@@ -133,7 +134,11 @@ export class SkillTree implements ISkillTree {
 
 export class Main {
     isLoaded?:boolean;
-    experiences: Array<Experience>
+    experiences: Array<Experience>;
+}
+
+export class Authentication {
+    authenticatedUser: any;
 }
 
 export class Skill {

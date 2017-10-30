@@ -8,6 +8,8 @@ export const INITIALSTATELOADED = "INITIALSTATELOADED";
 export const MAINCONTENTLOADED = "MAINCONTENTLOADED";
 export const FETCHMAINCONTENT = "FETCHMAINCONTENT";
 export const FETCHINITIALSTATE = "FETCHINITIALSTATE";
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
 
 export class Add implements Action {
     readonly type = ADD;
@@ -41,4 +43,17 @@ export class MainContentLoaded implements Action {
     constructor(public payload: Main) { }
 }
 
+export class Login implements Action {
+    readonly type = LOGIN;
+
+    constructor(public payload: any) { }
+}
+
+export class Logout implements Action {
+    readonly type = LOGOUT;
+
+    constructor(public payload: any) { }
+}
+
 export type All =  Add | Remove| InitialStateLoaded | FetchInitialState | MainContentLoaded | FetchMainContent;
+export type Auth =  Login | Logout;

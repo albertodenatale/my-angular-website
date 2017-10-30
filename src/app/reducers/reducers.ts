@@ -54,3 +54,14 @@ export function mainReducer(state: Main = { experiences: [], isLoaded: false }, 
 
     return JSON.parse(JSON.stringify(state));
 }
+
+export function authenticationReducer(state: any, action: Actions.Auth) {
+    switch (action.type) {
+        case Actions.LOGIN: 
+            return action.payload;
+        case Actions.LOGOUT: 
+            return null;
+    }
+
+    return state;
+}
