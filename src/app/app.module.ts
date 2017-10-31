@@ -1,3 +1,4 @@
+import { EditingModule } from './editing/editing.module';
 import { ExperienceService } from './experiences/experience.service';
 import { StateService } from './core/state.service';
 import { CoreModule } from './core/core.module';
@@ -31,6 +32,7 @@ import { AngularFireAuthModule } from "angularfire2/auth";
     ExperiencesModule,
     NavigationModule,
     CoreModule,
+    EditingModule,
     StoreModule.forRoot({ navigation: navigationReducer, main: mainReducer, authentication: authenticationReducer }),
     AngularFireModule.initializeApp(environment.firebase),             
     AngularFireDatabaseModule,   

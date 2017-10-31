@@ -15,9 +15,8 @@ import { Add, Remove } from "app/reducers/actions";
       <strong>{{experience.period}}</strong>
     </div>
     <div class="col second">
-      <h5>{{experience.title}}</h5>
+      <h5 editable>{{experience.title}}</h5>
       <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" [id]="nav.key" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
-      <i *ngIf="isEditable === true" class="fa fa-pencil-square-o" aria-hidden="true"></i>
       <div>{{experience.place}}</div>
       <div>{{experience.description}}</div>
     </div>`

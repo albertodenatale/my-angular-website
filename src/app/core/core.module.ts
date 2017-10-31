@@ -1,3 +1,4 @@
+import { EditService } from './edit.service';
 import { StateService } from './state.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,7 +9,7 @@ import { PersonalDetailsComponent } from './personal-details.component';
   imports: [
     CommonModule
   ],
-  providers:[StateService],
+  providers:[StateService, EditService],
   declarations: [LineComponent, PersonalDetailsComponent],
   exports:[LineComponent, PersonalDetailsComponent]
 })

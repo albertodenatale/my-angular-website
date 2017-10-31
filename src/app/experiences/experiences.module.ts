@@ -1,3 +1,4 @@
+import { EditingModule } from './../editing/editing.module';
 import { SharedModule } from './../shared/shared.module';
 import { ExperienceService } from './experience.service';
 import { NgModule } from '@angular/core';
@@ -8,7 +9,8 @@ import { HistoryComponent } from './history.component';
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule, 
+    EditingModule
   ],
   declarations: [ExperienceComponent, HistoryComponent],
   providers:[ExperienceService],
