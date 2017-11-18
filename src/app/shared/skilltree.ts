@@ -50,11 +50,30 @@ export function* enumerateSkill(skill: Skill): IterableIterator<Skill> {
     }
     else {
         for (let child of skill.children) {
+            yield child;
+        }
+
+        for (let child of skill.children) {
             for (let nephew of Array.from(enumerateSkill(child))) {
                 yield nephew;
             }
+        }
+    }
+}
 
-            yield child;
+export function* enumerateAncestors(tree: ISkillTree, skill: Skill): IterableIterator<Skill>  {
+    if(skill && skill.parentId)
+    {
+        let parent = findSkill(tree, skill.parentId);
+
+        if(parent)
+        {
+            yield parent;
+
+            for(let ancestor of Array.from(enumerateAncestors(tree, parent)))
+            {
+                yield ancestor;
+            }
         }
     }
 }
@@ -119,7 +138,7 @@ function* enumerateLevels(level: Skill[]): IterableIterator<Skill[]> {
 export class AppState {
     navigation: ISkillTree;
     main: Main;
-    authentication:any;
+    authentication: any;
 }
 
 export interface ISkillTree {
@@ -130,10 +149,12 @@ export interface ISkillTree {
 export class SkillTree implements ISkillTree {
     root: Skill;
     isLoaded: boolean;
+    currentNav: string;
+    currentSubnav: string;
 }
 
 export class Main {
-    isLoaded?:boolean;
+    isLoaded?: boolean;
     experiences: Array<Experience>;
 }
 

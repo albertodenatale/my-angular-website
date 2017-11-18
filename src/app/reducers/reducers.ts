@@ -1,6 +1,6 @@
 import { Main } from './../shared/skilltree';
 import { Experience } from './../experiences/experience';
-import { ISkillTree, findSkill, Skill, enumerateSkill } from '../shared/skilltree';
+import { ISkillTree, findSkill, Skill, enumerateSkill, enumerateAncestors } from '../shared/skilltree';
 import * as Actions from './actions'
 
 export type SelectedNodes = Array<string[]>
@@ -30,6 +30,16 @@ function add(state, nodeId) {
 
     if (skill != null) {
         skill.isActive = true;
+
+        addAncestors(state, skill);
+    }
+}
+ 
+function addAncestors(state: ISkillTree, skill: Skill) {
+    for(let ancestor of Array.from(enumerateAncestors(state, skill))){
+        if(!ancestor.isActive){
+            ancestor.isActive = true;
+        }
     }
 }
 

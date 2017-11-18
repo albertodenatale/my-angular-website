@@ -10,7 +10,7 @@ import { Add, Remove } from "app/reducers/actions";
 @Component({
   selector: 'subnavigation',
   template: `
-      <toggable *ngFor="let nav of navs" [id]="nav.key" [@flyInOut] (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+      <toggable *ngFor="let nav of navs" [id]="nav.key" [isOn]="nav.isActive" [@flyInOut] (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
   `,
   animations: [
     trigger('flyInOut', [
@@ -54,8 +54,8 @@ export class SubnavigationComponent {
     )
   }
 
-  process(skillTree: ISkillTree, selected: Array<Skill>): void { 
-    if(this.navs == null){
+  process(skillTree: ISkillTree, selected: Array<Skill>): void {
+    if (this.navs == null) {
       this.navs = [];
     }
 
@@ -63,10 +63,16 @@ export class SubnavigationComponent {
       node => {
         let parent: Skill = findSkill(skillTree, node.parentId);
 
-        if (parent != null) {
-          if(parent.isActive){
-            return !this.navs.some(n => n.id === node.id);
+        if (parent != null && parent.isActive) {
+          let existing = this.navs.find(n => n.id === node.id);
+
+          if (existing) {
+            existing.isActive = node.isActive;
+
+            return false;
           }
+
+          return true;
         }
 
         return false;
@@ -77,10 +83,8 @@ export class SubnavigationComponent {
       node => {
         let parent: Skill = findSkill(skillTree, node.parentId);
 
-        if (parent != null) {
-          if(!parent.isActive){
-            return this.navs.some(n => n.id === node.id);
-          }
+        if (parent != null && !parent.isActive) {
+          return this.navs.some(n => n.id === node.id);
         }
 
         return false;
