@@ -1,7 +1,6 @@
 import { SUBNAV, AppState, MAINNAV } from './../shared/skilltree';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
-import { NavigationService } from './navigation.service';
 import { Component, OnInit, trigger, state, transition, style, animate, keyframes, ViewChild } from '@angular/core';
 import { Node } from './navigation';
 import 'rxjs/Rx';

@@ -1,4 +1,3 @@
-import { NavigationService } from './navigation.service';
 import { SharedModule } from '../shared/shared.module';
 import { NavigationComponent } from './navigation.component';
 import { NgModule } from '@angular/core';
@@ -11,7 +10,6 @@ import { SubnavigationComponent } from './subnavigation.component';
     SharedModule
   ],
   declarations: [NavigationComponent, SubnavigationComponent],
-  exports: [NavigationComponent, SubnavigationComponent],
-  providers:[NavigationService]
+  exports: [NavigationComponent, SubnavigationComponent]
 })
 export class NavigationModule { }

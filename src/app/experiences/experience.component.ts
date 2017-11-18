@@ -4,7 +4,6 @@ import { ISkillTree, Skill, getByNavigationBarId, AppState, enumerateTree } from
 import { Subject } from 'rxjs/Subject';
 import { Experience } from './experience';
 import { Component, OnInit, Input, ContentChild, ViewChild, Directive } from '@angular/core';
-import { NavigationService } from "app/navigation/navigation.service";
 import { Node } from '../navigation/navigation';
 import { Add, Remove } from "app/reducers/actions";
 
