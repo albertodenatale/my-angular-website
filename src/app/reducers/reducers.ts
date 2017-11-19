@@ -34,10 +34,10 @@ function add(state, nodeId) {
         addAncestors(state, skill);
     }
 }
- 
+
 function addAncestors(state: ISkillTree, skill: Skill) {
-    for(let ancestor of Array.from(enumerateAncestors(state, skill))){
-        if(!ancestor.isActive){
+    for (let ancestor of Array.from(enumerateAncestors(state, skill))) {
+        if (!ancestor.isActive) {
             ancestor.isActive = true;
         }
     }
@@ -51,6 +51,18 @@ function remove(state, nodeId) {
 
         for (let s of Array.from(enumerateSkill(skill))) {
             s.isActive = false;
+        }
+
+        if (skill.parentId) {
+            let parent: Skill = findSkill(state, skill.parentId);
+
+            if (parent.navigationBarId == null) {
+                let isAnyChildActive = parent.children.some(c => c.isActive);
+
+                if(!isAnyChildActive){
+                    parent.isActive = false;
+                }
+            }
         }
     }
 }
@@ -67,9 +79,9 @@ export function mainReducer(state: Main = { experiences: [], isLoaded: false }, 
 
 export function authenticationReducer(state: any, action: Actions.Auth) {
     switch (action.type) {
-        case Actions.LOGIN: 
+        case Actions.LOGIN:
             return action.payload;
-        case Actions.LOGOUT: 
+        case Actions.LOGOUT:
             return null;
     }
 
