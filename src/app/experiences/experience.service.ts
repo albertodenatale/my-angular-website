@@ -1,7 +1,7 @@
 import { Main } from './../shared/skilltree';
 import { Observable } from 'rxjs/Rx';
 import { SkillTree } from 'app/shared/skilltree';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Effect, Actions } from '@ngrx/effects';
 import { Experience } from './experience';
 import { Injectable } from '@angular/core';
@@ -10,168 +10,41 @@ import * as MainActions from 'app/reducers/actions';
 
 @Injectable()
 export class ExperienceService {
-  experiences: Observable<Experience[]>;
+  experiences: AngularFireList<Experience[]>;
   
-      constructor(
-          private actions$: Actions,
-          private db: AngularFireDatabase
-        ) { 
-          this.experiences = this.db.list<Experience[]>("experiences").valueChanges();
-        }
-  
-        @Effect() loadInitialState$ = this.actions$
-          .ofType(MainActions.FETCHMAINCONTENT)
-          .switchMap(payload => this.getState())
-          .map(res => ({type: MainActions.MAINCONTENTLOADED, payload: res }))
-  
-          private getState(){
-              return this.experiences.map(e => <Main>{ experiences : e });
-          }
-  // brightserve = [
-  //   <Node>{
-  //     id: 0,
-  //     key: "frontend",
-  //     label: "Front End",
-  //     path: ["frontend"]
-  //   },
-  //   <Node>{
-  //     id: 2,
-  //     label: "js",
-  //     key: "js",
-  //     path: ["frontend", "js"]
-  //   },
-  //   <Node>{
-  //     id: 3,
-  //     label: "AngularJS",
-  //     key: "angularjs",
-  //     path: ["frontend", "js", "angularjs"]
-  //   },
-  //   <Node>{
-  //     id: 6,
-  //     label: "C#",
-  //     key: "csharp",
-  //     path: ["backend", "csharp"]
-  //   }
-  // ];
+  constructor(
+      private actions$: Actions,
+      private db: AngularFireDatabase
+    ) { 
+      this.experiences = this.db.list<Experience[]>("experiences");
+    }
 
-  // freshegg = [
-  //   <Node>{
-  //     id: 0,
-  //     key: "frontend",
-  //     label: "Front End",
-  //     path: ["frontend"]
-  //   },
-  //   <Node>{
-  //     id: 2,
-  //     label: "js",
-  //     key: "js",
-  //     path: ["frontend", "js"]
-  //   },
-  //   <Node>{
-  //     id: 4,
-  //     label: "JQuery",
-  //     key: "jquery",
-  //     path: ["frontend", "js", "jquery"]
-  //   },
-  //   <Node>{
-  //     id: 6,
-  //     label: "C#",
-  //     key: "csharp",
-  //     path: ["backend", "csharp"]
-  //   }
-  // ]
+    @Effect() loadInitialState$ = this.actions$
+      .ofType(MainActions.FETCHMAINCONTENT)
+      .switchMap(payload => this.getState())
+      .map(res => ({type: MainActions.MAINCONTENTLOADED, payload: res }));
+      
+    private getState(){
+        return this.experiences.snapshotChanges()
+        .map(snapshots =>{
+          return snapshots.map(s =>
+            <Experience> {
+              id: s.key,
+              title: s.payload.val().title,
+              place: s.payload.val().place,
+              description: s.payload.val().description,
+              subnav: s.payload.val().subnav,
+              period: s.payload.val().period,
+              path: s.payload.val().path,
+              label: s.payload.val().label
+            }
+          )
+        })
+        .map(e => <Main>{ experiences : e });
+    }
 
-  // mosaic = [
-  //   <Node>{
-  //     id: 0,
-  //     key: "backend",
-  //     label: "Back End",
-  //     path: ["backend"]
-  //   },
-  //   <Node>{
-  //     id: 6,
-  //     label: "C#",
-  //     key: "csharp",
-  //     path: ["backend", "csharp"]
-  //   }
-  // ]
-
-  // pharmi = [
-  //   <Node>{
-  //     id: 0,
-  //     key: "frontend",
-  //     label: "Front End",
-  //     path: ["frontend"]
-  //   },
-  //   <Node>{
-  //     id: 2,
-  //     label: "js",
-  //     key: "js",
-  //     path: ["frontend", "js"]
-  //   },
-  //   <Node>{
-  //     id: 4,
-  //     label: "JQuery",
-  //     key: "jquery",
-  //     path: ["frontend", "js", "jquery"]
-  //   }
-  // ]
-
-  // getAll(): Array<Experience> {
-  //   return [
-  //     {
-  //       id: 7,
-  //       label: "",
-  //       key: "",
-  //       path: ["backend", "csharp", "frontend", "js", "angularjs", "git"],
-  //       title: 'Software Developer',
-  //       place: 'Brightserve, Chichester',
-  //       description: `Worked on the extension of two different angularjs/webapi2/SQLServer projects, mainly on authentication side installing
-  //       and configuring ASP.NET Identity with JWT tokens. I also had the opportunity to work with GIT, Windows Workflow Foundation,
-  //       Ninject, MOQ, bower and GRUNT`,
-  //       period: 'Sept 2016 – 13 March 2017',
-  //       subnav: this.brightserve
-  //     },
-  //     {
-  //       id: 8,
-  //       label: "",
-  //       key: "",
-  //       path: ["backend", "csharp", "frontend", "js", "jquery", "subversion"],
-  //       title: 'Web Developer',
-  //       place: 'Fresh Egg, Worthing',
-  //       description: `Worked on different integrations with third party web-services (Trustpilot, Mailchimp,
-  //       Eventbrite) for different ASP.NET MVC websites. Ordinary maintenance for customer
-  //       websites. I worked and promoted the adoption of Owin and Katana for a small self hosted
-  //       WebApi 2.0 webservice, withing a windows service.`,
-  //       period: 'January 2016 – 20 August 2016',
-  //       subnav: this.freshegg
-  //     },
-  //     {
-  //       id: 9,
-  //       label: "",
-  //       key: "",
-  //       path: ["backend", "csharp", "tfs"],
-  //       title: 'Junior Software Developer',
-  //       place: 'Mosaic Online Systems, Worthing',
-  //       description: `I Worked as .NET backend developer in the mailing industry using WPF, WCF, WebApi,
-  //       Webforms, TSQL and MVC. I worked on a windows service, an MVC web-application, a
-  //       WebApi web service, different TSQL stored procedures and one WPF application.`,
-  //       period: 'September 2014 – December 2015',
-  //       subnav: this.mosaic
-  //     },
-  //     {
-  //       id: 10,
-  //       label: "",
-  //       key: "",
-  //       path: ["frontend", "js", "jquery", "subversion"],
-  //       title: 'Junior Software Developer',
-  //       place: 'PharmiWeb Solutions, Bracknell',
-  //       description: `Front-end development on HTML5 web sites, compiled to IOS apps. I mainly worked with
-  //       js, html5 and css3.`,
-  //       period: 'November 2013 – August 2014',
-  //       subnav: this.pharmi
-  //     }
-  //   ]
-  // }
+    updateExperience(experience:Experience, newData:Partial<Experience>){
+      this.db.object(`/experiences/${experience.id}`).update(newData);
+    }
 
 }

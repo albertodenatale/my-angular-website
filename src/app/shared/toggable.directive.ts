@@ -5,9 +5,6 @@ import { Component, OnInit, Output, EventEmitter, HostBinding, HostListener, Inp
   host: { 'class':'btn' }
 })
 export class ToggableDirective{
-  @Input()
-  id:string;
-  
   @Output()
   whenOn: EventEmitter<ToggableDirective> = new EventEmitter<ToggableDirective>();
   

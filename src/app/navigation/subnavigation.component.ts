@@ -10,7 +10,7 @@ import { Add, Remove } from "app/reducers/actions";
 @Component({
   selector: 'subnavigation',
   template: `
-      <toggable *ngFor="let nav of navs" [id]="nav.key" [isOn]="nav.isActive" [@flyInOut] (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+      <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" [@flyInOut] (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
   `,
   animations: [
     trigger('flyInOut', [

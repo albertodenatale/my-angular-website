@@ -1,6 +1,5 @@
 export class Node{
-    id:number;
+    id:string;
     label:string;
-    key:string;
     path:string[];
 }

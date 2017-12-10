@@ -1,14 +1,17 @@
 import { AppState } from 'app/shared/skilltree';
 import { Store } from '@ngrx/store';
 import { EditService } from './../core/edit.service';
-import { Directive, HostBinding, HostListener, Output, EventEmitter } from '@angular/core';
+import { Directive, HostBinding, HostListener, Output, EventEmitter, ElementRef } from '@angular/core';
 
 @Directive({
   selector: '[editable]'
 })
 export class EditableDirective {
 
-  constructor(private editService: EditService, private store: Store<AppState>) { }
+  @Output()
+  contentChanges: EventEmitter<string> = new EventEmitter<string>();
+
+  constructor(private editService: EditService, private store: Store<AppState>, private elementRef: ElementRef) { }
 
   ngOnInit()
   {
@@ -33,6 +36,14 @@ export class EditableDirective {
 
   @HostListener('mouseout') onMouseOut() {
     this.editService.hide();
+  }
+
+  @HostListener('focusout') onContentChange() {
+    this.contentChanges.emit(this.getContent());
+  }
+
+  private getContent():string{
+    return this.elementRef.nativeElement.innerHTML;
   }
 
   @HostBinding('attr.contenteditable') isEditable: boolean

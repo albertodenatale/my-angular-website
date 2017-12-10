@@ -9,7 +9,7 @@ import { ISkillTree, getByNavigationBarId, Skill } from "app/shared/skilltree";
 @Component({
   selector: 'navigation',
   template: `
-      <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" [id]="nav.key" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+      <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
       <subnavigation></subnavigation>`
 })
 export class NavigationComponent {
