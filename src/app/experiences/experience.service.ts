@@ -21,30 +21,18 @@ export class ExperienceService {
 
     @Effect() loadInitialState$ = this.actions$
       .ofType(MainActions.FETCHMAINCONTENT)
-      .switchMap(payload => this.getState())
-      .map(res => ({type: MainActions.MAINCONTENTLOADED, payload: res }));
-      
-    private getState(){
-        return this.experiences.snapshotChanges()
-        .map(snapshots =>{
-          return snapshots.map(s =>
-            <Experience> {
-              id: s.key,
-              title: s.payload.val().title,
-              place: s.payload.val().place,
-              description: s.payload.val().description,
-              subnav: s.payload.val().subnav,
-              period: s.payload.val().period,
-              path: s.payload.val().path,
-              label: s.payload.val().label
-            }
-          )
-        })
-        .map(e => <Main>{ experiences : e });
-    }
+      .map(res => ({type: MainActions.MAINCONTENTLOADED, payload: { isLoaded: true } }));
 
     updateExperience(experience:Experience, newData:Partial<Experience>){
       this.db.object(`/experiences/${experience.id}`).update(newData);
+    }
+
+    addExperience(experience){
+      this.db.list("experiences").push(experience);
+    }
+
+    deleteExperience(experience){
+      this.db.object(`/experiences/${experience.id}`).remove();
     }
 
 }

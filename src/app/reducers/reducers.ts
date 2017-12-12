@@ -67,10 +67,9 @@ function remove(state, nodeId) {
     }
 }
 
-export function mainReducer(state: Main = { experiences: [], isLoaded: false }, action: Actions.All): Main {
+export function mainReducer(state: Main = { experiences: null, isLoaded: false }, action: Actions.All): Main {
     switch (action.type) {
         case Actions.MAINCONTENTLOADED:
-            action.payload.isLoaded = true;
             return action.payload;
     }
 

@@ -11,6 +11,7 @@ import { ExperienceService } from 'app/experiences/experience.service';
 @Component({
   selector: 'experience',
   template: `
+    <i *ngIf="isEditable" (click)="deleteExperience(experience)" class="fa fa-trash-o" aria-hidden="true"></i>
     <div class="col-3 first">
       <strong editable (contentChanges)="updatePeriod(experience, $event)">{{experience.period}}</strong>
     </div>
@@ -28,20 +29,27 @@ export class ExperienceComponent {
 
   navs: Array<Skill> = [];
 
-  isEditable:boolean;
+  isEditable: boolean;
 
-  constructor(private store: Store<AppState>, private experienceService:ExperienceService) { }
+  constructor(private store: Store<AppState>, private experienceService: ExperienceService) { }
 
   ngOnInit() {
-    this.store.select<ISkillTree>(state => state.navigation).subscribe(
-      skillTree => {
+    this.store.select<AppState>(state => state).subscribe(
+      state => {
         this.navs = [];
 
         this.experience.path.forEach(skillId => {
-          let skill: Skill = findSkill(skillTree, skillId);
+          let skill: Skill = findSkill(state.navigation, skillId);
 
           this.navs.push(skill);
         });
+
+        if (state.authentication != null) {
+          this.isEditable = true;
+        }
+        else {
+          this.isEditable = false;
+        }
       }
     )
   }
@@ -58,20 +66,24 @@ export class ExperienceComponent {
     )
   }
 
-  updateTitle(experience, newTitle:string){
-    this.experienceService.updateExperience(experience, { title : newTitle });
+  updateTitle(experience, newTitle: string) {
+    this.experienceService.updateExperience(experience, { title: newTitle });
   }
 
-  updatePlace(experience, newPlace:string){
-    this.experienceService.updateExperience(experience, { place : newPlace });
+  updatePlace(experience, newPlace: string) {
+    this.experienceService.updateExperience(experience, { place: newPlace });
   }
 
-  updateDescription(experience, description:string){
-    this.experienceService.updateExperience(experience, { description : description });
+  updateDescription(experience, description: string) {
+    this.experienceService.updateExperience(experience, { description: description });
   }
-  
-  updatePeriod(experience, period:string){
-    this.experienceService.updateExperience(experience, { period : period });
+
+  updatePeriod(experience, period: string) {
+    this.experienceService.updateExperience(experience, { period: period });
+  }
+
+  deleteExperience(experience) {
+    this.experienceService.deleteExperience(experience);
   }
 
 }

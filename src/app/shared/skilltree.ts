@@ -1,6 +1,7 @@
 import { Experience } from './../experiences/experience';
 import { element } from 'protractor';
 import { ISkillTree } from './skilltree';
+import { AngularFireList } from "angularfire2/database";
 
 export function addSkill(tree: ISkillTree, skillId: string) {
     if (tree && tree.root) {
@@ -155,7 +156,7 @@ export class SkillTree implements ISkillTree {
 
 export class Main {
     isLoaded?: boolean;
-    experiences: Array<Experience>;
+    experiences: AngularFireList<Experience[]>;
 }
 
 export class Authentication {

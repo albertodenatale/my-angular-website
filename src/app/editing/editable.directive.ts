@@ -15,12 +15,12 @@ export class EditableDirective {
 
   ngOnInit()
   {
-    this.store.select<any>(state => state.authentication).subscribe(
+    this.store.select<AppState>(state => state.authentication).subscribe(
       auth => {
         if (auth != null) {
           this.isEditable = true;
         }
-        else{
+        else {
           this.isEditable = false;
         }
       }
