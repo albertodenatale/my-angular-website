@@ -12,13 +12,13 @@ import { ExperienceService } from 'app/experiences/experience.service';
   selector: 'experience',
   template: `
     <div class="col-3 first">
-      <strong>{{experience.period}}</strong>
+      <strong editable (contentChanges)="updatePeriod(experience, $event)">{{experience.period}}</strong>
     </div>
     <div class="col second">
       <h5 editable (contentChanges)="updateTitle(experience, $event)">{{experience.title}}</h5>
       <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
-      <div editable>{{experience.place}}</div>
-      <div editable>{{experience.description}}</div>
+      <div editable (contentChanges)="updatePlace(experience, $event)">{{experience.place}}</div>
+      <div editable (contentChanges)="updateDescription(experience, $event)">{{experience.description}}</div>
     </div>`
 })
 export class ExperienceComponent {
@@ -59,7 +59,19 @@ export class ExperienceComponent {
   }
 
   updateTitle(experience, newTitle:string){
-    this.experienceService.updateExperience(experience, <Partial<Experience>> { title : newTitle });
+    this.experienceService.updateExperience(experience, { title : newTitle });
+  }
+
+  updatePlace(experience, newPlace:string){
+    this.experienceService.updateExperience(experience, { place : newPlace });
+  }
+
+  updateDescription(experience, description:string){
+    this.experienceService.updateExperience(experience, { description : description });
+  }
+  
+  updatePeriod(experience, period:string){
+    this.experienceService.updateExperience(experience, { period : period });
   }
 
 }
