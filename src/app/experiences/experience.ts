@@ -1,20 +1,73 @@
 import { Node } from './../navigation/navigation';
+import * as moment from 'moment';
+import { AngularFireAction, SnapshotAction } from "angularfire2/database";
 
 export class Experience extends Node {
-    constructor(){
+    constructor() {
         super();
-        
+
         this.path = [];
         this.title = "Position";
         this.place = "Place";
         this.description = "description";
-        this.period = "from, to";
-        this.path = ["new"]
+        this.period = {
+            from: new Date().getMilliseconds(),
+            to: new Date().getMilliseconds()
+        };
+        this.path = ["new"];
     }
 
     title: string;
     place: string;
     description: string;
-    period: string;
+    period: Period;
     subnav: Array<Node>
+}
+
+export class Period {
+    from: number;
+    to: number;
+}
+
+export function ParsePeriod(period: string): Period {
+    // TODO this will have to change
+    if (period == null) {
+        return new Period();
+    }
+
+    let dates: string[] = period.split("-");
+
+    let from: string = dates[0];
+    let to: string = dates[1];
+
+    let dateFrom: number = moment(from, "MMMM YYYY").unix();
+    let dateTo: number = moment(to, "MMMM YYYY").unix();
+
+    return <Period>{
+        from: dateFrom,
+        to: dateTo
+    }
+}
+
+export function formatPeriod(period:Period): string {
+    if(period == null){
+        return "";
+    }
+    var dateFrom = moment(period.from).format("MMMM YYYY");
+    var dateTo = moment(period.to).format("MMMM YYYY");
+
+    return dateFrom.concat(" - ").concat(dateTo);
+}
+
+export function mapFromSnapshot(experience: SnapshotAction) {
+    return <Experience>{
+        id: experience.key,
+        title: experience.payload.val().title,
+        place: experience.payload.val().place,
+        description: experience.payload.val().description,
+        subnav: experience.payload.val().subnav,
+        period: experience.payload.val().period,
+        path: experience.payload.val().path,
+        label: experience.payload.val().label
+    }
 }

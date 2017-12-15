@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { ExperienceComponent } from './experience.component';
 import { element } from 'protractor';
 import { ExperienceService } from './experience.service';
-import { Experience } from './experience';
+import { Experience, mapFromSnapshot } from './experience';
 import { Component, OnInit, ViewChild, ViewChildren, QueryList, state } from '@angular/core';
 import { AppState, ISkillTree, convertToRegex } from "app/shared/skilltree";
 
@@ -30,34 +30,7 @@ export class HistoryComponent implements OnInit {
         }
 
         if (state.navigation.isLoaded && state.main.isLoaded) {
-          if (this.experiences == null || this.experiences.length === 0) {
-            this.experienceService.experiences
-              .snapshotChanges()
-              .map(snapshots => {
-                return snapshots.map(s =>
-                  <Experience>{
-                    id: s.key,
-                    title: s.payload.val().title,
-                    place: s.payload.val().place,
-                    description: s.payload.val().description,
-                    subnav: s.payload.val().subnav,
-                    period: s.payload.val().period,
-                    path: s.payload.val().path,
-                    label: s.payload.val().label
-                  }
-                )
-              })
-              .subscribe(experiences => {
-                this.experiences = experiences;
-
-                var toRemove = this.queue.filter(q => this.experiences.find(e => e.id === q.id) == null);
-
-                var toAdd = this.experiences.filter(e => e.path.find(p => p === "new")).filter(e => this.queue.find(q => q.id === e.id)== null);
-                
-                this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
-              })
-          }
-          
+          this.handleHistoryReload();
           this.process(state);
         }
 
@@ -117,6 +90,25 @@ export class HistoryComponent implements OnInit {
     }
     else {
       this.queue = [];
+    }
+  }
+
+  handleHistoryReload() {
+    if (this.experiences == null || this.experiences.length === 0) {
+      this.experienceService.experiences
+        .snapshotChanges()
+        .map(snapshots => {
+          return snapshots.map(s => mapFromSnapshot(s))
+        })
+        .subscribe(experiences => {
+          this.experiences = experiences;
+
+          var toRemove = this.queue.filter(q => this.experiences.find(e => e.id === q.id) == null);
+
+          var toAdd = this.experiences.filter(e => e.path.find(p => p === "new")).filter(e => this.queue.find(q => q.id === e.id) == null);
+
+          this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
+        })
     }
   }
 

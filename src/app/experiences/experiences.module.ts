@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from './experience.component';
 import { HistoryComponent } from './history.component';
+import { PeriodPipe } from './period.pipe';
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import { HistoryComponent } from './history.component';
     SharedModule, 
     EditingModule
   ],
-  declarations: [ExperienceComponent, HistoryComponent],
+  declarations: [ExperienceComponent, HistoryComponent, PeriodPipe],
   providers:[ExperienceService],
   exports:[HistoryComponent]
 })

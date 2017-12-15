@@ -2,7 +2,7 @@ import { findSkill } from 'app/shared/skilltree';
 import { Store } from '@ngrx/store';
 import { ISkillTree, Skill, getByNavigationBarId, AppState, enumerateTree } from './../shared/skilltree';
 import { Subject } from 'rxjs/Subject';
-import { Experience } from './experience';
+import { Experience, Period, ParsePeriod } from './experience';
 import { Component, OnInit, Input, ContentChild, ViewChild, Directive } from '@angular/core';
 import { Node } from '../navigation/navigation';
 import { Add, Remove } from "app/reducers/actions";
@@ -13,7 +13,7 @@ import { ExperienceService } from 'app/experiences/experience.service';
   template: `
     <i *ngIf="isEditable" (click)="deleteExperience(experience)" class="fa fa-trash-o" aria-hidden="true"></i>
     <div class="col-3 first">
-      <strong editable (contentChanges)="updatePeriod(experience, $event)">{{experience.period}}</strong>
+      <strong editable (contentChanges)="updatePeriod(experience, $event)">{{experience.period | period}}</strong>
     </div>
     <div class="col second">
       <h5 editable (contentChanges)="updateTitle(experience, $event)">{{experience.title}}</h5>
@@ -79,7 +79,7 @@ export class ExperienceComponent {
   }
 
   updatePeriod(experience, period: string) {
-    this.experienceService.updateExperience(experience, { period: period });
+    this.experienceService.updateExperience(experience, { period: ParsePeriod(period) });
   }
 
   deleteExperience(experience) {

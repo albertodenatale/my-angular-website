@@ -19,6 +19,7 @@ import { AngularFireModule } from 'angularfire2';
 import { EffectsModule } from "@ngrx/effects";
 import { AngularFireDatabaseModule } from "angularfire2/database";
 import { AngularFireAuthModule } from "angularfire2/auth";
+import * as moment from 'moment';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { AngularFireAuthModule } from "angularfire2/auth";
     EffectsModule.forRoot([StateService, ExperienceService]),      
     AngularFireAuthModule  
   ],
-  providers: [],
+  providers: [{ provide: 'moment', useValue: moment }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
