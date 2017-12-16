@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Period, formatPeriod } from "app/experiences/experience";
+import { Period, formatPeriod, Experience } from "app/experiences/experience";
 import * as moment from 'moment';
 
 @Pipe({
@@ -7,8 +7,8 @@ import * as moment from 'moment';
 })
 export class PeriodPipe implements PipeTransform {
 
-  transform(period: Period, args?: any): string {
-    return formatPeriod(period);
+  transform(experience: Experience, args?: any): string {
+    return formatPeriod(experience.period);
   }
 
 }

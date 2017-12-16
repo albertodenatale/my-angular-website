@@ -50,23 +50,29 @@ export function ParsePeriod(period: string): Period {
 }
 
 export function formatPeriod(period:Period): string {
-    if(period == null){
-        return "";
-    }
-    var dateFrom = moment(period.from).format("MMMM YYYY");
-    var dateTo = moment(period.to).format("MMMM YYYY");
+    var dateFrom = moment.unix(period.from).format("MMMM YYYY");
+    var dateTo = moment.unix(period.to).format("MMMM YYYY");
 
     return dateFrom.concat(" - ").concat(dateTo);
 }
 
 export function mapFromSnapshot(experience: SnapshotAction) {
+    let period : Period = experience.payload.val().period;
+
+    if(period== null){
+        period = <Period>{
+            from:0,
+            to:0
+        }
+    };
+    
     return <Experience>{
         id: experience.key,
         title: experience.payload.val().title,
         place: experience.payload.val().place,
         description: experience.payload.val().description,
         subnav: experience.payload.val().subnav,
-        period: experience.payload.val().period,
+        period: period,
         path: experience.payload.val().path,
         label: experience.payload.val().label
     }

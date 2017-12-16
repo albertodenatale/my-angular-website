@@ -10,7 +10,7 @@ import { AppState, ISkillTree, convertToRegex } from "app/shared/skilltree";
 @Component({
   selector: 'history',
   template: `
-     <experience *ngFor="let experience of queue" [experience]="experience" class="row"></experience>
+     <experience *ngFor="let experience of queue | sortByDateFrom" [experience]="experience" class="row"></experience>
      <button *ngIf="isEditable==true" class="btn btn-primary" (click)="addEmptyExperience()">Add</button>
     `
 })

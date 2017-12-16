@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from './experience.component';
 import { HistoryComponent } from './history.component';
 import { PeriodPipe } from './period.pipe';
+import { SortByDateFromPipe } from './sort-by-date-from.pipe';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { PeriodPipe } from './period.pipe';
     SharedModule, 
     EditingModule
   ],
-  declarations: [ExperienceComponent, HistoryComponent, PeriodPipe],
+  declarations: [ExperienceComponent, HistoryComponent, PeriodPipe, SortByDateFromPipe],
   providers:[ExperienceService],
   exports:[HistoryComponent]
 })

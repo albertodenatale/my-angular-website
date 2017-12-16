@@ -13,7 +13,7 @@ import { ExperienceService } from 'app/experiences/experience.service';
   template: `
     <i *ngIf="isEditable" (click)="deleteExperience(experience)" class="fa fa-trash-o" aria-hidden="true"></i>
     <div class="col-3 first">
-      <strong editable (contentChanges)="updatePeriod(experience, $event)">{{experience.period | period}}</strong>
+      <strong editable (contentChanges)="updatePeriod(experience, $event)">{{experience | period}}</strong>
     </div>
     <div class="col second">
       <h5 editable (contentChanges)="updateTitle(experience, $event)">{{experience.title}}</h5>
