@@ -37,11 +37,20 @@ export function ParsePeriod(period: string): Period {
 
     let dates: string[] = period.split("-");
 
+    if(dates.length == 1){
+        dates = period.split("–");
+    }
+
     let from: string = dates[0];
     let to: string = dates[1];
 
+    
     let dateFrom: number = moment(from, "MMMM YYYY").unix();
-    let dateTo: number = moment(to, "MMMM YYYY").unix();
+    let dateTo: number = null;
+
+    if(to){
+        let dateTo: number = moment(to, "MMMM YYYY").unix();
+    }
 
     return <Period>{
         from: dateFrom,
@@ -50,8 +59,12 @@ export function ParsePeriod(period: string): Period {
 }
 
 export function formatPeriod(period:Period): string {
-    var dateFrom = moment.unix(period.from).format("MMMM YYYY");
-    var dateTo = moment.unix(period.to).format("MMMM YYYY");
+    let dateFrom : string = moment.unix(period.from).format("MMMM YYYY");
+    var dateTo = "Today";
+    
+    if(period.to){
+        var dateTo = moment.unix(period.to).format("MMMM YYYY");
+    }
 
     return dateFrom.concat(" - ").concat(dateTo);
 }
