@@ -4,11 +4,12 @@ import { Observable } from 'rxjs/Rx';
 import { ISkillTree, AppState } from './shared/skilltree';
 import * as NodesActions from 'app/reducers/actions';
 import { StateService } from './core/state.service';
-import { Component, trigger, state, style, transition, animate, keyframes } from '@angular/core';
+import { Component } from '@angular/core';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Store } from "@ngrx/store";
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { style, trigger, state, transition, animate, keyframes, query, stagger } from "@angular/animations";
 
 @Component({
   selector: 'app-root',
@@ -16,20 +17,26 @@ import * as firebase from 'firebase/app';
   animations: [
     trigger("loaded",
       [
-        state("loaded", style({ transform: "translate(0)" })),
-        transition('loading => loaded', [
-          animate(300, keyframes([
-            style({ transform: 'translateX(-100%)', }),
-            style({ transform: 'translateX(30px)' }),
-            style({ transform: 'translateX(0)' })
-          ]))
+        transition('* => *', [
+          query(':enter', style({ opacity: 0 }), { optional: true }),
+          query(':enter',
+            stagger('200ms', [
+              animate(300,
+                keyframes([
+                  style({ transform: 'translateX(-100%)', opacity: 0 }),
+                  style({ transform: 'translateX(30px)', opacity: 1 }),
+                  style({ transform: 'translateX(0)' })
+                ])
+              )
+            ]), { optional: true }
+          )
         ])
       ])
   ]
 })
 export class AppComponent {
   loaded: string = "loading";
-  user:any
+  user: any
 
   constructor(private store: Store<AppState>, private stateService: StateService, private firebaseAuth: AngularFireAuth) {
     this.store.select<ISkillTree>(state => state.navigation).subscribe((skillTree) => { if (skillTree.isLoaded) { this.loaded = "loaded" } });
@@ -41,10 +48,10 @@ export class AppComponent {
     });
   }
 
- googleauth() {
+  googleauth() {
     this.firebaseAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
-      (value) =>{
-        if(value){
+      (value) => {
+        if (value) {
           this.store.dispatch(
             new Login(value)
           )

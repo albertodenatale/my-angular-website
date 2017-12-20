@@ -1,32 +1,46 @@
 import { SUBNAV, AppState, MAINNAV } from './../shared/skilltree';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
-import { Component, OnInit, trigger, state, transition, style, animate, keyframes, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Node } from './navigation';
 import 'rxjs/Rx';
 import { ISkillTree, Skill, getByNavigationBarId, findSkill } from "app/shared/skilltree";
 import { Add, Remove } from "app/reducers/actions";
+import { style, trigger, state, transition, animate, keyframes, query, stagger } from "@angular/animations";
 
 @Component({
   selector: 'subnavigation',
   template: `
-      <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" [@flyInOut] (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+    <div [@flyInOut]="navs.length">
+      <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+    </div>
   `,
   animations: [
     trigger('flyInOut', [
-      transition('void => *', [
-        animate(300, keyframes([
-          style({ transform: 'translateX(1000%)', }),
-          style({ transform: 'translateX(-30px)' }),
-          style({ transform: 'translateX(0)' })
-        ]))
-      ]),
-      transition('* => void', [
-        animate(300, keyframes([
-          style({ transform: 'translateX(0)', }),
-          style({ transform: 'translateX(-30px)' }),
-          style({ transform: 'translateX(1000%)' })
-        ]))
+      transition('* => *', [
+        query(':enter', style({ opacity: 0 }), { optional: true }),
+        query(':enter',
+          stagger('200ms', [
+            animate(300,
+              keyframes([
+                style({ opacity: 0, transform: 'translateX(1000%)', offset: 0 }),
+                style({ opacity: 1, transform: 'translateX(-30px)', offset: 0.3 }),
+                style({ transform: 'translateX(0)', offset: 1 })
+              ])
+            )
+          ]), { optional: true }
+        ),
+        query(':leave',
+          stagger('200ms', [
+            animate(300,
+              keyframes([
+                style({ transform: 'translateX(0)' }),
+                style({ transform: 'translateX(-30px)', opacity: 1 }),
+                style({ transform: 'translateX(1000%)', opacity: 0 })
+              ])
+            )
+          ]), { optional: true }
+        )
       ])
     ])
   ]
@@ -39,7 +53,7 @@ export class SubnavigationComponent {
       skillTree => {
         this.process(skillTree, getByNavigationBarId(skillTree, SUBNAV));
       }
-    )
+    );
   }
 
   whenOn(skill: Skill) {
