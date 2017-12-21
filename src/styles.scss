@@ -15,7 +15,7 @@ $paddingRightColumns1:20px;
 
 
 body{
-    font-size: 16px;
+    font-size: 15px;
 }
 
 h5{
@@ -85,7 +85,7 @@ h5{
     right:0;
 }
 
-header .col-3.first h5 {
+header .first h5 {
     top: 0;
 }
 
@@ -93,12 +93,12 @@ h5{
     right: $paddingRightColumns1;
 }
 
-.col-3.first h5 {
+.first h5 {
     position: absolute;
     top:15px;
 }
 
-.col-3.first strong {
+.first strong {
     color: $blueMedium;
     position: absolute;
     right: $paddingRightColumns1;
