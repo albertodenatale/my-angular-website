@@ -126,6 +126,7 @@ navigation {
     display: flex;
     margin-top:1%;
     width: 100%;
+    min-height: 150px;
     // .input-group{
     //     width: 80%;
     //     float: right;
@@ -148,8 +149,19 @@ navigation {
 
 experience{
     margin:0 0 10px 0;
+    toggable{
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
 }
 
 subnavigation {
     width: 100%;
+    min-height: 100px;
+}
+
+.container{
+    overflow-y:hidden;
+    overflow-x:hidden;
+    min-height: 50px;
 }
