@@ -14,7 +14,7 @@ export class ToggableDirective{
   @Input()
   @HostBinding('class.btn-primary') isOn: boolean;
   
-  @HostBinding('class.btn-info') get isOff() { return !this.isOn;};
+  @HostBinding('class.btn-secondary') get isOff() { return !this.isOn;};
 
   toggleState(){
     this.isOn = !this.isOn;

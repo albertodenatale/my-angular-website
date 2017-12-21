@@ -140,6 +140,18 @@ navigation {
     }
 }
 
+toggable {
+    &.btn{
+        &.btn-primary{
+            background-color:$blueDark;
+        } 
+        &.btn-secondary{
+            color:$blueLight;
+            border-color: $blueMedium;
+        } 
+    }
+}
+
 .signin {
     position: absolute;
     right: 0;
