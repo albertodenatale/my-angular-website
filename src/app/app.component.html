@@ -1,5 +1,5 @@
 <div class="container" >
-  <navigation class="row" [@loaded]="loaded"></navigation>
+  <navigation [@loaded]="loaded"></navigation>
   <div *ngIf="user==null" class="btn btn-primary signin" (click)="googleauth()">Sign In</div>
   <personal-details></personal-details>
   <line>Work Experience</line>

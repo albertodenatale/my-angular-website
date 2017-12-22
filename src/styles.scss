@@ -125,17 +125,15 @@ html, body {
 navigation {
     display: flex;
     margin-top:1%;
-    width: 100%;
-    min-height: 150px;
+    width: 110%;
     // .input-group{
     //     width: 80%;
     //     float: right;
     // }
     toggable {
         display:block;
-        width: 10%;
         height:38px;
-        min-width: 100px;
+        min-width: 115px;
         margin: 5px 10px 0 0;
     }
 }
@@ -144,9 +142,10 @@ toggable {
     &.btn{
         &.btn-primary{
             background-color:$blueDark;
+            border-color: $blueDark;
         } 
         &.btn-secondary{
-            color:$blueLight;
+            color:$blueMedium;
             border-color: $blueMedium;
         } 
     }
