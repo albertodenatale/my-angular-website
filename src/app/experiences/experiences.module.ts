@@ -7,6 +7,7 @@ import { ExperienceComponent } from './experience.component';
 import { HistoryComponent } from './history.component';
 import { PeriodPipe } from './period.pipe';
 import { SortByDateFromPipe } from './sort-by-date-from.pipe';
+import { TrainingComponent } from "app/experiences/training.component";
 
 @NgModule({
   imports: [
@@ -14,8 +15,8 @@ import { SortByDateFromPipe } from './sort-by-date-from.pipe';
     SharedModule, 
     EditingModule
   ],
-  declarations: [ExperienceComponent, HistoryComponent, PeriodPipe, SortByDateFromPipe],
+  declarations: [ExperienceComponent, HistoryComponent, PeriodPipe, SortByDateFromPipe, TrainingComponent],
   providers:[ExperienceService],
-  exports:[HistoryComponent]
+  exports:[HistoryComponent, TrainingComponent]
 })
 export class ExperiencesModule { }
