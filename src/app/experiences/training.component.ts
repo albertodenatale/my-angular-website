@@ -21,8 +21,7 @@ import { Component, OnInit } from '@angular/core';
   `
 })
 export class TrainingComponent {
-  isEditable: boolean;
-
+  
   constructor(private store: Store<AppState>) { }
 
   ngOnInit() {

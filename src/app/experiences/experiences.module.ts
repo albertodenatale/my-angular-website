@@ -1,3 +1,4 @@
+import { EducationComponent } from './education.component';
 import { EditingModule } from './../editing/editing.module';
 import { SharedModule } from './../shared/shared.module';
 import { ExperienceService } from './experience.service';
@@ -15,8 +16,8 @@ import { TrainingComponent } from "app/experiences/training.component";
     SharedModule, 
     EditingModule
   ],
-  declarations: [ExperienceComponent, HistoryComponent, PeriodPipe, SortByDateFromPipe, TrainingComponent],
+  declarations: [ExperienceComponent, HistoryComponent, PeriodPipe, SortByDateFromPipe, TrainingComponent, EducationComponent],
   providers:[ExperienceService],
-  exports:[HistoryComponent, TrainingComponent]
+  exports:[HistoryComponent, TrainingComponent, EducationComponent]
 })
 export class ExperiencesModule { }
