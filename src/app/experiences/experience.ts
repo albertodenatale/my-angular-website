@@ -21,7 +21,8 @@ export class Experience extends Node {
     place: string;
     description: string;
     period: Period;
-    subnav: Array<Node>
+    subnav: Array<Node>;
+    relevancy: number;
 }
 
 export class Period {
