@@ -171,6 +171,7 @@ export class Skill {
     children: Array<Skill>;
     parentId: string;
     label: string;
+    weight:number;
 }
 
 export const MAINNAV = "MAINNAV";

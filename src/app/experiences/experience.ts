@@ -15,6 +15,7 @@ export class Experience extends Node {
             to: new Date().getMilliseconds()
         };
         this.path = ["new"];
+        this.currentPosition = 0;
     }
 
     title: string;
@@ -23,6 +24,8 @@ export class Experience extends Node {
     period: Period;
     subnav: Array<Node>;
     relevancy: number;
+    currentPosition: number;
+    currentDelta: number;
 }
 
 export class Period {

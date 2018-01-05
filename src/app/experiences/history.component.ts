@@ -4,23 +4,23 @@ import { ExperienceComponent } from './experience.component';
 import { element } from 'protractor';
 import { ExperienceService } from './experience.service';
 import { Experience, mapFromSnapshot } from './experience';
-import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { AppState, ISkillTree, convertToRegex, enumerateTree } from "app/shared/skilltree";
 import { style, trigger, state, transition, animate, keyframes, query, stagger } from "@angular/animations";
 
 @Component({
   selector: 'history',
   template: `
-     <div [@flyInOut]="weight">
-       <experience *ngFor="let experience of queue | sortByDateFrom" [experience]="experience" class="row"></experience>
+     <div [@flyInOut]="queue.length">
+       <experience *ngFor="let experience of queue" [experience]="experience" [style.transform]="'translateY('+experience.currentPosition+'px)'" class="row"></experience>
      </div>
      <button *ngIf="isEditable==true" class="btn btn-primary" (click)="addEmptyExperience()">Add</button>
     `,
   animations: [
     trigger('flyInOut', [
       transition('* => *', [
-        query('experience', style({ opacity: 0 }), { optional: true }),
-        query('experience',
+        query('experience:enter', style({ opacity: 0 }), { optional: true }),
+        query('experience:enter',
           stagger('200ms', [
             animate(300,
               keyframes([
@@ -36,10 +36,12 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
   ]
 })
 export class HistoryComponent implements OnInit {
-  experiences: Array<Experience> = new Array<Experience>();
   queue: Array<Experience> = [];
   isEditable: boolean = false;
   weight = 0;
+
+  @ViewChildren(ExperienceComponent, { read: ElementRef }) componentsSizes: QueryList<ElementRef>;
+  @ViewChildren(ExperienceComponent) experienceComponents: QueryList<ExperienceComponent>;
 
   constructor(private store: Store<AppState>, private experienceService: ExperienceService) {
     this.store.select<AppState>((state) => state).subscribe(
@@ -64,85 +66,107 @@ export class HistoryComponent implements OnInit {
     this.store.dispatch(new FetchMainContent());
   }
 
+  sizes: Array<number> = [];
+
   process(state: AppState) {
-    var regex: Array<RegExp> = convertToRegex(state.navigation);
-
-    if (regex && regex.length > 0) {
-      let selected: Array<Experience> = this.experiences.filter(
-        e => {
-          let path: string = e.path.join(' ');
-          let isMatch: boolean = true;
-
-          regex.forEach(r => {
-            if (path.match(r) == null) {
-              isMatch = false;
-            }
-          });
-
-          if (isMatch) {
-            let relevancy = 0;
-            
-            for (var skill of Array.from(enumerateTree(state.navigation))) {
-              if (skill.isActive && e.path.find(p => p === skill.id)) {
-                relevancy += 1;
-                this.weight += 1;
-              }
-            }
-
-            e.relevancy = relevancy;
-          }
-
-          return isMatch;
-        }
-      );
-
-      if (selected != null && selected.length > 0) {
-        let toAdd: Array<Experience> = selected.filter(
-          e => {
-            if (this.queue.find(existing => existing.id === e.id) == null) {
-              return true;
-            }
-
-            return false;
-          }
-        );
-
-        let toRemove: Array<Experience> = this.queue.filter(
-          existing => {
-            if (selected.find(e => e.id === existing.id) == null) {
-              return true;
-            }
-
-            return false;
-          }
-        );
-
-        this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
-      }
-      else {
-        this.queue = [];
-      }
+    if (this.componentsSizes.length) {
+      this.getComponentSize("1");
     }
-    else {
-      this.queue = [];
+
+    var sorted = this.queue.slice();
+
+    this.queue.forEach(e => {
+      let relevancy = 0;
+      e.relevancy = 0;
+
+      for (var skill of Array.from(enumerateTree(state.navigation))) {
+        if (skill.isActive && e.path.find(p => p === skill.id)) {
+          var weight = 1;
+
+          if (skill.weight) {
+            weight = skill.weight;
+          }
+          relevancy += weight;
+        }
+      }
+
+      e.relevancy = relevancy;
+    });
+
+    this.sortHistory(sorted);
+
+    if (this.componentsSizes.length) {
+      this.queue.forEach(e => {
+        var newIndex = sorted.indexOf(e);
+        var initialIndex = this.queue.indexOf(e);
+        var initialPosition = 0;
+
+        for (var i = 0; i < initialIndex; i++) {
+          initialPosition += this.getComponentSize(this.queue[i].id);
+        }
+
+        var newPosition = 0;
+
+
+        for (var i = 0; i < newIndex; i++) {
+          newPosition += this.getComponentSize(sorted[i].id);
+        }
+
+        e.currentPosition = newPosition - initialPosition;
+      });
+    }
+
+  }
+
+  private sortHistory(unsorted) {
+    return unsorted.sort((a: Experience, b: Experience) => {
+      if (a.relevancy > b.relevancy) {
+        return -1;
+      }
+      else if (a.relevancy === b.relevancy) {
+        if (a.period.from < b.period.from) {
+          return 1;
+        }
+        else if (a.period.from == b.period.from) {
+          return 0;
+        }
+        else if (a.period.from > b.period.from) {
+          return -1;
+        }
+      }
+      else if (a.relevancy < b.relevancy) {
+        return 1;
+      }
+
+      throw new Error("Ouch!");
+    });
+  }
+
+  getComponentSize(key: string) {
+    var component = this.experienceComponents.find(e => e.experience.id === key);
+
+    if (component) {
+      var index = this.experienceComponents.toArray().indexOf(component);
+
+      if (index > -1) {
+        var natEl = this.componentsSizes.toArray()[index].nativeElement;
+
+        if (natEl) {
+          return natEl.offsetHeight + 10;
+        }
+      }
     }
   }
 
   handleHistoryReload() {
-    if (this.experiences == null || this.experiences.length === 0) {
+    if (this.queue == null || this.queue.length === 0) {
       this.experienceService.experiences
         .snapshotChanges()
         .map(snapshots => {
           return snapshots.map(s => mapFromSnapshot(s))
         })
         .subscribe(experiences => {
-          this.experiences = experiences;
-
-          var toRemove = this.queue.filter(q => this.experiences.find(e => e.id === q.id) == null);
-
-          var toAdd = this.experiences.filter(e => e.path.find(p => p === "new")).filter(e => this.queue.find(q => q.id === e.id) == null);
-
-          this.queue = this.queue.concat(toAdd).filter(s => toRemove.find(r => r.id === s.id) == null);
+          this.queue = this.sortHistory(experiences);
         })
     }
   }

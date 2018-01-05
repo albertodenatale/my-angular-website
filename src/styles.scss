@@ -163,7 +163,8 @@ experience{
     toggable{
         margin-right: 5px;
         margin-bottom: 5px;
-    }
+    };
+    transition: transform 1s;
 }
 
 subnavigation {
