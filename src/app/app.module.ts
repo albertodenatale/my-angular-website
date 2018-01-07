@@ -19,6 +19,7 @@ import { AngularFireModule } from 'angularfire2';
 import { EffectsModule } from "@ngrx/effects";
 import { AngularFireDatabaseModule } from "angularfire2/database";
 import { AngularFireAuthModule } from "angularfire2/auth";
+import { AngularFirestoreModule } from "angularfire2/firestore";
 import * as moment from 'moment';
 
 @NgModule({
@@ -35,7 +36,8 @@ import * as moment from 'moment';
     CoreModule,
     EditingModule,
     StoreModule.forRoot({ navigation: navigationReducer, main: mainReducer, authentication: authenticationReducer }),
-    AngularFireModule.initializeApp(environment.firebase),             
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),            
     AngularFireDatabaseModule,   
     EffectsModule.forRoot([StateService, ExperienceService]),      
     AngularFireAuthModule  
