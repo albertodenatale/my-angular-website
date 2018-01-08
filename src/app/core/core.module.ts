@@ -1,3 +1,4 @@
+import { QueryStringService } from './querystring.service';
 import { EditService } from './edit.service';
 import { StateService } from './state.service';
 import { NgModule } from '@angular/core';
@@ -9,7 +10,7 @@ import { PersonalDetailsComponent } from './personal-details.component';
   imports: [
     CommonModule
   ],
-  providers:[StateService, EditService],
+  providers:[StateService, EditService, QueryStringService],
   declarations: [LineComponent, PersonalDetailsComponent],
   exports:[LineComponent, PersonalDetailsComponent]
 })

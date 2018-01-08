@@ -144,7 +144,8 @@ export class AppState {
 
 export interface ISkillTree {
     root: Skill
-    isLoaded: boolean
+    isLoaded: boolean,
+    queryString: any
 }
 
 export class SkillTree implements ISkillTree {
@@ -152,6 +153,7 @@ export class SkillTree implements ISkillTree {
     isLoaded: boolean;
     currentNav: string;
     currentSubnav: string;
+    queryString: any;
 }
 
 export class Main {

@@ -1,3 +1,4 @@
+import { QueryStringService } from './core/querystring.service';
 import { EditingModule } from './editing/editing.module';
 import { ExperienceService } from './experiences/experience.service';
 import { StateService } from './core/state.service';
@@ -21,6 +22,7 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFirestoreModule } from "angularfire2/firestore";
 import * as moment from 'moment';
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import * as moment from 'moment';
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot([]),
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
@@ -39,7 +42,7 @@ import * as moment from 'moment';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),            
     AngularFireDatabaseModule,   
-    EffectsModule.forRoot([StateService, ExperienceService]),      
+    EffectsModule.forRoot([StateService, ExperienceService, QueryStringService]),      
     AngularFireAuthModule  
   ],
   providers: [{ provide: 'moment', useValue: moment }],

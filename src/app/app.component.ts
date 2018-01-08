@@ -1,3 +1,4 @@
+import { QueryStringService } from './core/querystring.service';
 import { Login } from './reducers/actions';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Rx';
@@ -38,7 +39,7 @@ export class AppComponent {
   loaded: string = "loading";
   user: any
 
-  constructor(private store: Store<AppState>, private stateService: StateService, private firebaseAuth: AngularFireAuth) {
+  constructor(private store: Store<AppState>, private stateService: StateService, private firebaseAuth: AngularFireAuth, private queryStringComponent:QueryStringService) {
     this.store.select<ISkillTree>(state => state.navigation).subscribe((skillTree) => { if (skillTree.isLoaded) { this.loaded = "loaded" } });
   }
 

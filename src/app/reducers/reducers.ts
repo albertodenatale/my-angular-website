@@ -5,7 +5,7 @@ import * as Actions from './actions'
 
 export type SelectedNodes = Array<string[]>
 
-export function navigationReducer(state: ISkillTree = { root: null, isLoaded: false }, action: Actions.All): ISkillTree {
+export function navigationReducer(state: ISkillTree = { root: null, isLoaded: false, queryString: {} }, action: Actions.All): ISkillTree {
     switch (action.type) {
         case Actions.ADD:
             add(state, action.payload);
@@ -15,14 +15,28 @@ export function navigationReducer(state: ISkillTree = { root: null, isLoaded: fa
             remove(state, action.payload);
 
             break;
+        case Actions.QUERYSTRINGLOADED:
+            state.queryString = action.payload;
+            loadQueryString(state);
+            break;
 
         case Actions.INITIALSTATELOADED:
-            action.payload.isLoaded = true;
-            return action.payload;
+            state.isLoaded = true;
+            state.root = action.payload.root;
+            loadQueryString(state);
+            break;
 
     }
 
     return JSON.parse(JSON.stringify(state));
+}
+
+function loadQueryString(state) {
+    if (state.queryString) {
+        for (var query in state.queryString) {
+            add(state, query);
+        }
+    }
 }
 
 function add(state, nodeId) {
@@ -59,7 +73,7 @@ function remove(state, nodeId) {
             if (parent.navigationBarId == null) {
                 let isAnyChildActive = parent.children.some(c => c.isActive);
 
-                if(!isAnyChildActive){
+                if (!isAnyChildActive) {
                     parent.isActive = false;
                 }
             }

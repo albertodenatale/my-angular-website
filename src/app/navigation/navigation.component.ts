@@ -5,6 +5,7 @@ import { Node } from './navigation';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject } from "rxjs/Rx";
 import { ISkillTree, getByNavigationBarId, Skill } from "app/shared/skilltree";
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'navigation',
