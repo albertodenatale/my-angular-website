@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { ISkillTree, AppState } from './shared/skilltree';
 import * as NodesActions from 'app/reducers/actions';
 import { StateService } from './core/state.service';
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Store } from "@ngrx/store";
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -38,6 +38,7 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
 export class AppComponent {
   loaded: string = "loading";
   user: any
+  //@HostBinding('@.disabled') public animationsDisabled = true;
 
   constructor(private store: Store<AppState>, private stateService: StateService, private firebaseAuth: AngularFireAuth, private queryStringComponent:QueryStringService) {
     this.store.select<ISkillTree>(state => state.navigation).subscribe((skillTree) => { if (skillTree.isLoaded) { this.loaded = "loaded" } });
