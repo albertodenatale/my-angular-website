@@ -23,9 +23,9 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
           stagger('200ms', [
             animate(300,
               keyframes([
-                style({ opacity: 0, transform: 'translateX(1000%)', offset: 0 }),
-                style({ opacity: 1, transform: 'translateX(-30px)', offset: 0.3 }),
-                style({ transform: 'translateX(0)', offset: 1 })
+                style({ transform: 'translateX(-100%)', opacity: 0 }),
+                style({ transform: 'translateX(30px)', opacity: 1 }),
+                style({ transform: 'translateX(0)' })
               ])
             )
           ]), { optional: true }
