@@ -11,12 +11,12 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
 @Component({
   selector: 'subnavigation',
   template: `
-    <div [@flyInOut]="navs.length">
+    <div [@animateSubnav]="navs.length">
       <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
     </div>
   `,
   animations: [
-    trigger('flyInOut', [
+    trigger('animateSubnav', [
       transition('* => *', [
         query(':enter', style({ opacity: 0 }), { optional: true }),
         query(':enter',

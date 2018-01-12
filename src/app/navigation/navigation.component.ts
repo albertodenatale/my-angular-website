@@ -11,11 +11,11 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
 @Component({
   selector: 'navigation',
   template: `
-  <div [@loaded]="loaded">
+  <div [@animatebar]="animationTrigger">
     <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
   </div>`,
   animations: [
-    trigger("loaded",
+    trigger("animatebar",
       [
         transition('* => *', [
           query(':enter', style({ opacity: 0 }), { optional: true }),
@@ -37,13 +37,13 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
 export class NavigationComponent {
 
   navs: Array<Skill>;
-  loaded: string = "loading";
+  animationTrigger: string = "no";
 
   constructor(private store: Store<AppState>) {
     this.store.select<ISkillTree>(state => state.navigation).subscribe(
       skillTree => {
         this.navs = getByNavigationBarId(skillTree, MAINNAV);
-        if (skillTree.isLoaded) { this.loaded = "loaded" }
+        if (skillTree.isLoaded) { this.animationTrigger = "yes" }
       }
     )
   }
