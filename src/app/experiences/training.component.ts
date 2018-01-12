@@ -55,7 +55,7 @@ export class TrainingComponent {
     )
   }
 
-  private trainings = [
+  trainings = [
     {
       duration:"October 2013 – December 2013",
       title:".NET Advanced Applications Development Using C#",

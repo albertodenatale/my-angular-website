@@ -55,7 +55,7 @@ export class EducationComponent {
     )
   }
 
-  private educations = [
+  educations = [
     {
       duration:"August 2010-December 2010",
       title:"Semester Abroad",
