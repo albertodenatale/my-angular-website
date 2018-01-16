@@ -1,3 +1,4 @@
+import { AnimationService } from './animation.service';
 import { SUBNAV, AppState, MAINNAV } from './../shared/skilltree';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
@@ -47,11 +48,27 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
 })
 export class SubnavigationComponent {
   navs: Array<Skill>;
+  isNavBarLoaded: boolean = false;
+  loadedTree: ISkillTree
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private animationService: AnimationService) {
     this.store.select<ISkillTree>((state) => state.navigation).subscribe(
       skillTree => {
-        this.process(skillTree, getByNavigationBarId(skillTree, SUBNAV));
+        if (this.isNavBarLoaded) {
+          this.process(this.loadedTree, getByNavigationBarId(this.loadedTree, SUBNAV));
+        }
+        else {
+          this.loadedTree = skillTree;
+        }
+      }
+    );
+
+    this.animationService.startSubAnimation$.subscribe(
+      isOkToStart => {
+        if (isOkToStart) {
+          this.isNavBarLoaded = true;
+          this.process(this.loadedTree, getByNavigationBarId(this.loadedTree, SUBNAV));
+        }
       }
     );
   }
