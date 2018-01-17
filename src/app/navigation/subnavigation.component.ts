@@ -47,7 +47,7 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
   ]
 })
 export class SubnavigationComponent {
-  navs: Array<Skill>;
+  navs: Array<Skill> = [];
   isNavBarLoaded: boolean = false;
   loadedTree: ISkillTree
 
