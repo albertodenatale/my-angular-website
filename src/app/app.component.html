@@ -1,7 +1,6 @@
 <div class="container" >
-  <isMobile (isMobile)="isNavShowed=!$event"></isMobile>
-  <navigation *ngIf="isNavShowed"></navigation>
-  <subnavigation *ngIf="isNavShowed"></subnavigation>
+  <navigation class="hidden-sm-down"></navigation>
+  <subnavigation class="hidden-sm-down"></subnavigation>
   <div *ngIf="user==null" class="btn btn-primary signin" (click)="googleauth()">Sign In</div>
   <personal-details></personal-details>
   <line>Work Experience</line>

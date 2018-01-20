@@ -12,13 +12,13 @@ import { ExperienceService } from 'app/experiences/experience.service';
   selector: 'experience',
   template: `
     <i *ngIf="isEditable" (click)="deleteExperience(experience)" class="fa fa-trash-o" aria-hidden="true"></i>
-    <div class="col-12 col-md-6 push-sm-3 second">
+    <div class="col-12 col-lg-9 push-lg-3 second">
       <h5 editable (contentChanges)="updateTitle(experience, $event)">{{experience.title}}</h5>
     </div>
-    <div class="col-12 col-md-6 second pull-sm-6 first">
+    <div class="col-12 col-lg-3 pull-lg-9 first">
       <strong editable (contentChanges)="updatePeriod(experience, $event)">{{experience | period}}</strong>
     </div>
-    <div class="col-12 col-md-9 push-sm-3 col second">
+    <div class="col-12 col-lg-9 push-lg-3 col second">
       <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
       <div editable (contentChanges)="updatePlace(experience, $event)">{{experience.place}}</div>
       <div editable (contentChanges)="updateDescription(experience, $event)">{{experience.description}}</div>

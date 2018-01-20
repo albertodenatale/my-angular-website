@@ -4,7 +4,7 @@ import { ExperienceComponent } from './experience.component';
 import { element } from 'protractor';
 import { ExperienceService } from './experience.service';
 import { Experience, mapFromSnapshot } from './experience';
-import { Component, OnInit, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList, ElementRef, HostListener } from '@angular/core';
 import { AppState, ISkillTree, convertToRegex, enumerateTree } from "app/shared/skilltree";
 import { style, trigger, state, transition, animate, keyframes, query, stagger } from "@angular/animations";
 
@@ -39,6 +39,7 @@ export class HistoryComponent implements OnInit {
   queue: Array<Experience> = [];
   isEditable: boolean = false;
   weight = 0;
+  currentState:AppState
 
   @ViewChildren(ExperienceComponent, { read: ElementRef }) componentsSizes: QueryList<ElementRef>;
   @ViewChildren(ExperienceComponent) experienceComponents: QueryList<ExperienceComponent>;
@@ -58,8 +59,15 @@ export class HistoryComponent implements OnInit {
           this.process(state);
         }
 
+        this.currentState = state;
+
       }
     );
+  }
+  
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.process(this.currentState);
   }
 
   ngOnInit() {
