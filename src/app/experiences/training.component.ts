@@ -9,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
   selector: 'training',
   template: `
     <div *ngFor="let training of trainings" class="row">
-      <div class="col-3 first">
+      <div class="col-12 col-md-6 first push-sm-3 second">
+        <h5>{{training.title}}</h5>
+      </div>
+      <div class="col-12 col-md-6 second pull-sm-6 first">
         <strong>{{training.duration}}</strong>
       </div>
-      <div class="col second">
-        <h5>{{training.title}}</h5>
+      <div class="col-12 col-md-6 push-sm-3 col second">
         <toggable *ngFor="let nav of training.navs" [isOn]="nav.isActive" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
         <div>{{training.place}}</div>
       </div>

@@ -17,6 +17,7 @@ import * as firebase from 'firebase/app';
 })
 export class AppComponent {
   user: any
+  isNavShowed:boolean = true;
   //@HostBinding('@.disabled') public animationsDisabled = true;
 
   constructor(private store: Store<AppState>, 

@@ -55,7 +55,7 @@ export class SubnavigationComponent {
     this.store.select<ISkillTree>((state) => state.navigation).subscribe(
       skillTree => {
         if (this.isNavBarLoaded) {
-          this.process(this.loadedTree, getByNavigationBarId(this.loadedTree, SUBNAV));
+          this.process(skillTree, getByNavigationBarId(skillTree, SUBNAV));
         }
         else {
           this.loadedTree = skillTree;

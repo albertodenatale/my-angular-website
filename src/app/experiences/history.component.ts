@@ -152,7 +152,7 @@ export class HistoryComponent implements OnInit {
         var natEl = this.componentsSizes.toArray()[index].nativeElement;
 
         if (natEl) {
-          return natEl.offsetHeight + 10;
+          return natEl.offsetHeight + parseInt(window.getComputedStyle(natEl, null).marginBottom);
         }
       }
     }

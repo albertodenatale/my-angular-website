@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'line',
   template: `  
-  <div class="separator row">
-    <div class="col-3 first">
+  <div class="separator hidden-sm-down row">
+    <div class="col-md-3 first">
       <h5><ng-content></ng-content></h5>
     </div>
-    <div class="col second">
+    <div class="col-md-9 second">
       <div class="line"></div>
       <div class="square"></div>
     </div>

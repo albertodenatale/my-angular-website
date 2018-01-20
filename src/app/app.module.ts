@@ -1,3 +1,4 @@
+import { SharedModule } from './shared/shared.module';
 import { QueryStringService } from './core/querystring.service';
 import { EditingModule } from './editing/editing.module';
 import { ExperienceService } from './experiences/experience.service';
@@ -37,6 +38,7 @@ import { RouterModule } from "@angular/router";
     ExperiencesModule,
     NavigationModule,
     CoreModule,
+    SharedModule,
     EditingModule,
     StoreModule.forRoot({ navigation: navigationReducer, main: mainReducer, authentication: authenticationReducer }),
     AngularFireModule.initializeApp(environment.firebase),
