@@ -1,4 +1,5 @@
 @import "~assets/bower_components/bootstrap/scss/bootstrap";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 $red : red;
 $darkRed:darkRed;
@@ -43,6 +44,10 @@ h5{
             width: 100%;
         }
     }
+}
+
+mat-progress-bar[ng-reflect-value="101"]{
+    display: none;
 }
 
 .training { 

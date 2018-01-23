@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs/Subscription';
+import { LoadingService } from './loading/loading.service';
 import { QueryStringService } from './core/querystring.service';
 import { Login } from './reducers/actions';
 import { Effect, Actions } from '@ngrx/effects';
@@ -17,14 +19,24 @@ import * as firebase from 'firebase/app';
 })
 export class AppComponent {
   user: any
-  isNavShowed:boolean = true;
-  //@HostBinding('@.disabled') public animationsDisabled = true;
+  isNavShowed: boolean = true;
+  loadingNavSubscription : Subscription;
 
-  constructor(private store: Store<AppState>, 
-    private stateService: StateService, 
-    private firebaseAuth: AngularFireAuth, 
-    private queryStringComponent:QueryStringService) {
-  }
+  constructor(private store: Store<AppState>,
+    private stateService: StateService,
+    private firebaseAuth: AngularFireAuth,
+    private queryStringComponent: QueryStringService,
+    private loadingService:LoadingService
+  ) {
+    this.loadingNavSubscription = this.store.select<ISkillTree>(state => state.navigation).subscribe(
+      skillTree => {
+        if (skillTree.isLoaded) {
+          this.loadingNavSubscription.unsubscribe();
+          this.loadingService.navigationLoaded();
+        }
+      }
+    )
+   }
 
   ngOnInit() {
     this.store.dispatch({

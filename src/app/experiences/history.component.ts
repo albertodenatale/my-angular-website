@@ -1,3 +1,4 @@
+import { LoadingService } from './../loading/loading.service';
 import { FetchInitialState, FetchMainContent } from './../reducers/actions';
 import { Store } from '@ngrx/store';
 import { ExperienceComponent } from './experience.component';
@@ -11,7 +12,7 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
 @Component({
   selector: 'history',
   template: `
-     <div [@flyInOut]="queue.length">
+     <div [@flyInOut]="queue.length" (@flyInOut.done)="displayEducationAndTraining($event)">
        <experience *ngFor="let experience of queue" [experience]="experience" [style.transform]="'translateY('+experience.currentPosition+'px)'" class="row"></experience>
      </div>
      <button *ngIf="isEditable==true" class="btn btn-primary" (click)="addEmptyExperience()">Add</button>
@@ -44,7 +45,7 @@ export class HistoryComponent implements OnInit {
   @ViewChildren(ExperienceComponent, { read: ElementRef }) componentsSizes: QueryList<ElementRef>;
   @ViewChildren(ExperienceComponent) experienceComponents: QueryList<ExperienceComponent>;
 
-  constructor(private store: Store<AppState>, private experienceService: ExperienceService) {
+  constructor(private store: Store<AppState>, private experienceService: ExperienceService, private loadingService: LoadingService) {
     this.store.select<AppState>((state) => state).subscribe(
       state => {
         if (state.authentication != null) {
@@ -183,5 +184,9 @@ export class HistoryComponent implements OnInit {
     var newExperience = new Experience();
 
     this.experienceService.addExperience(newExperience);
+  }
+
+  displayEducationAndTraining(event){
+    this.loadingService.mainContentRendered();
   }
 }

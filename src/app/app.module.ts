@@ -1,3 +1,4 @@
+import { LoadingModule } from './loading/loading.module';
 import { SharedModule } from './shared/shared.module';
 import { QueryStringService } from './core/querystring.service';
 import { EditingModule } from './editing/editing.module';
@@ -24,6 +25,7 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFirestoreModule } from "angularfire2/firestore";
 import * as moment from 'moment';
 import { RouterModule } from "@angular/router";
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { RouterModule } from "@angular/router";
     AngularFirestoreModule.enablePersistence(),            
     AngularFireDatabaseModule,   
     EffectsModule.forRoot([StateService, ExperienceService, QueryStringService]),      
-    AngularFireAuthModule  
+    AngularFireAuthModule,
+    LoadingModule
   ],
   providers: [{ provide: 'moment', useValue: moment }],
   bootstrap: [AppComponent]
