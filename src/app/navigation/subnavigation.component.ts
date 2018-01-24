@@ -1,4 +1,4 @@
-import { AnimationService } from './animation.service';
+import { AnimationService } from '../core/animation.service';
 import { SUBNAV, AppState, MAINNAV } from './../shared/skilltree';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';

@@ -1,4 +1,4 @@
-import { AnimationService } from './animation.service';
+import { AnimationService } from '../core/animation.service';
 import { AppState, MAINNAV } from './../shared/skilltree';
 import { Add, Remove } from '../reducers/actions';
 import { Store } from '@ngrx/store';

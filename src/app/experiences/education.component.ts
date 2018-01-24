@@ -1,3 +1,4 @@
+import { AnimationService } from 'app/core/animation.service';
 import { Add, Remove } from './../reducers/actions';
 import { findSkill } from 'app/shared/skilltree';
 import { Skill } from 'app/shared/skilltree';
@@ -8,25 +9,36 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'education',
   template: `
-  <div *ngFor="let education of educations" class="row">
-    <div class="col-12 col-lg-9 push-lg-3 col second">
-      <h5>{{education.title}}</h5>
-    </div>
-    <div class="col-12 col-lg-3 pull-lg-9 first">
-      <strong>{{education.duration}}</strong>
-    </div>
-    <div class="col-12 col-lg-9 push-lg-3 col second">
-      <toggable *ngFor="let nav of education.navs" [isOn]="nav.isActive" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
-      <div>{{education.place}}</div>
+  <div *ngIf="display">
+    <line>Education</line>
+    <div *ngFor="let education of educations" class="row">
+      <div class="col-12 col-lg-9 push-lg-3 col second">
+        <h5>{{education.title}}</h5>
+      </div>
+      <div class="col-12 col-lg-3 pull-lg-9 first">
+        <strong>{{education.duration}}</strong>
+      </div>
+      <div class="col-12 col-lg-9 push-lg-3 col second">
+        <toggable *ngFor="let nav of education.navs" [isOn]="nav.isActive" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
+        <div>{{education.place}}</div>
+      </div>
     </div>
   </div>
   `
 })
 export class EducationComponent {
+  public display: boolean = false;
   
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private animationService:AnimationService) { }
 
   ngOnInit() {
+    this.animationService.showContentAndEducation$.subscribe(
+      result => {
+        if(result){
+          this.display = true;
+        }
+      }
+    );
     this.store.select<AppState>(state => state).subscribe(
       state => {
         this.educations.forEach(

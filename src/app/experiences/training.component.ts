@@ -1,3 +1,4 @@
+import { AnimationService } from 'app/core/animation.service';
 import { Add, Remove } from './../reducers/actions';
 import { findSkill } from 'app/shared/skilltree';
 import { Skill } from 'app/shared/skilltree';
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'training',
   template: `
+  <div *ngIf="display">
+    <line>Training</line>
     <div *ngFor="let training of trainings" class="row">
       <div class="col-12 col-lg-9 push-lg-3 col second">
         <h5>{{training.title}}</h5>
@@ -20,13 +23,22 @@ import { Component, OnInit } from '@angular/core';
         <div>{{training.place}}</div>
       </div>
     </div>
+  </div>
   `
 })
 export class TrainingComponent {
+  public display:boolean = false;
   
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private animationService:AnimationService) { }
 
   ngOnInit() {
+    this.animationService.showContentAndEducation$.subscribe(
+      result => {
+        if(result){
+          this.display = true;
+        }
+      }
+    )
     this.store.select<AppState>(state => state).subscribe(
       state => {
         this.trainings.forEach(

@@ -17,7 +17,7 @@ export class LoaderComponent implements OnInit {
   private timerPace: number = 1;
   private threshold: number = 20;
   private timer: Subscription = null;
-  private isDisplayed: boolean = true;
+  isDisplayed: boolean = true;
 
   constructor(private loadingService: LoadingService) {
     this.loadingService.loadingStatus$.subscribe(
@@ -38,8 +38,11 @@ export class LoaderComponent implements OnInit {
         if (this.progress < this.threshold) {
           this.timerPace = 1;
         }
-        else {
+        else if (this.progress < this.threshold + 20) {
           this.timerPace = 0.1;
+        }
+        else {
+          this.timerPace = 0;
         }
 
         this.progress += this.timerPace;

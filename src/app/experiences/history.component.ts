@@ -1,3 +1,4 @@
+import { AnimationService } from '../core/animation.service';
 import { LoadingService } from './../loading/loading.service';
 import { FetchInitialState, FetchMainContent } from './../reducers/actions';
 import { Store } from '@ngrx/store';
@@ -12,6 +13,7 @@ import { style, trigger, state, transition, animate, keyframes, query, stagger }
 @Component({
   selector: 'history',
   template: `
+     <line>Work Experience</line>
      <div [@flyInOut]="queue.length" (@flyInOut.done)="displayEducationAndTraining($event)">
        <experience *ngFor="let experience of queue" [experience]="experience" [style.transform]="'translateY('+experience.currentPosition+'px)'" class="row"></experience>
      </div>
@@ -45,7 +47,7 @@ export class HistoryComponent implements OnInit {
   @ViewChildren(ExperienceComponent, { read: ElementRef }) componentsSizes: QueryList<ElementRef>;
   @ViewChildren(ExperienceComponent) experienceComponents: QueryList<ExperienceComponent>;
 
-  constructor(private store: Store<AppState>, private experienceService: ExperienceService, private loadingService: LoadingService) {
+  constructor(private store: Store<AppState>, private experienceService: ExperienceService, private loadingService: LoadingService, private animationService:AnimationService) {
     this.store.select<AppState>((state) => state).subscribe(
       state => {
         if (state.authentication != null) {
@@ -187,6 +189,9 @@ export class HistoryComponent implements OnInit {
   }
 
   displayEducationAndTraining(event){
-    this.loadingService.mainContentRendered();
+    if(event.fromState === 0){
+      this.loadingService.mainContentRendered();
+      this.animationService.showEducationAndTraining();
+    }
   }
 }
