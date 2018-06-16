@@ -71,23 +71,30 @@ export class TrainingComponent {
 
   trainings = [
     {
+      duration:"13th June 2018",
+      title:"Exam 70-483: Programming in C#",
+      place:"Microsoft, Poole, UK",
+      path:["csharp"],
+      navs:[]
+    },
+    {
       duration:"October 2013 – December 2013",
       title:".NET Advanced Applications Development Using C#",
-      place:"City University, London (UK)",
+      place:"City University, London, UK",
       path:["backend", "wpf", "csharp"],
       navs:[]
     },
     {
       duration:"October 2013 – December 2013",
       title:"ASP.NET: Web Applications with MVC and Entity Frameworks Using C#",
-      place:"City University, London (UK)",
+      place:"City University, London, UK)",
       path:["backend", "mvc", "csharp", "ef"],
       navs:[]
     },
     {
       duration:"18th November 2013",
       title:"Java SE 7 Certified Programmer I (Exam 1Z0-803)",
-      place:"London",
+      place:"Oracle, London",
       path:["java"],
       navs:[]
     }
