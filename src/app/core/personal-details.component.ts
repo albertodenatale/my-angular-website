@@ -14,7 +14,7 @@ declare var Skype : any
     <div class="col-12 col-lg-9 push-lg-3 col second jupiter">
       <span class="trait"><i class="fa fa-skype" aria-hidden="true"></i><a href="javascript://" (click)="openSkype()">alberto.denatale</a></span>
       <span class="trait"><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:berto.dena@gmail.com">berto.dena@gmail.com</a></span>
-      <span class="trait"><i class="fa fa-linkedin" aria-hidden="true"></i><a target="_blank" href="https://www.linkedin.com/in/alberto-de-natale-1b990082/">www.linkedin.com/in/alberto-de-natale</a></span>
+      <span class="trait"><i class="fa fa-linkedin" aria-hidden="true"></i><a target="_blank" href="https://www.linkedin.com/in/alberto-de-natale/">www.linkedin.com/in/alberto-de-natale</a></span>
       <span class="trait"><i class="fa fa-github" aria-hidden="true"></i><a target="_blank" href="https://github.com/albertodenatale/my-angular-website">https://github.com/albertodenatale</a></span>
       <span class="trait saturn"><span class="mars">Sex</span> male | <span class="mars">Date of birth</span> 5 of December 1986
       | <span class="mars">Nationality</span> Italian | <span class="mars">Resident In</span> Poole, UK</span>
