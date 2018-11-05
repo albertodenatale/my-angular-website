@@ -16,16 +16,16 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from "@ngrx/store";
-import { navigationReducer, mainReducer, authenticationReducer} from "app/reducers/reducers";
-import { environment } from "environments/environment";
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule } from '@angular/fire';
 import { EffectsModule } from "@ngrx/effects";
-import { AngularFireDatabaseModule } from "angularfire2/database";
-import { AngularFireAuthModule } from "angularfire2/auth";
-import { AngularFirestoreModule } from "angularfire2/firestore";
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import * as moment from 'moment';
 import { RouterModule } from "@angular/router";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { mainReducer, authenticationReducer, navigationReducer } from './reducers/reducers';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [

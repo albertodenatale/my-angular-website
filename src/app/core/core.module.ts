@@ -1,4 +1,4 @@
-import { AnimationService } from 'app/core/animation.service';
+import { AnimationService } from '../core/animation.service';
 import { QueryStringService } from './querystring.service';
 import { EditService } from './edit.service';
 import { StateService } from './state.service';

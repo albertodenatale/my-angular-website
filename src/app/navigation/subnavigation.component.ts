@@ -1,13 +1,10 @@
 import { AnimationService } from '../core/animation.service';
-import { SUBNAV, AppState, MAINNAV } from './../shared/skilltree';
+import { SUBNAV, AppState } from './../shared/skilltree';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs/Subject';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Node } from './navigation';
-import 'rxjs/Rx';
-import { ISkillTree, Skill, getByNavigationBarId, findSkill } from "app/shared/skilltree";
-import { Add, Remove } from "app/reducers/actions";
-import { style, trigger, state, transition, animate, keyframes, query, stagger } from "@angular/animations";
+import { Component } from '@angular/core';
+import { ISkillTree, Skill, getByNavigationBarId, findSkill } from "../shared/skilltree";
+import { Add, Remove } from "../reducers/actions";
+import { style, trigger, transition, animate, keyframes, query, stagger } from "@angular/animations";
 
 @Component({
   selector: 'subnavigation',

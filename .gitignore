@@ -7,7 +7,6 @@
 
 # dependencies
 /node_modules
-/src/assets/bower_components
 
 # IDEs and editors
 /.idea
@@ -17,11 +16,6 @@
 *.launch
 .settings/
 *.sublime-workspace
-/wwwroot
-/bin
-/bower_components
-/obj
-/public
 
 # IDE - VSCode
 .vscode/*
@@ -33,15 +27,12 @@
 # misc
 /.sass-cache
 /connect.lock
-/coverage/*
+/coverage
 /libpeerconnection.log
 npm-debug.log
+yarn-error.log
 testem.log
 /typings
-
-# e2e
-/e2e/*.js
-/e2e/*.map
 
 # System Files
 .DS_Store

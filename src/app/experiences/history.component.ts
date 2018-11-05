@@ -1,14 +1,14 @@
 import { AnimationService } from '../core/animation.service';
 import { LoadingService } from './../loading/loading.service';
-import { FetchInitialState, FetchMainContent } from './../reducers/actions';
+import { FetchMainContent } from './../reducers/actions';
 import { Store } from '@ngrx/store';
 import { ExperienceComponent } from './experience.component';
-import { element } from 'protractor';
 import { ExperienceService } from './experience.service';
 import { Experience, mapFromSnapshot } from './experience';
 import { Component, OnInit, ViewChild, ViewChildren, QueryList, ElementRef, HostListener } from '@angular/core';
-import { AppState, ISkillTree, convertToRegex, enumerateTree } from "app/shared/skilltree";
+import { AppState, ISkillTree, convertToRegex, enumerateTree } from "../shared/skilltree";
 import { style, trigger, state, transition, animate, keyframes, query, stagger } from "@angular/animations";
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'history',
@@ -173,9 +173,11 @@ export class HistoryComponent implements OnInit {
     if (this.queue == null || this.queue.length === 0) {
       this.experienceService.experiences
         .snapshotChanges()
-        .map(snapshots => {
-          return snapshots.map(s => mapFromSnapshot(s))
-        })
+        .pipe(
+          map(snapshots => {
+            return snapshots.map(s => mapFromSnapshot(s))
+          })
+        )
         .subscribe(experiences => {
           this.queue = this.sortHistory(experiences);
         })

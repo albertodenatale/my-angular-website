@@ -1,6 +1,5 @@
-import { Main } from './../shared/skilltree';
+import { Main, ISkillTree } from './../shared/skilltree';
 import { Action } from '@ngrx/store';
-import { ISkillTree } from "app/shared/skilltree";
 
 export const ADD = "ADD";
 export const REMOVE = "REMOVE";

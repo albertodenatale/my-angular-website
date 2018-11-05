@@ -3,8 +3,9 @@ import { QueryStringLoaded } from '../reducers/actions';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Effect, Actions } from "@ngrx/effects";
-import * as MainActions from 'app/reducers/actions';
-import { AppState, ISkillTree } from "app/shared/skilltree";
+import * as MainActions from '../reducers/actions';
+import { switchMap, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class QueryStringService {
@@ -26,15 +27,16 @@ export class QueryStringService {
 
   @Effect() loadInitialState$ = this.actions$
     .ofType(MainActions.FETCHMAINCONTENT)
-    .switchMap(payload => this.getQueryString())
-    .map(query => {
+    .pipe(
+      switchMap(() => this.getQueryString()),
+      map(query => {
       if (this.isEmpty(query)) {
         return new QueryStringLoaded({ frontend: '', backend: '' });
       }
       else {
         return new QueryStringLoaded(query);
       }
-    });
+    }));
 
   private isEmpty(queryString): boolean {
     return queryString == null || Object.keys(queryString).length === 0;

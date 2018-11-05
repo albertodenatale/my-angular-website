@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Period, formatPeriod, Experience } from "app/experiences/experience";
-import * as moment from 'moment';
+import { formatPeriod, Experience } from "../experiences/experience";
 
 @Pipe({
   name: 'period'

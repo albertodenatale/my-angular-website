@@ -1,8 +1,8 @@
-import { AnimationService } from 'app/core/animation.service';
+import { AnimationService } from '../core/animation.service';
 import { Add, Remove } from './../reducers/actions';
-import { findSkill } from 'app/shared/skilltree';
-import { Skill } from 'app/shared/skilltree';
-import { AppState } from 'app/shared/skilltree';
+import { findSkill } from '../shared/skilltree';
+import { Skill } from '../shared/skilltree';
+import { AppState } from '../shared/skilltree';
 import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 

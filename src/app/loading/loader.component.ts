@@ -1,9 +1,7 @@
 import { LoadingService } from './loading.service';
-import { Observable } from 'rxjs/Rx';
-import { Store } from '@ngrx/store';
-import { ISkillTree, AppState } from './../shared/skilltree';
+import { timer } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'loader',
@@ -29,7 +27,7 @@ export class LoaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timer = Observable.timer(1000, 100).subscribe(_ => {
+    this.timer = timer(1000, 100).subscribe(_ => {
       if (this.progress >= 100.5) {
         this.isDisplayed = false;
         this.timer.unsubscribe();

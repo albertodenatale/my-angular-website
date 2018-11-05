@@ -1,12 +1,10 @@
-import { findSkill } from 'app/shared/skilltree';
+import { findSkill } from '../shared/skilltree';
 import { Store } from '@ngrx/store';
 import { ISkillTree, Skill, getByNavigationBarId, AppState, enumerateTree } from './../shared/skilltree';
-import { Subject } from 'rxjs/Subject';
 import { Experience, Period, ParsePeriod } from './experience';
 import { Component, OnInit, Input, ContentChild, ViewChild, Directive } from '@angular/core';
-import { Node } from '../navigation/navigation';
-import { Add, Remove } from "app/reducers/actions";
-import { ExperienceService } from 'app/experiences/experience.service';
+import { Add, Remove } from "../reducers/actions";
+import { ExperienceService } from '../experiences/experience.service';
 
 @Component({
   selector: 'experience',

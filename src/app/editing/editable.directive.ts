@@ -1,4 +1,4 @@
-import { AppState } from 'app/shared/skilltree';
+import { AppState } from '../shared/skilltree';
 import { Store } from '@ngrx/store';
 import { EditService } from './../core/edit.service';
 import { Directive, HostBinding, HostListener, Output, EventEmitter, ElementRef } from '@angular/core';

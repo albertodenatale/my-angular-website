@@ -8,7 +8,7 @@ import { ExperienceComponent } from './experience.component';
 import { HistoryComponent } from './history.component';
 import { PeriodPipe } from './period.pipe';
 import { SortByDateFromPipe } from './sort-by-date-from.pipe';
-import { TrainingComponent } from "app/experiences/training.component";
+import { TrainingComponent } from "../experiences/training.component";
 
 @NgModule({
   imports: [

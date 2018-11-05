@@ -1,16 +1,15 @@
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { LoadingService } from './loading/loading.service';
 import { QueryStringService } from './core/querystring.service';
 import { Login } from './reducers/actions';
 import { Effect, Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { ISkillTree, AppState } from './shared/skilltree';
-import * as NodesActions from 'app/reducers/actions';
+import * as NodesActions from './reducers/actions';
 import { StateService } from './core/state.service';
 import { Component, HostBinding } from '@angular/core';
-import { TimerObservable } from "rxjs/observable/TimerObservable";
 import { Store } from "@ngrx/store";
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 
 @Component({
