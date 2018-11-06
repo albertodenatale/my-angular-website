@@ -1,7 +1,7 @@
 <loader></loader>
 <div class="container" >
-  <navigation class="hidden-sm-down"></navigation>
-  <subnavigation class="hidden-sm-down"></subnavigation>
+  <navigation class="d-none d-md-block"></navigation>
+  <subnavigation class="d-none d-md-block"></subnavigation>
   <div *ngIf="user==null" class="btn btn-primary signin" (click)="googleauth()">Sign In</div>
   <personal-details></personal-details>
   <history></history>

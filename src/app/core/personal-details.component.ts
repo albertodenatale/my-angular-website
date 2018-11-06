@@ -5,13 +5,13 @@ declare var Skype : any
   selector: 'personal-details',
   template: `  
   <div class="row personal">
-    <div class="col-12 col-lg-6 second push-lg-3">
+    <div class="col-12 col-lg-6 second order-lg-3">
       <h5>Alberto De Natale</h5>
     </div>
-    <div class="hidden-md-down col-6 col-lg-6 first pull-lg-6">
+    <div class="d-none d-lg-block col-6 col-lg-3 first order-lg-0">
       <h5>Personal Information</h5>
     </div>
-    <div class="col-12 col-lg-9 push-lg-3 col second jupiter">
+    <div class="col-12 col-lg-9 offset-lg-3 order-lg-3 col second jupiter">
       <span class="trait"><i class="fa fa-skype" aria-hidden="true"></i><a href="javascript://" (click)="openSkype()">alberto.denatale</a></span>
       <span class="trait"><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:berto.dena@gmail.com">berto.dena@gmail.com</a></span>
       <span class="trait"><i class="fa fa-linkedin" aria-hidden="true"></i><a target="_blank" href="https://www.linkedin.com/in/alberto-de-natale/">www.linkedin.com/in/alberto-de-natale</a></span>
@@ -50,7 +50,6 @@ export class PersonalDetailsComponent {
     
     var skypeElement = document.getElementById("SkypeButton_Call_alberto.denatale_1");
     if(skypeElement){
-      debugger;
       var link = skypeElement.getElementsByTagName('a');
       link[0].click();
       //skypeElement.parentNode.removeChild(skypeElement);

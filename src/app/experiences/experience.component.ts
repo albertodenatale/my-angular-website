@@ -1,8 +1,8 @@
 import { findSkill } from '../shared/skilltree';
 import { Store } from '@ngrx/store';
-import { ISkillTree, Skill, getByNavigationBarId, AppState, enumerateTree } from './../shared/skilltree';
-import { Experience, Period, ParsePeriod } from './experience';
-import { Component, OnInit, Input, ContentChild, ViewChild, Directive } from '@angular/core';
+import { Skill, AppState } from './../shared/skilltree';
+import { Experience, ParsePeriod } from './experience';
+import { Component, Input } from '@angular/core';
 import { Add, Remove } from "../reducers/actions";
 import { ExperienceService } from '../experiences/experience.service';
 
@@ -10,13 +10,13 @@ import { ExperienceService } from '../experiences/experience.service';
   selector: 'experience',
   template: `
     <i *ngIf="isEditable" (click)="deleteExperience(experience)" class="fa fa-trash-o" aria-hidden="true"></i>
-    <div class="col-12 col-lg-9 push-lg-3 second">
+    <div class="col-12 col-lg-9 order-lg-3 second">
       <h5 editable (contentChanges)="updateTitle(experience, $event)">{{experience.title}}</h5>
     </div>
-    <div class="col-12 col-lg-3 pull-lg-9 first">
+    <div class="col-12 col-lg-3 order-lg-0 first">
       <strong editable (contentChanges)="updatePeriod(experience, $event)">{{experience | period}}</strong>
     </div>
-    <div class="col-12 col-lg-9 push-lg-3 col second">
+    <div class="col-12 col-lg-9 offset-lg-3 order-lg-3 col second">
       <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
       <div editable (contentChanges)="updatePlace(experience, $event)">{{experience.place}}</div>
       <div editable (contentChanges)="updateDescription(experience, $event)">{{experience.description}}</div>

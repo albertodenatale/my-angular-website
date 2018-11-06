@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'line',
   template: `  
-  <div class="separator hidden-sm-down row">
+  <div class="separator d-none d-md-block row">
     <div class="col-md-3 first">
       <h5><ng-content></ng-content></h5>
     </div>

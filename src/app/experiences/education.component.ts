@@ -12,13 +12,13 @@ import { Component, OnInit } from '@angular/core';
   <div *ngIf="display">
     <line>Education</line>
     <div *ngFor="let education of educations" class="row">
-      <div class="col-12 col-lg-9 push-lg-3 col second">
+      <div class="col-12 col-lg-9 order-lg-3 col second">
         <h5>{{education.title}}</h5>
       </div>
-      <div class="col-12 col-lg-3 pull-lg-9 first">
+      <div class="col-12 col-lg-3 order-lg-0 first">
         <strong>{{education.duration}}</strong>
       </div>
-      <div class="col-12 col-lg-9 push-lg-3 col second">
+      <div class="col-12 col-lg-9 offset-lg-3 order-lg-3 col second">
         <toggable *ngFor="let nav of education.navs" [isOn]="nav.isActive" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
         <div>{{education.place}}</div>
       </div>

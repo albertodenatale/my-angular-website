@@ -2,11 +2,8 @@ import { AnimationService } from '../core/animation.service';
 import { AppState, MAINNAV } from './../shared/skilltree';
 import { Add, Remove } from '../reducers/actions';
 import { Store } from '@ngrx/store';
-import { Node } from './navigation';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Subject } from "rxjs";
+import { Component } from '@angular/core';
 import { ISkillTree, getByNavigationBarId, Skill } from "../shared/skilltree";
-import { Router, ActivatedRoute, Params } from '@angular/router';
 import { style, trigger, state, transition, animate, keyframes, query, stagger } from "@angular/animations";
 
 @Component({

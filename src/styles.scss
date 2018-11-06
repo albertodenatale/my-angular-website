@@ -1,5 +1,6 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~font-awesome/css/font-awesome.css";
 
 $red : red;
 $darkRed:darkRed;
@@ -143,12 +144,22 @@ navigation, subnavigation {
 toggable {
     &.btn{
         &.btn-primary{
-            background-color:$blueDark;
-            border-color: $blueDark;
+            background-color:$blueDark !important;
+            border-color: $blueDark !important;
         } 
-        &.btn-secondary{
-            color:$blueMedium;
-            border-color: $blueMedium;
+        &.btn-outline-primary{
+            color:$blueMedium !important;
+            border-color: $blueMedium !important;
+
+            &:hover{
+                background-color: #e6e5e5 !important;
+            }
+            
+            &:active{
+                background-color: transparent !important;
+                color:$blueMedium !important;
+                border-color: $blueMedium !important;
+            }
         } 
     }
 }
@@ -182,6 +193,7 @@ experience {
     personal-details {
         display: block;
         margin-bottom: 40px;
+        min-height: 230px;
     }
 }
 
