@@ -1,13 +1,10 @@
+import { ClippyService } from 'js-clippy';
 import { Subscription } from 'rxjs';
 import { LoadingService } from './loading/loading.service';
-import { QueryStringService } from './core/querystring.service';
 import { Login } from './reducers/actions';
-import { Effect, Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs';
 import { ISkillTree, AppState } from './shared/skilltree';
 import * as NodesActions from './reducers/actions';
-import { StateService } from './core/state.service';
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from "@ngrx/store";
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
@@ -22,25 +19,29 @@ export class AppComponent {
   loadingNavSubscription : Subscription;
 
   constructor(private store: Store<AppState>,
-    private stateService: StateService,
     private firebaseAuth: AngularFireAuth,
-    private queryStringComponent: QueryStringService,
-    private loadingService:LoadingService
+    private loadingService:LoadingService,
+    private clippy: ClippyService
   ) {
     this.loadingNavSubscription = this.store.select<ISkillTree>(state => state.navigation).subscribe(
       skillTree => {
         if (skillTree.isLoaded) {
           this.loadingNavSubscription.unsubscribe();
           this.loadingService.navigationLoaded();
+          this.clippy.speak("Welcome, the buttons are for you to look how comfortable I am with the skills I specialise", true);
         }
-      }
-    )
+      });
+
+      this.clippy.create("Clippy");
+    ;
    }
 
   ngOnInit() {
     this.store.dispatch({
       type: NodesActions.FETCHINITIALSTATE
     });
+
+    this.clippy.show(true);
   }
 
   googleauth() {

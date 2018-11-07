@@ -224,3 +224,16 @@ training, education{
         margin-bottom: 5px;
     }
 }
+
+
+app-clippy{
+    position: absolute;
+    top:30%;
+    left:80%;
+}
+
+@include media-breakpoint-down(sm) { 
+    app-clippy{
+        display: none;
+    }
+}

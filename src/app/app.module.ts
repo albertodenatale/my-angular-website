@@ -15,6 +15,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JsClippyModule } from 'js-clippy'
 import { StoreModule } from "@ngrx/store";
 import { AngularFireModule } from '@angular/fire';
 import { EffectsModule } from "@ngrx/effects";
@@ -23,7 +24,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import * as moment from 'moment';
 import { RouterModule } from "@angular/router";
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { mainReducer, authenticationReducer, navigationReducer } from './reducers/reducers';
 import { environment } from 'src/environments/environment';
 
@@ -48,7 +48,8 @@ import { environment } from 'src/environments/environment';
     AngularFireDatabaseModule,   
     EffectsModule.forRoot([StateService, ExperienceService, QueryStringService]),      
     AngularFireAuthModule,
-    LoadingModule
+    LoadingModule,
+    JsClippyModule
   ],
   providers: [{ provide: 'moment', useValue: moment }],
   bootstrap: [AppComponent]
