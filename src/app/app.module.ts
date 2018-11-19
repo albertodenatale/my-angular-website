@@ -24,7 +24,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import * as moment from 'moment';
 import { RouterModule } from "@angular/router";
-import { mainReducer, authenticationReducer, navigationReducer } from './reducers/reducers';
+import { mainReducer, authenticationReducer, navigationReducer, clippyReducer } from './reducers/reducers';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
@@ -42,7 +42,7 @@ import { environment } from 'src/environments/environment';
     CoreModule,
     SharedModule,
     EditingModule,
-    StoreModule.forRoot({ navigation: navigationReducer, main: mainReducer, authentication: authenticationReducer }),
+    StoreModule.forRoot({ navigation: navigationReducer, main: mainReducer, authentication: authenticationReducer, clippy: clippyReducer }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),            
     AngularFireDatabaseModule,   

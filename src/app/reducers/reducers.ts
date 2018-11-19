@@ -1,4 +1,4 @@
-import { Main } from './../shared/skilltree';
+import { Main, ClippyState } from './../shared/skilltree';
 import { Experience } from './../experiences/experience';
 import { ISkillTree, findSkill, Skill, enumerateSkill, enumerateAncestors } from '../shared/skilltree';
 import * as Actions from './actions'
@@ -96,6 +96,19 @@ export function authenticationReducer(state: any, action: Actions.Auth) {
             return action.payload;
         case Actions.LOGOUT:
             return null;
+    }
+
+    return state;
+}
+
+export function clippyReducer(state: ClippyState, action: Actions.All): ClippyState {
+    if(state == null){
+        state = new ClippyState();
+    }
+    
+    switch(action.type){
+        case Actions.ADD: state.skillId = action.payload; break;
+        case Actions.REMOVE: state.skillId = ""; break;
     }
 
     return state;
