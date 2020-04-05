@@ -1,6 +1,4 @@
 import { Experience } from './../experiences/experience';
-import { element } from 'protractor';
-import { ISkillTree } from './skilltree';
 import { AngularFireList } from '@angular/fire/database';
 
 export function addSkill(tree: ISkillTree, skillId: string) {

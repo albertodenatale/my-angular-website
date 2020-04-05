@@ -6,29 +6,34 @@ import * as Actions from './actions'
 export type SelectedNodes = Array<string[]>
 
 export function navigationReducer(state: ISkillTree = { root: null, isLoaded: false, queryString: {} }, action: Actions.All): ISkillTree {
+    
     switch (action.type) {
         case Actions.ADD:
+            state = JSON.parse(JSON.stringify(state));
             add(state, action.payload);
 
             break;
         case Actions.REMOVE:
+            state = JSON.parse(JSON.stringify(state));
             remove(state, action.payload);
 
             break;
         case Actions.QUERYSTRINGLOADED:
-            state.queryString = action.payload;
+            state = { ...state, queryString: action.payload };
+
             loadQueryString(state);
             break;
 
         case Actions.INITIALSTATELOADED:
-            state.isLoaded = true;
-            state.root = action.payload.root;
+
+            state = { ...state, isLoaded: true, root: JSON.parse(JSON.stringify(action.payload.root)) };
+            
             loadQueryString(state);
             break;
 
     }
 
-    return JSON.parse(JSON.stringify(state));
+    return state;
 }
 
 function loadQueryString(state) {
@@ -107,8 +112,8 @@ export function clippyReducer(state: ClippyState, action: Actions.All): ClippySt
     }
     
     switch(action.type){
-        case Actions.ADD: state.skillId = action.payload; break;
-        case Actions.REMOVE: state.skillId = ""; break;
+        case Actions.ADD: state = { ...state, skillId: action.payload}; break;
+        case Actions.REMOVE: state = { ...state, skillId: ""}; break;
     }
 
     return state;

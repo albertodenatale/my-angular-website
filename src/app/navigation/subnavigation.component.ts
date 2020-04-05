@@ -95,7 +95,7 @@ export class SubnavigationComponent {
           let existing = this.navs.find(n => n.id === node.id);
 
           if (existing) {
-            existing.isActive = node.isActive;
+            // existing.isActive = node.isActive;
 
             return false;
           }

@@ -13,11 +13,10 @@ declare var Skype : any
     </div>
     <div class="col-12 col-lg-9 offset-lg-3 order-lg-3 col second jupiter">
       <span class="trait"><i class="fa fa-skype" aria-hidden="true"></i><a href="javascript://" (click)="openSkype()">alberto.denatale</a></span>
-      <span class="trait"><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:berto.dena@gmail.com">berto.dena@gmail.com</a></span>
-      <span class="trait"><i class="fa fa-linkedin" aria-hidden="true"></i><a target="_blank" href="https://www.linkedin.com/in/alberto-de-natale/">www.linkedin.com/in/alberto-de-natale</a></span>
-      <span class="trait"><i class="fa fa-github" aria-hidden="true"></i><a target="_blank" href="https://github.com/albertodenatale/my-angular-website">https://github.com/albertodenatale</a></span>
-      <span class="trait saturn"><span class="mars">Sex</span> male | <span class="mars">Date of birth</span> 5 of December 1986
-      | <span class="mars">Nationality</span> Italian | <span class="mars">Resident In</span> Poole, UK</span>
+      <span class="trait"><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="mailto:alberto.denatale@outlook.com">alberto.denatale@outlook.com</a></span>
+      <span class="trait"><i class="fa fa-linkedin" aria-hidden="true"></i><a target="_blank" href="https://www.linkedin.com/in/alberto-de-natale/">LinkedIn</a></span>
+      <span class="trait"><i class="fa fa-github" aria-hidden="true"></i><a target="_blank" href="https://github.com/albertodenatale/my-angular-website">GitHub</a></span>
+      <span class="trait"><i class="fa fa-stack-overflow" aria-hidden="true"></i><a target="_blank" href="https://stackexchange.com/users/3578609/alberto">Stack Overflow</a></span>
       <div id="SkypeButton_Call_alberto.denatale_1" style="display:none"></div>
     </div>
   </div>`

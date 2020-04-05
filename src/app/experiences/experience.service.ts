@@ -1,7 +1,7 @@
 import { Main } from './../shared/skilltree';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { Experience } from './experience';
 import { Injectable } from '@angular/core';
 import * as MainActions from '../reducers/actions';
@@ -19,8 +19,8 @@ export class ExperienceService {
     }
 
     @Effect() loadInitialState$ = this.actions$
-      .ofType(MainActions.FETCHMAINCONTENT)
       .pipe(
+        ofType(MainActions.FETCHMAINCONTENT),
         map(res => ({type: MainActions.MAINCONTENTLOADED, payload: { isLoaded: true } }))
       );
 

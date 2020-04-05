@@ -2,7 +2,7 @@ import { Store } from '@ngrx/store';
 import { QueryStringLoaded } from '../reducers/actions';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { Effect, Actions } from "@ngrx/effects";
+import { Effect, Actions, ofType } from "@ngrx/effects";
 import * as MainActions from '../reducers/actions';
 import { switchMap, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -26,8 +26,8 @@ export class QueryStringService {
   }
 
   @Effect() loadInitialState$ = this.actions$
-    .ofType(MainActions.FETCHMAINCONTENT)
     .pipe(
+      ofType(MainActions.FETCHMAINCONTENT),
       switchMap(() => this.getQueryString()),
       map(query => {
       if (this.isEmpty(query)) {
