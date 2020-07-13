@@ -71,6 +71,19 @@ export class TrainingComponent {
 
   trainings = [
     {
+      duration:"12th July 2020",
+      title:"Exam AZ-204: Developing Solutions for Microsoft Azure",
+      place:"Microsoft, Milan, Italy",
+      path:["appservices", "azurefunctions", 
+            "azurecontainer", "azureregistry", 
+            "azurestorage", "azurecosmosdb", 
+            "azurecdn", "azureredis", 
+            "azuremonitor", "azureapi", 
+            "azurelogicapp", "azureeventgrid", 
+            "azureeventhubs", "azurestoragequeues", "azureservicebus" ],
+      navs:[]
+    },
+    {
       duration:"13th June 2018",
       title:"Exam 70-483: Programming in C#",
       place:"Microsoft, Poole, UK",

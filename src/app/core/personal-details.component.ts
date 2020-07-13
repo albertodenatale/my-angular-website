@@ -17,6 +17,7 @@ declare var Skype : any
       <span class="trait"><i class="fa fa-linkedin" aria-hidden="true"></i><a target="_blank" href="https://www.linkedin.com/in/alberto-de-natale/">LinkedIn</a></span>
       <span class="trait"><i class="fa fa-github" aria-hidden="true"></i><a target="_blank" href="https://github.com/albertodenatale/my-angular-website">GitHub</a></span>
       <span class="trait"><i class="fa fa-stack-overflow" aria-hidden="true"></i><a target="_blank" href="https://stackexchange.com/users/3578609/alberto">Stack Overflow</a></span>
+      <span class="trait"><i class="fa fa-windows" aria-hidden="true"></i><a target="_blank" href="https://docs.microsoft.com/en-us/users/albertodenatale/">Microsoft Learn</a></span>
       <div id="SkypeButton_Call_alberto.denatale_1" style="display:none"></div>
     </div>
   </div>`

@@ -117,8 +117,7 @@ export class HistoryComponent implements OnInit {
         }
 
         var newPosition = 0;
-
-
+        
         for (var i = 0; i < newIndex; i++) {
           newPosition += this.getComponentSize(sorted[i].id);
         }
