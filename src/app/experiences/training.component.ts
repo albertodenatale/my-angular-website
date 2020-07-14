@@ -100,7 +100,7 @@ export class TrainingComponent {
     {
       duration:"October 2013 – December 2013",
       title:"ASP.NET: Web Applications with MVC and Entity Frameworks Using C#",
-      place:"City University, London, UK)",
+      place:"City University, London, UK",
       path:["backend", "mvc", "csharp", "ef"],
       navs:[]
     },

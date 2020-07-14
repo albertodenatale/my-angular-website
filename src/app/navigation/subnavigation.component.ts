@@ -87,6 +87,8 @@ export class SubnavigationComponent {
       this.navs = [];
     }
 
+    selected = JSON.parse(JSON.stringify(selected));
+
     var toAdd = selected.filter(
       node => {
         let parent: Skill = findSkill(skillTree, node.parentId);
@@ -95,7 +97,7 @@ export class SubnavigationComponent {
           let existing = this.navs.find(n => n.id === node.id);
 
           if (existing) {
-            // existing.isActive = node.isActive;
+            existing.isActive = node.isActive;
 
             return false;
           }
