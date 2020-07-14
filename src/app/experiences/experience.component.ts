@@ -19,7 +19,7 @@ import { ExperienceService } from '../experiences/experience.service';
     <div class="col-12 col-lg-9 offset-lg-3 order-lg-3 col second">
       <toggable *ngFor="let nav of navs" [isOn]="nav.isActive" class="btn-sm" (whenOff)="whenOff(nav)" (whenOn)="whenOn(nav)">{{nav.label}}</toggable>
       <div editable (contentChanges)="updatePlace(experience, $event)">{{experience.place}}</div>
-      <div editable (contentChanges)="updateDescription(experience, $event)">{{experience.description}}</div>
+      <pre editable (contentChanges)="updateDescription(experience, $event)">{{experience.description}}</pre>
     </div>`
 })
 export class ExperienceComponent {

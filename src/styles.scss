@@ -30,6 +30,13 @@ a{
     color: #4F81BD !important;
 }
 
+pre{
+    white-space: pre-wrap;
+    overflow-x: hidden;
+    font-size: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 //temp styles 
 .personal {
     height: $minHeight;
