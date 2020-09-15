@@ -14,9 +14,9 @@ $blue:blue;
 $blueDark:#424199;
 $blueMedium:#4F81BD;
 $blueLight:#1698CE;
+$whitish: #e6e5e5;
 $minHeight:200px;
 $paddingRightColumns1:20px;
-
 
 body{
     font-size: 15px;
@@ -24,10 +24,11 @@ body{
 
 h5{
     color: $blueDark;
+    display: inline;
 }
 
 a{
-    color: #4F81BD !important;
+    color: $blueMedium !important;
 }
 
 pre{
@@ -41,6 +42,11 @@ pre{
 .personal {
     height: $minHeight;
     margin-top:2rem;
+
+    .jupiter {
+        margin-top: 5px;
+    }
+
     .col.second{
 
         .trait {
@@ -163,7 +169,7 @@ toggable {
             border-color: $blueMedium !important;
 
             &:hover{
-                background-color: #e6e5e5 !important;
+                background-color: $whitish !important;
             }
             
             &:active{
@@ -242,5 +248,73 @@ app-clippy{
 @include media-breakpoint-down(sm) { 
     app-clippy{
         display: none;
+    }
+}
+
+
+$blueDark:#4590ce;
+$blueMedium:#90caf9;
+$blueLight:#bbe0ff;
+$pinkish: #f48fb1;
+
+.darkmode {
+    position: absolute;
+    right: 0;
+}
+
+body.darkModeOn {
+    background-color:#333;
+    color: white;
+}
+
+.darkModeOn {
+    pre {
+        color: white;
+    }
+    
+    h5 {
+        color: $blueDark;
+    }
+    
+    a {
+        color: $blueLight !important;
+    }
+
+    .personal {
+
+        .col.second{
+    
+            .trait {
+
+                i {
+                    color: $blueLight;
+                }
+            }
+        }
+    }
+
+    toggable {
+        &.btn{
+            &.btn-primary{
+                background-color:$blueDark !important;
+                border-color: $blueDark !important;
+            } 
+            &.btn-outline-primary{
+                color:$blueMedium !important;
+                border-color: $blueMedium !important;
+    
+                &:hover{
+                    background-color: $pinkish !important;
+                    border-color: $pinkish !important;
+                    color: white !important;
+                }
+                
+                &:active{
+                    background-color: transparent !important;
+                    color:$blueMedium !important;
+                    border-color: $blueMedium !important;
+                }
+            } 
+        }
     }
 }

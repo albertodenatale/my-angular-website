@@ -5,10 +5,12 @@ import { StateService } from './state.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PersonalDetailsComponent } from './personal-details.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   providers:[StateService, EditService, QueryStringService, AnimationService],
   declarations: [PersonalDetailsComponent],

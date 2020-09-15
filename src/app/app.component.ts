@@ -3,8 +3,10 @@ import { Subscription } from 'rxjs';
 import { LoadingService } from './loading/loading.service';
 import { ISkillTree, AppState } from './shared/skilltree';
 import * as NodesActions from './reducers/actions';
-import { Component } from '@angular/core';
+import { Component, Inject, Renderer2 } from '@angular/core';
 import { Store } from "@ngrx/store";
+import { DarkModeService } from './darkmode/darkmode.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +16,14 @@ export class AppComponent {
   user: any
   isNavShowed: boolean = true;
   loadingNavSubscription: Subscription;
+  isDarkModeOn: Boolean;
 
   constructor(private store: Store<AppState>,
     private loadingService: LoadingService,
-    private clippy: ClippyService
+    private clippy: ClippyService,
+    private darkModeService: DarkModeService,
+    @Inject(DOCUMENT) private document: Document,
+    private renderer: Renderer2
   ) {
     this.loadingNavSubscription = this.store.select<ISkillTree>(state => state.navigation).subscribe(
       skillTree => {
@@ -51,7 +57,14 @@ export class AppComponent {
     );
 
     this.clippy.create("Clippy");
-    ;
+
+    this.darkModeService.darkModeOnOrOff$.subscribe((isDarkModeOn) => {
+      if(isDarkModeOn){
+        this.renderer.addClass(this.document.body, 'darkModeOn');
+      } else {
+        this.renderer.removeClass(this.document.body, 'darkModeOn');
+      }
+    });
   }
 
   ngOnInit() {
