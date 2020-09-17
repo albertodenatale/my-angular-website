@@ -3,6 +3,7 @@ import { Component, HostBinding, HostListener, Inject, OnInit, Renderer2 } from 
 
 @Component({
     selector: 'darkmodetoggle',
+    template: '',
     styles: [
         ':host { display: block }',
         ':host { width: 100%; height: 100%; }',
