@@ -6,11 +6,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PersonalDetailsComponent } from './personal-details.component';
 import { SharedModule } from '../shared/shared.module';
+import { DarkmodeModule } from '../darkmode/darkmode.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    DarkmodeModule
   ],
   providers:[StateService, EditService, QueryStringService, AnimationService],
   declarations: [PersonalDetailsComponent],

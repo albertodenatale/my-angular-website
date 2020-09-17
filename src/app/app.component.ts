@@ -5,8 +5,6 @@ import { ISkillTree, AppState } from './shared/skilltree';
 import * as NodesActions from './reducers/actions';
 import { Component, Inject, Renderer2 } from '@angular/core';
 import { Store } from "@ngrx/store";
-import { DarkModeService } from './darkmode/darkmode.service';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -20,17 +18,14 @@ export class AppComponent {
 
   constructor(private store: Store<AppState>,
     private loadingService: LoadingService,
-    private clippy: ClippyService,
-    private darkModeService: DarkModeService,
-    @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2
+    private clippy: ClippyService
   ) {
     this.loadingNavSubscription = this.store.select<ISkillTree>(state => state.navigation).subscribe(
       skillTree => {
         if (skillTree.isLoaded) {
           this.loadingNavSubscription.unsubscribe();
           this.loadingService.navigationLoaded();
-          this.clippy.speak("Welcome, the buttons are for you to look how comfortable I am with the skills I specialise. Otherwise, double click on me and I will entertain you.", true);
+          this.clippy.speak("Welcome, the buttons are for you to look how comfortable I am with the skills I specialise. Otherwise, double click on me and I will entertain you.", false);
         }
       });
 
@@ -58,13 +53,6 @@ export class AppComponent {
 
     this.clippy.create("Clippy");
 
-    this.darkModeService.darkModeOnOrOff$.subscribe((isDarkModeOn) => {
-      if(isDarkModeOn){
-        this.renderer.addClass(this.document.body, 'darkModeOn');
-      } else {
-        this.renderer.removeClass(this.document.body, 'darkModeOn');
-      }
-    });
   }
 
   ngOnInit() {

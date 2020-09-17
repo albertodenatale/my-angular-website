@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { DarkModeService } from '../darkmode/darkmode.service';
-declare var Skype : any 
+declare var Skype : any;
 
 @Component({
   selector: 'personal-details',
   template: `  
   <div class="row personal">
-    <div class="col-12 col-lg-9 second order-lg-3">
+    <div class="col-10 col-lg-8 second order-lg-3">
       <h5>Alberto De Natale</h5>
-      <toggable class="darkmode" [isOn]="isDarkModeOn" (whenOn)="turnDarkModeOn()" (whenOff)="turnDarkModeOff()">Dark Mode</toggable>
+    </div>
+    <div class="col-2 col-lg-1 second order-lg-3">
+      <darkmodetoggle></darkmodetoggle>
     </div>
     <div class="d-none d-lg-block col-6 col-lg-3 first order-lg-0">
       <h5>Personal Information</h5>
@@ -25,8 +26,6 @@ declare var Skype : any
   </div>`
 })
 export class PersonalDetailsComponent {
-
-  constructor(private darkModeService: DarkModeService) {}
 
   ngAfterViewInit() {
     // var skypeScript = `
@@ -46,14 +45,6 @@ export class PersonalDetailsComponent {
       "element": "SkypeButton_Call_alberto.denatale_1",
       "participants": ["alberto.denatale"]
     });
-  }
-
-  turnDarkModeOn() {
-    this.darkModeService.turnDarkModeOn();
-  }
-
-  turnDarkModeOff() {
-    this.darkModeService.turnDarkModeOff();
   }
 
   openSkype(){

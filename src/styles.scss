@@ -241,8 +241,24 @@ training, education{
 
 app-clippy{
     position: absolute;
-    top:30%;
-    left:80%;
+    top:15%;
+    left:60%;
+}
+
+@include media-breakpoint-up(xl) { 
+    app-clippy{
+        top:30%;
+        right:20%;
+        left:auto;
+    }
+}
+
+@include media-breakpoint-up(md) { 
+    app-clippy{
+        top:25%;
+        right:20%;
+        left:auto;
+    }
 }
 
 @include media-breakpoint-down(sm) { 
@@ -265,6 +281,14 @@ $pinkish: #f48fb1;
 body.darkModeOn {
     background-color:#333;
     color: white;
+}
+
+darkmodetoggle {
+    float: right;
+
+    img {
+        width: 100%;
+    }
 }
 
 .darkModeOn {

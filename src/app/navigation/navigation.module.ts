@@ -3,6 +3,7 @@ import { NavigationComponent } from './navigation.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SubnavigationComponent } from './subnavigation.component';
+import { DarkmodeModule } from '../darkmode/darkmode.module';
 
 @NgModule({
   imports: [
